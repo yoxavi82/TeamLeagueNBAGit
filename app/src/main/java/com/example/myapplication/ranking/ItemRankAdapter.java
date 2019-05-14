@@ -50,23 +50,9 @@ public class ItemRankAdapter extends BaseAdapter {
         }
 
 
-//        ItemRank item = MainActivity.orden.get(position);
-//
-//        ImageView image = vi.findViewById(R.id.imagen);
-//        if(position==0){
-//            image.setImageResource(R.drawable.oro);
-//            image.setVisibility(View.VISIBLE);
-//        }else if(position==1){
-//            image.setImageResource(R.drawable.plata);
-//            image.setVisibility(View.VISIBLE);
-//        }else if(position==2){
-//            image.setImageResource(R.drawable.bronce);
-//            image.setVisibility(View.VISIBLE);
-//        }else{
-//            image.setImageResource(R.drawable.oro);
-//            image.setVisibility(View.INVISIBLE);
-//        }
-
+//        ItemRank item = jugadores.get(position);
+//        TextView pos = vi.findViewById(R.id.Posicion);
+//        pos.setText(position);
 //
 //        TextView nombre = (TextView) vi.findViewById(R.id.nombre);
 //        nombre.setText(item.getNombre());
