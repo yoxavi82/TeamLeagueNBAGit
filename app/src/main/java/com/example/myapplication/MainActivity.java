@@ -24,6 +24,11 @@ public class MainActivity extends AppCompatActivity {
         password = findViewById(R.id.Password);
     }
 
+    public  void login(View view){
+        Intent intent = new Intent(this, Homepage.class);
+        startActivity(intent);
+    }
+
     public void registro(View view){
         Intent intent = new Intent(this, RegisterView.class);
         startActivity(intent);
