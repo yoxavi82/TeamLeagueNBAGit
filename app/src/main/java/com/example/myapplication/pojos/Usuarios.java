@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.pojos;
 // Generated 09-may-2019 19:56:04 by Hibernate Tools 5.1.10.Final
 
 import java.util.Date;
