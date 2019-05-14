@@ -61,6 +61,18 @@ public class RegisterView extends AppCompatActivity {
         });
     }
 
+    public Connection connection(){
+        Connection conexion = null;
+        try{
+
+
+        }catch (Exception e){
+
+        }
+        return  conexion;
+    }
+
+
     Thread sqlThread = new Thread() {
         public void run() {
             try {
