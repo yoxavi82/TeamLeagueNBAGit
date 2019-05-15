@@ -7,6 +7,41 @@
     android:background="@drawable/degradado"
     tools:context=".RegisterView">
 
+    <Spinner
+        android:id="@+id/mes"
+        android:layout_width="107dp"
+        android:layout_height="31dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/dia"
+        app:layout_constraintStart_toEndOf="@+id/dia" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="48dp"
+        android:layout_height="32dp"
+        android:text="Mes:"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView3"
+        app:layout_constraintStart_toEndOf="@+id/dia" />
+
+    <Spinner
+        android:id="@+id/dia"
+        android:layout_width="113dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="28dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="47dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="56dp"
+        android:text="Año:"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView5"
+        app:layout_constraintStart_toEndOf="@+id/textView5" />
+
     <TextView
         android:id="@+id/Titulo"
         android:layout_width="wrap_content"
@@ -22,7 +57,7 @@
         android:id="@+id/username"
         android:layout_width="276dp"
         android:layout_height="47dp"
-        android:layout_marginStart="36dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="20dp"
         android:ems="10"
         android:hint="Usuario"
@@ -67,12 +102,12 @@
         android:id="@+id/registrar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="28dp"
-        android:layout_marginBottom="128dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="64dp"
         android:onClick="registrar"
         android:text="Registrar"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/año" />
 
     <ImageView
         android:id="@+id/verificado"
@@ -87,16 +122,6 @@
         app:layout_constraintTop_toTopOf="@+id/username"
         app:srcCompat="@drawable/verificado" />
 
-    <CalendarView
-        android:id="@+id/Calendario"
-        android:layout_width="236dp"
-        android:layout_height="226dp"
-        android:layout_marginEnd="80dp"
-        android:clickable="true"
-        android:visibility="visible"
-        app:layout_constraintEnd_toEndOf="@+id/Password"
-        app:layout_constraintTop_toBottomOf="@+id/Password" />
-
     <EditText
         android:id="@+id/Password"
         android:layout_width="276dp"
@@ -107,5 +132,35 @@
         android:inputType="textPassword"
         app:layout_constraintStart_toStartOf="@+id/Correo"
         app:layout_constraintTop_toBottomOf="@+id/Correo" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="233dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="40dp"
+        android:text="Fecha de nacimiento:"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="@+id/Password"
+        app:layout_constraintTop_toBottomOf="@+id/Password" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="40dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="20dp"
+        android:text="Dia:"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+    <Spinner
+        android:id="@+id/año"
+        android:layout_width="124dp"
+        android:layout_height="31dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/mes"
+        app:layout_constraintStart_toEndOf="@+id/mes" />
 
 </android.support.constraint.ConstraintLayout>
