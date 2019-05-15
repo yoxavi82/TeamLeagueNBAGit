@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="65dp"
         android:layout_marginEnd="65dp"
-        android:layout_marginBottom="43dp"
+        android:layout_marginBottom="36dp"
         android:background="@android:color/black"
         android:onClick="login"
         android:text="Iniciar Sesion"
@@ -21,9 +21,8 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/Registrar"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Password"
         tools:text="Iniciar Sesion" />
 
     <EditText
@@ -56,18 +55,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="223dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="94dp"
-        android:layout_marginBottom="368dp"
-        app:layout_constraintBottom_toTopOf="@+id/Registrar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/logo" />
 
     <TextView
         android:id="@+id/textView"
@@ -104,17 +91,25 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <CheckBox
         android:id="@+id/Recordar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="195dp"
+        android:layout_marginBottom="188dp"
         android:text="Recordar usuario"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/Password"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintEnd_toEndOf="@+id/Password" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="180dp"
+        android:layout_height="202dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="116dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/logo" />
 
 </android.support.constraint.ConstraintLayout>
