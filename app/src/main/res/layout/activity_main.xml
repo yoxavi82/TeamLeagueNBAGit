@@ -88,6 +88,7 @@
         android:onClick="registro"
         android:text="Registrarse"
         android:textColor="@android:color/holo_orange_dark"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
