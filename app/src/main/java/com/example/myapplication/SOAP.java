@@ -4,7 +4,7 @@ package com.example.myapplication;
 //import org.ksoap2.serialization.SoapObject;
 //import org.ksoap2.SoapEnvelope;
 //import org.ksoap2.serialization.SoapSerializationEnvelope;
-//
+
 //public class SOAP {
 //    String NAMESPACE = "http://remotemysql.com/";
 //    String URL="";
@@ -18,5 +18,5 @@ package com.example.myapplication;
 //    }
 //
 //    SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
-//
+
 //}
