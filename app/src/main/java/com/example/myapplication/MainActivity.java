@@ -17,11 +17,17 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//        getSupportActionBar().hide();
         setContentView(R.layout.activity_main);
         entrar = findViewById(R.id.Entrar);
         resgitrar = findViewById(R.id.Registrar);
         usuario = findViewById(R.id.username);
         password = findViewById(R.id.Password);
+    }
+
+    public  void login(View view){
+        Intent intent = new Intent(this, Homepage.class);
+        startActivity(intent);
     }
 
     public void registro(View view){

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/home"
+        android:icon="@drawable/ic_home_black_24dp"
+        android:title="Inicio" />
+
+    <item
+        android:id="@+id/ali"
+        android:icon="@drawable/alineacion"
+        android:title="Alineación" />
+
+    <item
+        android:id="@+id/mercado"
+        android:icon="@drawable/mercado"
+        android:title="Mercado" />
+
+    <item
+        android:id="@+id/clasificacion"
+        android:icon="@drawable/clasificacion"
+        android:title="Clasificación" />
+
+    <item
+        android:id="@+id/jornada"
+        android:icon="@drawable/jornada"
+        android:title="Jornada" />
+
+
+
+</menu>

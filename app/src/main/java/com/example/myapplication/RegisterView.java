@@ -33,7 +33,6 @@ public class RegisterView extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_view);
-        getSupportActionBar().hide();
         usuario = findViewById(R.id.username);
         nombre = findViewById(R.id.Nombre);
         apellidos = findViewById(R.id.Apellidos);
@@ -49,19 +48,31 @@ public class RegisterView extends AppCompatActivity {
             }
         });
 
-        usuario.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if(!hasFocus){
-                    for(int i =0;i<usuarios.size();i++){
-                        if(usuarios.get(i)==usuario.getText().toString()){
-                            existe=true;
-                        }
-                    }
-                }
-            }
-        });
+//        usuario.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+//            @Override
+//            public void onFocusChange(View v, boolean hasFocus) {
+//                if(!hasFocus){
+//                    for(int i =0;i<usuarios.size();i++){
+//                        if(usuarios.get(i)==usuario.getText().toString()){
+//                            existe=true;
+//                        }
+//                    }
+//                }
+//            }
+//        });
     }
+
+    public Connection connection(){
+        Connection conexion = null;
+        try{
+
+
+        }catch (Exception e){
+
+        }
+        return  conexion;
+    }
+
 
     Thread sqlThread = new Thread() {
         public void run() {
