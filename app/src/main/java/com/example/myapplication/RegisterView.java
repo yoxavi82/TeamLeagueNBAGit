@@ -157,7 +157,27 @@ public class RegisterView extends AppCompatActivity {
 
     public  void crearFecha(){
         if(fechaAño!=null&&fechaDia!=null&&fechaMes!=null){
-            fechaNacimiento = fechaDia="/"+fechaMes+"/"+fechaAño;
+            int ayuda =0;
+            switch (Integer.parseInt(fechaMes)){
+                case 2:if(Integer.parseInt(fechaDia)>29) ayuda =1;
+                        break;
+                case 4:if(Integer.parseInt(fechaDia)>30) ayuda =1;
+                    break;
+                case 6:if(Integer.parseInt(fechaDia)>30) ayuda =1;
+                    break;
+                case 9: if(Integer.parseInt(fechaDia)>30) ayuda =1;
+                    break;
+                case 11:if(Integer.parseInt(fechaDia)>30) ayuda =1;
+                    break;
+                default:break;
+            }
+            if(ayuda==0){
+                fechaNacimiento = fechaDia="/"+fechaMes+"/"+fechaAño;
+            }else{
+                Toast toast = Toast.makeText(getApplicationContext(),
+                        "Fecha no valida", Toast.LENGTH_SHORT);
+                toast.show();
+            }
         }
     }
 
