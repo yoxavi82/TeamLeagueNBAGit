@@ -183,6 +183,7 @@ public class RegisterView extends AppCompatActivity {
 
 
     public void registrar(View view)throws ParseException {
+        crearFecha();
         if(usuario.getText().toString()==""||nombre.getText().toString()==""|apellidos.getText().toString()==""|
                 correo.getText().toString()==""||fechaNacimiento==null){
             Toast toast = Toast.makeText(getApplicationContext(),
