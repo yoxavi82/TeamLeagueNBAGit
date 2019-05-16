@@ -20,6 +20,6 @@
         android:layout_width="400dp"
         android:layout_height="121dp"
         android:orientation="horizontal"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="505dp"></LinearLayout>
+        tools:layout_editor_absoluteX="5dp"
+        tools:layout_editor_absoluteY="553dp"></LinearLayout>
 </android.support.constraint.ConstraintLayout>
