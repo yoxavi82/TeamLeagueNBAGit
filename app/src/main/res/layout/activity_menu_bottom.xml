@@ -11,12 +11,85 @@
         android:id="@+id/navigation"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="0dp"
-        android:layout_marginEnd="0dp"
         android:background="@android:color/transparent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout2"
         app:menu="@menu/navigation" />
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/constraintLayout2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="73dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/navigation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/textView8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginBottom="4dp"
+                    android:text="Bienvenido a LeagueTeamNBA, en esta aplicación podrás realizar ligas en las que competir con tus amigos."
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/textView13"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
+                    android:text=" Puedes crear tu propia liga o unirte a una liga. En cada liga habrá como máximo 10 usuarios y un usuario puede estar como máximo en 7 ligas diferentes. Al crear o unirte una liga, tendrás que representar a un equipo real de NBA. " />
+
+                <TextView
+                    android:id="@+id/textView14"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
+                    android:text="Cada jugador empieza con 12 jugadores entregados aleatoriamente y complementando a estos 12 jugadores una cantidad proporcional de dinero. Con estos 12 jugadores, el usuario puede armar su equipo estableciendo antes de las 17:00 su equipo titular,  que son los jugadores que puntuaran. Cada dia, puedes alternar entre los 5 jugadores suplentes y los otros 7 suplentes (los cambios se han de realizar entre las 8:00 y las 17:00) Al final del dia, si el jugador ha jugado un partido obtendra una cantidad de puntos dependiendo de su actuación." />
+
+                <TextView
+                    android:id="@+id/textView15"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
+                    android:text=" Cada jugador puede jugar 2 partidos maximo en la misma jornada (Duración de la jornada: Empieza el lunes a las 17:00 y acaba el siguiente lunes a las 8:00) Además podrás establecer a uno de tus 12 jugadores de la jornada al jugador franquicia, el cual podrá jugar un partido mas que los demás en esa jornada. Al finalizar la jornada cada usuario obtendrá una puntuación que será la suma de los puntos que han logrado sus jugadores esa jornada. Si un jugador recibe 0 puntos en el partido que es titular, no cuenta como partido jugado. Según la puntuación de la jornada, habrá un ranking de la jornada entre los usuarios y según la posición de ese ranking obtendrás una cantidad establecida de dinero. Con este dinero, podrás realizar fichajes en el mercado. Además hay un ranking total, que es por el cual todos los usuarios compiten." />
+
+                <TextView
+                    android:id="@+id/textView16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
+                    android:text="En el mercado, cada dia a las 9:00 salen nuevos jugadores de manera aleatoria a los cuales todos los usuarios pueden pujar por ellos, la puja es secreta e individual. A las 8:00 la mayor puja por cada jugador obtiene el jugador. Cada jugador solo puedes ser propiedad de un usuario por liga." />
+
+                <TextView
+                    android:id="@+id/textView17"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
+                    android:text="Buena suerte en tus futuras ligas y que gane el mejor!"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+        </ScrollView>
+
+    </android.support.constraint.ConstraintLayout>
 
 </android.support.constraint.ConstraintLayout>
