@@ -1,30 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
         android:id="@+id/home"
+        android:checkable="true"
+        android:enabled="true"
         android:icon="@drawable/ic_home_black_24dp"
-        android:title="Inicio" />
+        android:title="Inicio"
+        android:visible="true"
+        app:showAsAction="always" />
 
     <item
         android:id="@+id/ali"
+        android:checkable="true"
+        android:enabled="true"
         android:icon="@drawable/alineacion"
-        android:title="Alineación" />
+        android:title="Alineación"
+        android:visible="true"
+        app:showAsAction="always" />
 
     <item
         android:id="@+id/mercado"
+        android:checkable="true"
+        android:enabled="true"
         android:icon="@drawable/mercado"
-        android:title="Mercado" />
+        android:title="Mercado"
+        android:visible="true"
+        app:showAsAction="always" />
 
     <item
         android:id="@+id/clasificacion"
+        android:checkable="true"
+        android:enabled="true"
         android:icon="@drawable/clasificacion"
-        android:title="Clasificación" />
+        android:title="Clasificación"
+        android:visible="true"
+        app:showAsAction="always" />
 
     <item
         android:id="@+id/jornada"
+        android:checkable="true"
+        android:enabled="true"
         android:icon="@drawable/jornada"
-        android:title="Jornada" />
+        android:title="Jornada"
+        android:visible="true"
+        app:showAsAction="always" />
 
 
 
