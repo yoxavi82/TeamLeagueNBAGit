@@ -14,10 +14,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class Homepage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     Button crear,unir;
+    BottomNavigationView navigationBottom;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,25 +32,45 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
         setSupportActionBar(toolbar);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        navigationBottom  = (BottomNavigationView) findViewById(R.id.bottom_navigation_view);
+        navigationBottom.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                switch (menuItem.getItemId()) {
+                    case R.id.home:
+                        navigationBottom.setSelectedItemId(R.id.home);
+                        System.out.println("unir");
+                        break;
+                    case R.id.ali:
+                        navigationBottom.setSelectedItemId(R.id.ali);
+                        System.out.println("unir");
+                        break;
+                    case R.id.mercado:
+                        navigationBottom.setSelectedItemId(R.id.mercado);
+                        System.out.println("unir");
+                        break;
+                    case R.id.jornada:
+                        navigationBottom.setSelectedItemId(R.id.jornada);
+                        System.out.println("unir");
+                        break;
+                    case R.id.clasificacion:
+                        navigationBottom.setSelectedItemId(R.id.clasificacion);
+                        System.out.println("unir");
+                        break;
+                }
+                return false;
 
-    }
+            }
+        });
 
-    @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
+
     }
 
     public void unirseLiga(View view){
@@ -61,40 +82,48 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
 
     }
 
+    //Pulsar para atrás
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    //Crear menu lateral
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        return super.onOptionsItemSelected(item);
-    }
 
-    @SuppressWarnings("StatementWithEmptyBody")
+    //Opciones para menu lateral
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-//        int id = item.getItemId();
+        switch (item.getItemId()) {
+            case R.id.inicio:
+                System.out.println("unir");
+                break;
+            case R.id.ali:
+                System.out.println("unir");
+                break;
+            case R.id.mercado:
+                System.out.println("unir");
+                break;
+            case R.id.jornada:
+                System.out.println("unir");
+                break;
+            case R.id.clasificacion:
+                System.out.println("unir");
+                break;
+        }
 
-
-       /* if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
-        }*/
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
+//        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+//        drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 }
