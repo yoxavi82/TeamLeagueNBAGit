@@ -1,6 +1,5 @@
 package com.example.myapplication;
 
-import android.content.ClipData;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -8,12 +7,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
-public class menuBottom extends AppCompatActivity {
+public class menuBottom extends AppCompatActivity
+        implements BottomNavigationView.OnNavigationItemSelectedListener{
 
-    private TextView mTextMessage;
+    BottomNavigationView navigationBottom;
     Button crear,unir;
 
     @Override
@@ -23,36 +22,12 @@ public class menuBottom extends AppCompatActivity {
 
         crear = findViewById(R.id.crearId);
         unir = findViewById(R.id.unirseId);
-        mTextMessage = (TextView) findViewById(R.id.message);
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        MenuItem home = findViewById(R.id.home);
+        navigationBottom  = (BottomNavigationView) findViewById(R.id.bottom_navigation_view);
+        navigationBottom.setOnNavigationItemSelectedListener(this);
+
     }
 
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-        @Override
-        public boolean onNavigationItemSelected(@org.jetbrains.annotations.NotNull MenuItem item) {
-           switch (item.getItemId()) {
-                case R.id.home:
-                    mTextMessage.setText(R.string.title_home);
-                    return true;
-                case R.id.ali:
-                    mTextMessage.setText(R.string.title_dashboard);
-                    return true;
-                case R.id.mercado:
-                    mTextMessage.setText(R.string.title_notifications);
-                    return true;
-                case R.id.jornada:
-                   mTextMessage.setText(R.string.title_notifications);
-                   return true;
-                case R.id.clasificacion:
-                   mTextMessage.setText(R.string.title_notifications);
-                   return true;
-           }
-            return false;
-        }
-    };
+
 
     public void unirseLiga(View view){
         System.out.println("unir");
@@ -64,4 +39,36 @@ public class menuBottom extends AppCompatActivity {
 
     }
 
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        Toast toast;
+        switch (menuItem.getItemId()) {
+            case R.id.home:
+                toast = Toast.makeText(getApplicationContext(),
+                        "Introduce todos los campos", Toast.LENGTH_SHORT);
+                toast.show();
+                break;
+            case R.id.ali:
+                toast = Toast.makeText(getApplicationContext(),
+                        "Introduce todos los campos", Toast.LENGTH_SHORT);
+                toast.show();
+                break;
+            case R.id.mercado:
+                toast = Toast.makeText(getApplicationContext(),
+                        "Introduce todos los campos", Toast.LENGTH_SHORT);
+                toast.show();
+                break;
+            case R.id.jornada:
+                toast = Toast.makeText(getApplicationContext(),
+                        "Introduce todos los campos", Toast.LENGTH_SHORT);
+                toast.show();
+                break;
+            case R.id.clasificacion:
+                toast = Toast.makeText(getApplicationContext(),
+                        "Introduce todos los campos", Toast.LENGTH_SHORT);
+                toast.show();
+                break;
+        }
+        return false;
+    }
 }
