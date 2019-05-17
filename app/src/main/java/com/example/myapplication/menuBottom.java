@@ -3,6 +3,7 @@ package com.example.myapplication;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
@@ -38,37 +39,52 @@ public class menuBottom extends AppCompatActivity
         System.out.println("crear");
 
     }
-
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        Toast toast;
-        switch (menuItem.getItemId()) {
+    @Override public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
             case R.id.home:
-                toast = Toast.makeText(getApplicationContext(),
-                        "Introduce todos los campos", Toast.LENGTH_SHORT);
-                toast.show();
                 break;
             case R.id.ali:
-                toast = Toast.makeText(getApplicationContext(),
-                        "Introduce todos los campos", Toast.LENGTH_SHORT);
-                toast.show();
                 break;
             case R.id.mercado:
-                toast = Toast.makeText(getApplicationContext(),
-                        "Introduce todos los campos", Toast.LENGTH_SHORT);
-                toast.show();
-                break;
-            case R.id.jornada:
-                toast = Toast.makeText(getApplicationContext(),
-                        "Introduce todos los campos", Toast.LENGTH_SHORT);
-                toast.show();
                 break;
             case R.id.clasificacion:
-                toast = Toast.makeText(getApplicationContext(),
-                        "Introduce todos los campos", Toast.LENGTH_SHORT);
-                toast.show();
+                break;
+            case R.id.jornada:
                 break;
         }
-        return false;
+        return true;
     }
+
+//    @Override
+//    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+//        Toast toast;
+//        switch (menuItem.getItemId()) {
+//            case R.id.home:
+//                toast = Toast.makeText(getApplicationContext(),
+//                        "Introduce todos los campos", Toast.LENGTH_SHORT);
+//                toast.show();
+//                break;
+//            case R.id.ali:
+//                toast = Toast.makeText(getApplicationContext(),
+//                        "Introduce todos los campos", Toast.LENGTH_SHORT);
+//                toast.show();
+//                break;
+//            case R.id.mercado:
+//                toast = Toast.makeText(getApplicationContext(),
+//                        "Introduce todos los campos", Toast.LENGTH_SHORT);
+//                toast.show();
+//                break;
+//            case R.id.jornada:
+//                toast = Toast.makeText(getApplicationContext(),
+//                        "Introduce todos los campos", Toast.LENGTH_SHORT);
+//                toast.show();
+//                break;
+//            case R.id.clasificacion:
+//                toast = Toast.makeText(getApplicationContext(),
+//                        "Introduce todos los campos", Toast.LENGTH_SHORT);
+//                toast.show();
+//                break;
+//        }
+//        return false;
+//    }
 }
