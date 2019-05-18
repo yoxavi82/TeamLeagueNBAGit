@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.view.GravityCompat;
@@ -22,6 +23,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_homepage);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -47,7 +49,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 Intent i;
                 switch (menuItem.getItemId()) {
-                    case R.id.home:
+                    case R.id.inicio:
                         i = new Intent(Homepage.super.getApplication(), Homepage.class);
                         startActivity(i);
                         break;

@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
@@ -20,6 +21,7 @@ public class Alineacion extends AppCompatActivity  implements NavigationView.OnN
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alineacion);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -43,7 +45,7 @@ public class Alineacion extends AppCompatActivity  implements NavigationView.OnN
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 Intent i;
                 switch (menuItem.getItemId()) {
-                    case R.id.home:
+                    case R.id.inicio:
                         i = new Intent(Alineacion.super.getApplication(), Homepage.class);
                         startActivity(i);
                         break;

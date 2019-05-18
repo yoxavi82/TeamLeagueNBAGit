@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
@@ -21,6 +22,7 @@ public class Jornada extends AppCompatActivity  implements NavigationView.OnNavi
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_jornada);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -44,7 +46,7 @@ public class Jornada extends AppCompatActivity  implements NavigationView.OnNavi
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 Intent i;
                 switch (menuItem.getItemId()) {
-                    case R.id.home:
+                    case R.id.inicio:
                         i = new Intent(Jornada.super.getApplication(), Homepage.class);
                         startActivity(i);
                         break;
