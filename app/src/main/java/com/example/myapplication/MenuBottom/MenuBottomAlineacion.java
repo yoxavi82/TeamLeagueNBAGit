@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.MenuBottom;
 
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -6,13 +6,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-public class MenuBottomMercado extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
+import com.example.myapplication.R;
+
+public class MenuBottomAlineacion extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
     BottomNavigationView navigationBottom;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_menu_bottom_mercado);
+        setContentView(R.layout.activity_menu_bottom_alineacion);
 
         navigationBottom  = (BottomNavigationView) findViewById(R.id.bottom_navigation_view);
         navigationBottom.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
