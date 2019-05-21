@@ -53,7 +53,7 @@ public class RegisterView extends AppCompatActivity {
         accionRegistrar = findViewById( R.id.registrar);
 //        sqlThread.start();
 
-        for(int i =0 ;i<=31;i++){
+        for(int i =1 ;i<=31;i++){
             dias.add(i+"");
             if(i<=12)meses.add(i+"");
         }
@@ -157,19 +157,41 @@ public class RegisterView extends AppCompatActivity {
 
     public  void crearFecha(){
         if(fechaAño!=null&&fechaDia!=null&&fechaMes!=null){
-            fechaNacimiento = fechaDia="/"+fechaMes+"/"+fechaAño;
+            int ayuda =0;
+            switch (Integer.parseInt(fechaMes)){
+                case 2:if(Integer.parseInt(fechaDia)>28) ayuda =1;
+                        break;
+                case 4:if(Integer.parseInt(fechaDia)>30) ayuda =1;
+                    break;
+                case 6:if(Integer.parseInt(fechaDia)>30) ayuda =1;
+                    break;
+                case 9: if(Integer.parseInt(fechaDia)>30) ayuda =1;
+                    break;
+                case 11:if(Integer.parseInt(fechaDia)>30) ayuda =1;
+                    break;
+                default:break;
+            }
+            if(ayuda==0){
+                fechaNacimiento = fechaDia+"/"+fechaMes+"/"+fechaAño;
+            }else{
+                Toast toast = Toast.makeText(getApplicationContext(),
+                        "Fecha no valida", Toast.LENGTH_SHORT);
+                toast.show();
+            }
         }
     }
 
 
     public void registrar(View view)throws ParseException {
-        if(usuario.getText().toString()==""||nombre.getText().toString()==""|apellidos.getText().toString()==""|
-                correo.getText().toString()==""||fechaNacimiento==null){
+        crearFecha();
+        if(usuario.getText().toString().isEmpty()||nombre.getText().toString().isEmpty()|apellidos.getText().toString().isEmpty()|
+                correo.getText().toString().isEmpty()){
             Toast toast = Toast.makeText(getApplicationContext(),
                     "Introduce todos los campos", Toast.LENGTH_SHORT);
             toast.show();
         }else{
             Date date1=new SimpleDateFormat("dd/MM/yyyy").parse(fechaNacimiento);
+            System.out.println(date1);
             Usuarios registrado = new Usuarios(usuario.getText().toString(),nombre.getText().toString(),
                     apellidos.getText().toString(),correo.getText().toString(),date1,0);
         }
