@@ -2,29 +2,19 @@ package com.example.myapplication;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-
-import cfgs.example.teamleaguenbagit.Alineacion;
-import cfgs.example.teamleaguenbagit.alineacion_Activity;
 
 public class RegisterView extends AppCompatActivity {
     TextView usuario,nombre,apellidos,correo;
@@ -67,13 +57,6 @@ public class RegisterView extends AppCompatActivity {
             }
         });
     }
-    public void onClick(View v) {
-
-
-        Intent i = new Intent(this, alineacion_Activity.class);
-        startActivity(i);
-
-    }
 
     Thread sqlThread = new Thread() {
         public void run() {
@@ -98,7 +81,7 @@ public class RegisterView extends AppCompatActivity {
     };
 
 
-    public void registrar(View view)throws ParseException {
+    /*public void registrar(View view)throws ParseException {
         if(usuario.getText().toString()==""||nombre.getText().toString()==""|apellidos.getText().toString()==""|
                 correo.getText().toString()==""||fecha==null){
             Toast toast = Toast.makeText(getApplicationContext(),
@@ -110,6 +93,9 @@ public class RegisterView extends AppCompatActivity {
                     apellidos.getText().toString(),correo.getText().toString(),date1,0);
         }
 
+    }*/
+    public void click(View view){
+        Intent i = new Intent(this, Alineacion_Activity.class);
+        startActivity(i);
     }
-
 }
