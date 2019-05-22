@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.myapplication">
+    package="com.example.teamleaguebagit">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -11,24 +11,24 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MenuBottom.MenuBottomMercado"></activity>
-        <activity android:name=".Mercado" />
-        <activity android:name=".MenuBottom.MenuBottomAlineacion" />
-        <activity android:name=".Alineacion" />
-        <activity android:name=".MenuBottom.MenuBottomJornada" />
-        <activity android:name=".Jornada" />
-        <activity android:name=".Clasificacion" />
+        <activity android:name="com.example.teamleaguebagit.MenuBottom.MenuBottomMercado"></activity>
+        <activity android:name="com.example.teamleaguebagit.Mercado" />
+        <activity android:name="com.example.teamleaguebagit.MenuBottom.MenuBottomAlineacion" />
+        <activity android:name="com.example.teamleaguebagit.Alineacion" />
+        <activity android:name="com.example.teamleaguebagit.MenuBottom.MenuBottomJornada" />
+        <activity android:name="com.example.teamleaguebagit.Jornada" />
+        <activity android:name="com.example.teamleaguebagit.Clasificacion" />
         <activity
-            android:name=".ranking.Ranking"
+            android:name="com.example.teamleaguebagit.ranking.Ranking"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Homepage"
+            android:name="com.example.teamleaguebagit.Homepage"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".RegisterView"
+            android:name="com.example.teamleaguebagit.RegisterView"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".MainActivity"
+            android:name="com.example.teamleaguebagit.MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
