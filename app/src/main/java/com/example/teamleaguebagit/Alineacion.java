@@ -50,8 +50,8 @@ public class Alineacion extends AppCompatActivity  implements NavigationView.OnN
                         startActivity(i);
                         break;
                     case R.id.ali:
-                        i = new Intent(Alineacion.super.getApplication(), Alineacion.class);
-                        startActivity(i);
+//                        i = new Intent(Alineacion.super.getApplication(), Alineacion.class);
+//                        startActivity(i);
                         break;
                     case R.id.mercado:
                         i = new Intent(Alineacion.super.getApplication(), Mercado.class);

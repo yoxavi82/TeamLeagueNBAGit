@@ -58,8 +58,8 @@ public class Jornada extends AppCompatActivity  implements NavigationView.OnNavi
                         startActivity(i);
                         break;
                     case R.id.jornada:
-                        i = new Intent(Jornada.super.getApplication(), Jornada.class);
-                        startActivity(i);
+//                        i = new Intent(Jornada.super.getApplication(), Jornada.class);
+//                        startActivity(i);
                         break;
                     case R.id.clasificacion:
                         i = new Intent(Jornada.super.getApplication(), Clasificacion.class);

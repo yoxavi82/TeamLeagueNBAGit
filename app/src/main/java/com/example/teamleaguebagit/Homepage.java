@@ -50,8 +50,8 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
                 Intent i;
                 switch (menuItem.getItemId()) {
                     case R.id.inicio:
-                        i = new Intent(Homepage.super.getApplication(), Homepage.class);
-                        startActivity(i);
+//                        i = new Intent(Homepage.super.getApplication(), Homepage.class);
+//                        startActivity(i);
                         break;
                     case R.id.ali:
                         i = new Intent(Homepage.super.getApplication(), Alineacion.class);

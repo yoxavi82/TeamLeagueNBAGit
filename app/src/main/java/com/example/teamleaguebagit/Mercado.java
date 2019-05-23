@@ -54,8 +54,8 @@ public class Mercado extends AppCompatActivity  implements NavigationView.OnNavi
                         startActivity(i);
                         break;
                     case R.id.mercado:
-                        i = new Intent(Mercado.super.getApplication(), Mercado.class);
-                        startActivity(i);
+//                        i = new Intent(Mercado.super.getApplication(), Mercado.class);
+//                        startActivity(i);
                         break;
                     case R.id.jornada:
                         i = new Intent(Mercado.super.getApplication(), Jornada.class);

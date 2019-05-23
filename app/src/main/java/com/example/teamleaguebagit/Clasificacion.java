@@ -60,8 +60,8 @@ public class Clasificacion extends AppCompatActivity  implements NavigationView.
                         startActivity(i);
                         break;
                     case R.id.clasificacion:
-                        i = new Intent(Clasificacion.super.getApplication(), Clasificacion.class);
-                        startActivity(i);
+//                        i = new Intent(Clasificacion.super.getApplication(), Clasificacion.class);
+//                        startActivity(i);
                         break;
                 }
                 return false;
