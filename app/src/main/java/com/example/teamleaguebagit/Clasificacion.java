@@ -87,7 +87,7 @@ public class Clasificacion extends AppCompatActivity  implements NavigationView.
         alert.setMessage("¿Desea salir de la sesión?");
         alert.setNegativeButton("Salir", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-                finish();
+                finishAffinity();
                 System.exit(0);
             }
         });

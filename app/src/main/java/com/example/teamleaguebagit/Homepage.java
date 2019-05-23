@@ -1,5 +1,6 @@
 package com.example.teamleaguebagit;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.support.annotation.NonNull;
@@ -8,6 +9,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.design.widget.NavigationView;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -79,12 +81,21 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
     //Pulsar para atrás
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setTitle("Atención");
+        alert.setMessage("¿Desea salir de la sesión?");
+        alert.setNegativeButton("Salir", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                finishAffinity();
+                System.exit(0);
+            }
+        });
+        alert.setPositiveButton("Cancelar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        });
+        alert.show();
     }
 
     //Crear menu lateral
@@ -100,9 +111,22 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
     public boolean onNavigationItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.salir:
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
+                AlertDialog.Builder alert = new AlertDialog.Builder(this);
+                alert.setTitle("Atención");
+                alert.setMessage("¿Desea salir de la sesión?");
+                alert.setNegativeButton("Salir", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                    }
+                });
+                alert.setPositiveButton("Cancelar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                });
+                alert.show();
                 break;
             case R.id.config:
                 break;
