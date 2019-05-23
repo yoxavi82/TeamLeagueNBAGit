@@ -23,16 +23,16 @@
                 android:id="@+id/toolbar_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="60dp"
+                android:layout_marginLeft="30dp"
                 android:text="League Team"
                 android:textSize="24sp"
                 app:fontFamily="@font/alfa_slab_one" />
 
             <ImageView
-                android:src="@drawable/logo"
                 android:layout_width="50dp"
-                android:layout_marginLeft="50dp"
-                android:layout_height="50dp" />
+                android:layout_height="50dp"
+                android:layout_marginLeft="20dp"
+                android:src="@drawable/logo" />
         </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>

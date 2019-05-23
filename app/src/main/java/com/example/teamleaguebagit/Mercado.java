@@ -54,8 +54,6 @@ public class Mercado extends AppCompatActivity  implements NavigationView.OnNavi
                         startActivity(i);
                         break;
                     case R.id.mercado:
-//                        i = new Intent(Mercado.super.getApplication(), Mercado.class);
-//                        startActivity(i);
                         break;
                     case R.id.jornada:
                         i = new Intent(Mercado.super.getApplication(), Jornada.class);
@@ -71,15 +69,6 @@ public class Mercado extends AppCompatActivity  implements NavigationView.OnNavi
             }
         });
 
-
-    }
-
-    public void unirseLiga(View view){
-        System.out.println("unir");
-    }
-
-    public  void crearLiga(View view){
-        System.out.println("crear");
 
     }
 
@@ -106,20 +95,12 @@ public class Mercado extends AppCompatActivity  implements NavigationView.OnNavi
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.inicio:
-                System.out.println("unir");
+            case R.id.salir:
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
                 break;
-            case R.id.ali:
-                System.out.println("unir");
-                break;
-            case R.id.mercado:
-                System.out.println("unir");
-                break;
-            case R.id.jornada:
-                System.out.println("unir");
-                break;
-            case R.id.clasificacion:
-                System.out.println("unir");
+            case R.id.config:
                 break;
         }
 

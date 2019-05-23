@@ -127,4 +127,15 @@
 
     </android.support.constraint.ConstraintLayout>
 
+    <ImageView
+        android:id="@+id/informacion"
+        android:layout_width="40dp"
+        android:layout_height="28dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="16dp"
+        android:onClick="showInfo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Registrar"
+        app:srcCompat="@drawable/info" />
+
 </android.support.constraint.ConstraintLayout>
