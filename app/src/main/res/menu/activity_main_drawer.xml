@@ -25,7 +25,7 @@
             <item
                 android:id="@+id/salir"
                 android:icon="@drawable/salir"
-                android:title="Salir" />
+                android:title="Cerrar sesión" />
         </menu>
     </item>
 

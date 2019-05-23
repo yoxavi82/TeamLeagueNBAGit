@@ -80,7 +80,7 @@ public class Jornada extends AppCompatActivity  implements NavigationView.OnNavi
     public void onBackPressed() {
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setTitle("Atención");
-        alert.setMessage("¿Desea salir de la sesión?");
+        alert.setMessage("¿Desea salir de la aplicación?");
         alert.setNegativeButton("Salir", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 finishAffinity();
@@ -110,8 +110,8 @@ public class Jornada extends AppCompatActivity  implements NavigationView.OnNavi
             case R.id.salir:
                 AlertDialog.Builder alert = new AlertDialog.Builder(this);
                 alert.setTitle("Atención");
-                alert.setMessage("¿Desea salir de la sesión?");
-                alert.setNegativeButton("Salir", new DialogInterface.OnClickListener() {
+                alert.setMessage("¿Desea cerrar sesión?");
+                alert.setNegativeButton("Cerrar sesión", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
