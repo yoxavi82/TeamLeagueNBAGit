@@ -44,20 +44,24 @@ public class Jornada extends AppCompatActivity  implements NavigationView.OnNavi
                 switch (menuItem.getItemId()) {
                     case R.id.inicio:
                         i = new Intent(Jornada.super.getApplication(), Homepage.class);
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(i);
                         break;
                     case R.id.ali:
                         i = new Intent(Jornada.super.getApplication(), Alineacion.class);
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(i);
                         break;
                     case R.id.mercado:
                         i = new Intent(Jornada.super.getApplication(), Mercado.class);
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(i);
                         break;
                     case R.id.jornada:
                         break;
                     case R.id.clasificacion:
                         i = new Intent(Jornada.super.getApplication(), Clasificacion.class);
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(i);
                         break;
                 }

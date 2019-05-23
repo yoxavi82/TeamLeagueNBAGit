@@ -47,20 +47,24 @@ public class Alineacion extends AppCompatActivity  implements NavigationView.OnN
                 switch (menuItem.getItemId()) {
                     case R.id.inicio:
                         i = new Intent(Alineacion.super.getApplication(), Homepage.class);
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(i);
                         break;
                     case R.id.ali:
                         break;
                     case R.id.mercado:
                         i = new Intent(Alineacion.super.getApplication(), Mercado.class);
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(i);
                         break;
                     case R.id.jornada:
                         i = new Intent(Alineacion.super.getApplication(), Jornada.class);
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(i);
                         break;
                     case R.id.clasificacion:
                         i = new Intent(Alineacion.super.getApplication(), Clasificacion.class);
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(i);
                         break;
                 }

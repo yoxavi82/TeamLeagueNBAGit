@@ -47,20 +47,24 @@ public class Mercado extends AppCompatActivity  implements NavigationView.OnNavi
                 switch (menuItem.getItemId()) {
                     case R.id.inicio:
                         i = new Intent(Mercado.super.getApplication(), Homepage.class);
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(i);
                         break;
                     case R.id.ali:
                         i = new Intent(Mercado.super.getApplication(), Alineacion.class);
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(i);
                         break;
                     case R.id.mercado:
                         break;
                     case R.id.jornada:
                         i = new Intent(Mercado.super.getApplication(), Jornada.class);
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(i);
                         break;
                     case R.id.clasificacion:
                         i = new Intent(Mercado.super.getApplication(), Clasificacion.class);
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(i);
                         break;
                 }

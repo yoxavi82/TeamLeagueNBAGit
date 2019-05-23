@@ -52,18 +52,22 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
                         break;
                     case R.id.ali:
                         i = new Intent(Homepage.super.getApplication(), Alineacion.class);
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(i);
                         break;
                     case R.id.mercado:
                         i = new Intent(Homepage.super.getApplication(), Mercado.class);
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(i);
                         break;
                     case R.id.jornada:
                         i = new Intent(Homepage.super.getApplication(), Jornada.class);
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(i);
                         break;
                     case R.id.clasificacion:
                         i = new Intent(Homepage.super.getApplication(), Clasificacion.class);
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(i);
                         break;
                 }
