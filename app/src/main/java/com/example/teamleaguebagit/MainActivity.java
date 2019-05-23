@@ -37,8 +37,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void showInfo(View view){
-        Toast toast = Toast.makeText(getApplicationContext(),"Aplicación creada por:\nXavier Cañada, Alvaro Vázquez y Alberto Tiffon\n" +
-                "Versión 1.0",Toast.LENGTH_SHORT);
+        Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.Programadores) +
+                getString(R.string.Version),Toast.LENGTH_SHORT);
         toast.show();
     }
 }

@@ -24,7 +24,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
-                android:text="League Team"
+                android:text="@string/league_team"
                 android:textSize="24sp"
                 app:fontFamily="@font/alfa_slab_one" />
 

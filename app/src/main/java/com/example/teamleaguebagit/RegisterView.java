@@ -108,7 +108,7 @@ public class RegisterView extends AppCompatActivity {
                 fechaNacimiento = fechaDia+"/"+fechaMes+"/"+fechaAño;
             }else{
                 Toast toast = Toast.makeText(getApplicationContext(),
-                        "Fecha no valida", Toast.LENGTH_SHORT);
+                        getString(R.string.NoValidDate), Toast.LENGTH_SHORT);
                 toast.show();
             }
         }
@@ -120,7 +120,7 @@ public class RegisterView extends AppCompatActivity {
         if(usuario.getText().toString().isEmpty()||nombre.getText().toString().isEmpty()|apellidos.getText().toString().isEmpty()|
                 correo.getText().toString().isEmpty()){
             Toast toast = Toast.makeText(getApplicationContext(),
-                    "Introduce todos los campos", Toast.LENGTH_SHORT);
+                    getString(R.string.ErrorEmptyFields), Toast.LENGTH_SHORT);
             toast.show();
         }else{
             Date date1=new SimpleDateFormat("dd/MM/yyyy").parse(fechaNacimiento);

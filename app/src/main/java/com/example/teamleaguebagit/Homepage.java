@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -82,15 +83,15 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
     @Override
     public void onBackPressed() {
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
-        alert.setTitle("Atención");
-        alert.setMessage("¿Desea salir de la aplicación?");
-        alert.setNegativeButton("Salir", new DialogInterface.OnClickListener() {
+        alert.setTitle(R.string.Atencion);
+        alert.setMessage(R.string.MensajeSalirApp);
+        alert.setNegativeButton(R.string.Salir, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 finishAffinity();
                 System.exit(0);
             }
         });
-        alert.setPositiveButton("Cancelar", new DialogInterface.OnClickListener() {
+        alert.setPositiveButton(R.string.Cancelar, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
             }
@@ -98,6 +99,13 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
         alert.show();
     }
 
+    public void crearLiga(View view){
+        System.out.println("Crear");
+    }
+
+    public void unirseLiga(View view){
+        System.out.println("Unirse");
+    }
     //Crear menu lateral
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -112,16 +120,16 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
         switch (item.getItemId()) {
             case R.id.salir:
                 AlertDialog.Builder alert = new AlertDialog.Builder(this);
-                alert.setTitle("Atención");
-                alert.setMessage("¿Desea cerrar sesión?");
-                alert.setNegativeButton("Cerrar sesión", new DialogInterface.OnClickListener() {
+                alert.setTitle(R.string.Atencion);
+                alert.setMessage(R.string.CerrarSesionPregunta);
+                alert.setNegativeButton(R.string.CerrarSesion, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
                     }
                 });
-                alert.setPositiveButton("Cancelar", new DialogInterface.OnClickListener() {
+                alert.setPositiveButton(R.string.Cancelar, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                     }
