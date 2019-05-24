@@ -66,4 +66,8 @@
     <string name="mercado">Mercado</string>
     <string name="clasificaci_n">Clasificación</string>
     <string name="jornada">Jornada</string>
+    <string name="ToastErrorMain">Debes introducir una contraseña y usuario</string>
+    <string name="NameBbdd">Usuario</string>
+    <string name="KeyBbddUser">Username</string>
+    <string name="KeyBbddPass">Password</string>
 </resources>
