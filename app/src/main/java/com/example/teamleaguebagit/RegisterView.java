@@ -10,14 +10,28 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.teamleaguebagit.pojos.Equipos;
 import com.example.teamleaguebagit.pojos.Usuarios;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
 public class RegisterView extends AppCompatActivity {
+    private final String user="k0zCh3gTgb";
+    private final String password ="HD5V4w6oyv";
+    private final String server ="remotemysql.com";
+    private final String port="3306";
+    private Statement st;
+    private Connection con=null;
+    private ResultSet rs;
     TextView usuario,nombre,apellidos,correo;
     String fechaDia,fechaMes,fechaAño;
     String fechaNacimiento;
@@ -116,6 +130,7 @@ public class RegisterView extends AppCompatActivity {
 
 
     public void registrar(View view)throws ParseException {
+        generarConexion(accionRegistrar);
         crearFecha();
         if(usuario.getText().toString().isEmpty()||nombre.getText().toString().isEmpty()|apellidos.getText().toString().isEmpty()|
                 correo.getText().toString().isEmpty()){
@@ -127,6 +142,74 @@ public class RegisterView extends AppCompatActivity {
             System.out.println(date1);
             Usuarios registrado = new Usuarios(usuario.getText().toString(),nombre.getText().toString(),
                     apellidos.getText().toString(),correo.getText().toString(),date1,0);
+        }
+    }
+
+    public ArrayList getEquipos(){
+        /*ArrayList donde se almacenarán los objetos Agenda por cada iteración.*/
+        ArrayList columnas = new ArrayList();
+        try{
+            String driver = "com.mysql.jdbc.Driver";
+            String urlMySQL = "jdbc:mysql://remotemysql.com/"+user;
+            Class.forName(driver).newInstance();
+            con = DriverManager.getConnection(urlMySQL,user,password);
+            if(con!=null){
+                Toast toast = Toast.makeText(this,"Error",Toast.LENGTH_SHORT);
+                toast.show();
+                System.out.println(con.isValid(0)+"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz");
+            }
+            String sql="Select Nombre,Id_Equipo,Color from Equipos";
+            PreparedStatement prest = con.prepareStatement(sql);
+            ResultSet res =prest.executeQuery();
+            while (res.next()){
+                Equipos equipo = new Equipos(rs.getString("Id_Equipo"),rs.getString("Nombre"),rs.getString("Color"));
+                columnas.add(equipo);
+            }
+//            st = con.createStatement();
+//            rs = st.executeQuery("Select ");
+//            if(rs.first()){
+//                do{
+//                    Equipos equipo = new Equipos(rs.getString("Id_Equipo"),rs.getString("Nombre"),rs.getString("Color"));
+//                    columnas.add(equipo);
+//                }while(rs.next());
+//                rs.last();
+//            }
+//            else{
+//                Toast.makeText(this, "La base de datos consultada está vacía.", Toast.LENGTH_LONG).show();
+//            }
+        }catch(Exception ex){
+            Toast.makeText(this, "Error al obtener resultados de la consulta Transact-SQL: "
+                    + ex.getMessage(), Toast.LENGTH_LONG).show();
+            ex.printStackTrace();
+        }
+        finally{
+            try {
+//                rs.close();
+//                st.close();
+                con.close();
+            } catch (SQLException e) {
+//                e.printStackTrace();
+            }
+        }
+        return columnas;
+    }
+
+    public void generarConexion(View view){
+        String url = "jdbc:mysql://remotemysql.com/k0zCh3gTgb";
+        String user = "k0zCh3gTgb";
+        String pwd = "HD5V4w6oyv";
+        Connection conexio = null;
+        try {
+            conexio = DriverManager.getConnection(url, user, pwd);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        while (true) {
+            try {
+                System.out.println(conexio.isValid(0));
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

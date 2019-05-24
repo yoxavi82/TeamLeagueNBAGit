@@ -50,9 +50,10 @@ public class MainActivity extends AppCompatActivity {
                 editor.putString("Username", usuario.getText() + "");
                 editor.putString("Password", password.getText() + "");
                 editor.commit();
+                Intent intent = new Intent(this, Homepage.class);
+                startActivity(intent);
             }
-            Intent intent = new Intent(this, Homepage.class);
-            startActivity(intent);
+
         }
     }
 
