@@ -1,5 +1,7 @@
 package com.example.teamleaguebagit;
 
+import android.os.Looper;
+import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -12,6 +14,12 @@ import android.widget.Toast;
 
 import com.example.teamleaguebagit.pojos.Usuarios;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -128,5 +136,48 @@ public class RegisterView extends AppCompatActivity {
             Usuarios registrado = new Usuarios(usuario.getText().toString(),nombre.getText().toString(),
                     apellidos.getText().toString(),correo.getText().toString(),date1,0);
         }
+    }
+    public  void conectar(View view) throws SQLException {
+        try{
+
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+
+            Connection connection = DriverManager.getConnection("jdbc:mysql://remotemysql.com:3306/k0zCh3gTgb", "k0zCh3gTgb", "HD5V4w6oyv");       // Connect to database
+            if (connection == null) {
+                Toast.makeText(this, "Conexion Fallida", Toast.LENGTH_LONG).show();
+            } else {
+
+                //do something with your connection, in this case I executed a query
+                ResultSet rs = null;
+                String query = "EXEC AppMovil.INITE_Articulos_Familia '" + "SELECT * FROM Jugadores"  + "'";
+                Statement stmt = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+
+
+                //size = cantidad de rows, metodo para obtener cantidad de rows
+                rs = stmt.executeQuery(query);
+                ResultSetMetaData rsmtd = rs.getMetaData();
+                rs.next();
+                Toast.makeText(this, rs.getString("Nombre"), Toast.LENGTH_LONG).show();
+
+
+
+
+
+
+
+                //connection.close();
+            }
+
+        }catch (Exception ex)
+        {
+            //catch error while reading
+//            Looper.prepare();
+//            isSuccess = false;
+
+            ex.printStackTrace();
+    //            ConnectionResult = ex.getMessage();
+        }
+
     }
 }
