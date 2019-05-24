@@ -23,9 +23,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        SharedPreferences prefs = getSharedPreferences(R.string.NameBbdd+"", Context.MODE_PRIVATE);
-        String username = prefs.getString(getString(R.string.KeyBbddUser),"");
-        String contra = prefs.getString(getString(R.string.KeyBbddPass),"");
+        SharedPreferences prefs = getSharedPreferences("Usuario", Context.MODE_PRIVATE);
+        String username = prefs.getString("Username","");
+        String contra = prefs.getString("Password","");
         info = findViewById(R.id.informacion);
         entrar = findViewById(R.id.Entrar);
         recordarUser = findViewById(R.id.Recordar);
@@ -45,10 +45,10 @@ public class MainActivity extends AppCompatActivity {
             toast.show();
         }else {
             if (recordarUser.isChecked()) {
-                SharedPreferences prefs = getSharedPreferences(getString(R.string.NameBbdd), Context.MODE_PRIVATE);
+                SharedPreferences prefs = getSharedPreferences("Usuario", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = prefs.edit();
-                editor.putString(R.string.KeyBbddUser+"", usuario.getText() + "");
-                editor.putString(R.string.KeyBbddPass+"", password.getText() + "");
+                editor.putString("Username", usuario.getText() + "");
+                editor.putString("Password", password.getText() + "");
                 editor.commit();
             }
             Intent intent = new Intent(this, Homepage.class);
