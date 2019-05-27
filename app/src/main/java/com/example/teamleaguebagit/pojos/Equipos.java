@@ -1,5 +1,5 @@
 package com.example.teamleaguebagit.pojos;
-// Generated 09-may-2019 19:56:04 by Hibernate Tools 5.1.10.Final
+// Generated 24-may-2019 19:04:20 by Hibernate Tools 5.1.10.Final
 
 import java.util.HashSet;
 import java.util.Set;
@@ -14,8 +14,8 @@ public class Equipos implements java.io.Serializable {
 	private String color;
 	private String logo;
 	private String campo;
-	private Set<EquiposUsuarios> equiposUsuarioses = new HashSet<EquiposUsuarios>(0);
 	private Set<Jugadores> jugadoreses = new HashSet<Jugadores>(0);
+	private Set<EquiposUsuarios> equiposUsuarioses = new HashSet<EquiposUsuarios>(0);
 	private Set<Partidos> partidosesForIdVisitante = new HashSet<Partidos>(0);
 	private Set<Partidos> partidosesForIdLocal = new HashSet<Partidos>(0);
 
@@ -28,16 +28,16 @@ public class Equipos implements java.io.Serializable {
 		this.color = color;
 	}
 
-	public Equipos(String idEquipo, String nombre, String color, String logo, String campo,
-			Set<EquiposUsuarios> equiposUsuarioses, Set<Jugadores> jugadoreses, Set<Partidos> partidosesForIdVisitante,
+	public Equipos(String idEquipo, String nombre, String color, String logo, String campo, Set<Jugadores> jugadoreses,
+			Set<EquiposUsuarios> equiposUsuarioses, Set<Partidos> partidosesForIdVisitante,
 			Set<Partidos> partidosesForIdLocal) {
 		this.idEquipo = idEquipo;
 		this.nombre = nombre;
 		this.color = color;
 		this.logo = logo;
 		this.campo = campo;
-		this.equiposUsuarioses = equiposUsuarioses;
 		this.jugadoreses = jugadoreses;
+		this.equiposUsuarioses = equiposUsuarioses;
 		this.partidosesForIdVisitante = partidosesForIdVisitante;
 		this.partidosesForIdLocal = partidosesForIdLocal;
 	}
@@ -82,20 +82,20 @@ public class Equipos implements java.io.Serializable {
 		this.campo = campo;
 	}
 
-	public Set<EquiposUsuarios> getEquiposUsuarioses() {
-		return this.equiposUsuarioses;
-	}
-
-	public void setEquiposUsuarioses(Set<EquiposUsuarios> equiposUsuarioses) {
-		this.equiposUsuarioses = equiposUsuarioses;
-	}
-
 	public Set<Jugadores> getJugadoreses() {
 		return this.jugadoreses;
 	}
 
 	public void setJugadoreses(Set<Jugadores> jugadoreses) {
 		this.jugadoreses = jugadoreses;
+	}
+
+	public Set<EquiposUsuarios> getEquiposUsuarioses() {
+		return this.equiposUsuarioses;
+	}
+
+	public void setEquiposUsuarioses(Set<EquiposUsuarios> equiposUsuarioses) {
+		this.equiposUsuarioses = equiposUsuarioses;
 	}
 
 	public Set<Partidos> getPartidosesForIdVisitante() {

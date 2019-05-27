@@ -1,119 +1,133 @@
-package com.example.teamleaguebagit.Conexiones;///*
-// * To change this license header, choose License Headers in Project Properties.
-// * To change this template file, choose Tools | Templates
-// * and open the template in the editor.
-// */
-//package com.example.teamleaguebagit.Conexiones;
-//
-//import java.util.ArrayList;
-//import java.util.List;
-//import org.hibernate.HibernateException;
-//import org.hibernate.Session;
-//import org.hibernate.Transaction;
-//import pojos.Ligas;
-//import pojos.PasswordLigas;
-//import pojos.Usuarios;
-//import repository.LigaRepository;
-//import service.SessionFactoryUtil;
-//
-///**
-// *
-// * @author alber
-// */
-//public class LigaConexiones implements LigaRepository{
-//
-//    @Override
-//    public boolean register(Ligas liga) {
-//        Session session = SessionFactoryUtil.getSessionFactory().openSession();
-//        Transaction tx = null;
-//        try {
-//            tx = session.beginTransaction();
-//            session.save(liga);
-//            tx.commit();
-//        } catch (HibernateException e) {
-//            if (tx!=null) tx.rollback();
-//            e.printStackTrace();
-//            return false;
-//        } finally {
-//            session.close();
-//        }
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean update(Ligas liga) {
-//        Session session = SessionFactoryUtil.getSessionFactory().openSession();
-//        Transaction tx = null;
-//        try {
-//            tx = session.beginTransaction();
-//            session.update(liga);
-//            tx.commit();
-//        } catch (HibernateException e) {
-//            if (tx != null)
-//                tx.rollback();
-//            e.printStackTrace();
-//            return false;
-//        } finally {
-//            session.close();
-//        }
-//        return true;
-//    }
-//
-//    @Override
-//    public PasswordLigas unirte(Ligas ligas) {
-//        Session session = SessionFactoryUtil.getSessionFactory().openSession();
-//        Transaction tx = null;
-//        PasswordLigas buscado = new PasswordLigas();
-//        try {
-//            tx = session.beginTransaction();
-//            buscado =  (PasswordLigas) session.get(PasswordLigas.class, ligas.getIdLiga());
-//            tx.commit();
-//        } catch (HibernateException e) {
-//            if (tx != null)
-//                tx.rollback();
-//            e.printStackTrace();
-//        } finally {
-//            session.close();
-//        }
-//        return buscado;
-//    }
-//
-//    @Override
-//    public ArrayList<Ligas> getAll() {
-//        Session session = SessionFactoryUtil.getSessionFactory().openSession();
-//        Transaction tx = null;
-//        List ligas = new ArrayList();
-//        try {
-//            tx = session.beginTransaction();
-//            ligas = session.createQuery("FROM Ligas").list();
-//            tx.commit();
-//        } catch (HibernateException e) {
-//            if (tx != null)
-//                tx.rollback();
-//            e.printStackTrace();
-//        } finally {
-//            session.close();
-//        }
-//        return (ArrayList<Ligas>) ligas;
-//    }
-//
-//    @Override
-//    public Ligas get(String id) {
-//        Session session = SessionFactoryUtil.getSessionFactory().openSession();
-//        Transaction tx = null;
-//        Ligas buscado = new Ligas();
-//        try {
-//            tx = session.beginTransaction();
-//            buscado =  (Ligas) session.get(Ligas.class, id);
-//            tx.commit();
-//        } catch (HibernateException e) {
-//            if (tx != null)
-//                tx.rollback();
-//            e.printStackTrace();
-//        } finally {
-//            session.close();
-//        }
-//        return buscado;
-//    }
-//
-//}
+package com.example.teamleaguebagit.Conexiones;
+
+import com.example.teamleaguebagit.ConexionInterficies.LigaRepository;
+import com.example.teamleaguebagit.pojos.Ligas;
+import com.example.teamleaguebagit.pojos.PasswordLigas;
+import com.example.teamleaguebagit.pojos.Usuarios;
+import com.mysql.jdbc.Statement;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+
+/**
+ *
+ * @author alber
+ */
+public class LigaConexiones implements LigaRepository {
+
+    @Override
+    public boolean register(String id, Usuarios admin) {
+        try{
+            Connection connection = Conexion.obtenerConexion();
+            if (connection == null) {
+            } else {
+                String query ="Insert into Ligas (IdLiga,Admin) VALUES ('"+id+"','"+admin.getIdUsuario()+"')";
+
+                Statement stmt = (Statement) connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+                stmt.executeUpdate(query);
+            }
+
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return true;
+    }
+
+    //TODO
+    @Override
+    public boolean registerPass(PasswordLigas passwordLigas) {
+        try{
+            Connection connection = Conexion.obtenerConexion();
+            if (connection == null) {
+            } else {
+                String query ="Insert into PasswordLigas (IdLiga,Password) VALUES ('"+passwordLigas.getIdLiga()
+                        +"','"+passwordLigas.getPassword()+"')";
+
+                Statement stmt = (Statement) connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
+                        ResultSet.CONCUR_READ_ONLY);
+                stmt.executeUpdate(query);
+            }
+
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return true;
+    }
+
+    @Override
+    public PasswordLigas unirte(Ligas ligas) {
+        PasswordLigas buscado = new PasswordLigas();
+        try{
+            Connection connection = Conexion.obtenerConexion();
+            if (connection == null) {
+            } else {
+                ResultSet rs = null;
+                String query ="Select * FROM PasswordLigas WHERE IdLiga='"+ligas.getIdLiga()+"'";
+
+                Statement stmt = (Statement) connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+
+                rs = stmt.executeQuery(query);
+                if(rs.next()){
+                    buscado.setPassword(rs.getString("Password"));
+                    buscado.setIdLiga(ligas.getIdLiga());
+                }else{
+                    return null;
+                }
+            }
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return buscado;
+    }
+
+    @Override
+    public ArrayList<PasswordLigas> getAll() {
+        ArrayList<PasswordLigas> liga = new ArrayList<>();
+        try{
+            Connection connection = Conexion.obtenerConexion();
+            if (connection == null) {
+            } else {
+                ResultSet rs = null;
+                String query ="Select * FROM PasswordLigas";
+
+                Statement stmt = (Statement) connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+
+                rs = stmt.executeQuery(query);
+                while (rs.next()){
+                    PasswordLigas pass = new PasswordLigas();
+                    pass.setPassword(rs.getString("Password"));
+                    pass.setIdLiga(rs.getString("IdLiga"));
+                }
+            }
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return (ArrayList<PasswordLigas>) liga;
+    }
+
+    @Override
+    public Ligas get(String id) {
+        Ligas liga = new Ligas();
+        try{
+            Connection connection = Conexion.obtenerConexion();
+            if (connection == null) {
+            } else {
+                ResultSet rs = null;
+                String query ="Select * FROM Ligas WHERE IdLiga='"+id+"'";
+
+                Statement stmt = (Statement) connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+
+                rs = stmt.executeQuery(query);
+                if(rs.next()){
+                    liga.setIdLiga(id);
+                }else{
+                    return null;
+                }
+            }
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return liga;
+    }
+}

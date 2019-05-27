@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
             PasswordUsuarios pass = user.login(usuario.getText().toString());
             if(pass.getPassword()!=null){
                 if(pass.getPassword().equals(password.getText().toString())){
+                    Actual.setUsuarioActual(user.get(usuario.getText().toString()));
                     if (recordarUser.isChecked()) {
                         SharedPreferences prefs = getSharedPreferences("Usuario", Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = prefs.edit();

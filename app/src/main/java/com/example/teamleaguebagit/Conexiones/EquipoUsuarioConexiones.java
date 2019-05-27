@@ -1,136 +1,159 @@
-package com.example.teamleaguebagit.Conexiones;///*
-// * To change this license header, choose License Headers in Project Properties.
-// * To change this template file, choose Tools | Templates
-// * and open the template in the editor.
-// */
-//package com.example.teamleaguebagit.Conexiones;
-//
-//import java.util.ArrayList;
-//import java.util.List;
-//import org.hibernate.HibernateException;
-//import org.hibernate.Session;
-//import org.hibernate.Transaction;
-//import pojos.EquiposUsuarios;
-//import pojos.Ligas;
-//import repository.EquipoUsuarioRepository;
-//import service.SessionFactoryUtil;
-//
-///**
-// *
-// * @author alber
-// */
-//public class EquipoUsuarioConexiones implements EquipoUsuarioRepository{
-//
-//    @Override
-//    public boolean register(EquiposUsuarios nuevo) {
-//        Session session = SessionFactoryUtil.getSessionFactory().openSession();
-//        Transaction tx = null;
-//        try {
-//            tx = session.beginTransaction();
-//            session.save(nuevo);
-//            tx.commit();
-//        } catch (HibernateException e) {
-//            if (tx!=null) tx.rollback();
-//            e.printStackTrace();
-//            return false;
-//        } finally {
-//            session.close();
-//        }
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean update(EquiposUsuarios nuevo) {
-//        Session session = SessionFactoryUtil.getSessionFactory().openSession();
-//        Transaction tx = null;
-//        try {
-//            tx = session.beginTransaction();
-//            session.update(nuevo);
-//            tx.commit();
-//        } catch (HibernateException e) {
-//            if (tx != null)
-//                tx.rollback();
-//            e.printStackTrace();
-//            return false;
-//        } finally {
-//            session.close();
-//        }
-//        return true;
-//    }
-//
-//    @Override
-//    public ArrayList<EquiposUsuarios> getAll() {
-//        Session session = SessionFactoryUtil.getSessionFactory().openSession();
-//        Transaction tx = null;
-//        List ligas = new ArrayList();
-//        try {
-//            tx = session.beginTransaction();
-//            ligas = session.createQuery("FROM EquiposUsuarios").list();
-//            tx.commit();
-//        } catch (HibernateException e) {
-//            if (tx != null)
-//                tx.rollback();
-//            e.printStackTrace();
-//        } finally {
-//            session.close();
-//        }
-//        return (ArrayList<EquiposUsuarios>) ligas;
-//    }
-//
-//    @Override
-//    public ArrayList<EquiposUsuarios> getByUser(String idUser) {
-//        Session session = SessionFactoryUtil.getSessionFactory().openSession();
-//        Transaction tx = null;
-//        List ligas = new ArrayList();
-//        try {
-//            tx = session.beginTransaction();
-//            ligas = session.createQuery("FROM Equipos_usuarios Where Id_Usuario='"+idUser+"'").list();
-//            tx.commit();
-//        } catch (HibernateException e) {
-//            if (tx != null)
-//                tx.rollback();
-//            e.printStackTrace();
-//        } finally {
-//            session.close();
-//        }
-//        return (ArrayList<EquiposUsuarios>) ligas;
-//    }
-//
-//    @Override
-//    public ArrayList<EquiposUsuarios> getByLiga(String idLiga) {
-//        Session session = SessionFactoryUtil.getSessionFactory().openSession();
-//        Transaction tx = null;
-//        List ligas = new ArrayList();
-//        try {
-//            tx = session.beginTransaction();
-//            ligas = session.createQuery("FROM Equipos_usuarios Where Id_Liga='"+idLiga+"'").list();
-//            tx.commit();
-//        } catch (HibernateException e) {
-//            if (tx != null)
-//                tx.rollback();
-//            e.printStackTrace();
-//        } finally {
-//            session.close();
-//        }
-//        return (ArrayList<EquiposUsuarios>) ligas;
-//    }
-//
-//    @Override
-//    public EquiposUsuarios getEquipo(String id) {
-//        Session session = SessionFactoryUtil.getSessionFactory().openSession();
-//        Transaction tx = null;
-//        EquiposUsuarios ligas = new EquiposUsuarios();
-//        try {
-//            tx = session.beginTransaction();
-//            ligas = (EquiposUsuarios) session.get(EquiposUsuarios.class,id);
-//            tx.commit();
-//        } catch (HibernateException e) {
-//            if (tx != null)
-//                tx.rollback();
-//            e.printStackTrace();
-//        } finally {
-//            session.close();
-//        }
-//        return ligas;
-//    }
-//}
+package com.example.teamleaguebagit.Conexiones;
+
+import com.example.teamleaguebagit.ConexionInterficies.EquipoUsuarioRepository;
+import com.example.teamleaguebagit.pojos.EquiposUsuarios;
+import com.mysql.jdbc.Statement;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+
+/**
+ *
+ * @author alber
+ */
+public class EquipoUsuarioConexiones implements EquipoUsuarioRepository {
+    @Override
+    public boolean register(EquiposUsuarios nuevo) {
+        try{
+            Connection connection = Conexion.obtenerConexion();
+            if (connection == null) {
+            } else {
+                String query ="Insert into EquiposUsuarios (NombreEquipo,EquipoNBA,IdUsuario,IdLiga," +
+                        "Dinero,IdEquipo,PuntosTotales) VALUES ('"+nuevo.getNombreEquipo()+"','"
+                        +nuevo.getEquipos().getIdEquipo()+"','"+nuevo.getUsuarios().getIdUsuario()+"','"
+                        +nuevo.getLigas().getIdLiga()+"',"+nuevo.getDinero()+",'"+nuevo.getIdEquipo()
+                        +"',"+nuevo.getPuntosTotales()+")";
+
+                Statement stmt = (Statement) connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+                stmt.executeUpdate(query);
+            }
+
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return true;
+    }
+
+    @Override
+    public ArrayList<EquiposUsuarios> getAll() {
+        ArrayList<EquiposUsuarios> equipos = new ArrayList<>();
+        try{
+            Connection connection = Conexion.obtenerConexion();
+            if (connection == null) {
+            } else {
+                ResultSet rs = null;
+                String query ="Select * FROM EquiposUsuarios";
+
+                Statement stmt = (Statement) connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+
+                rs = stmt.executeQuery(query);
+                while(rs.next()){
+                    EquiposUsuarios equipo = new EquiposUsuarios();
+                    equipo.setIdEquipo(rs.getInt("IdEquipo"));
+                    equipo.setDinero(rs.getInt("Dinero"));
+                    equipo.setEquipos(new EquipoConexiones().get(rs.getString("IdEquipo")));
+                    equipo.setNombreEquipo(rs.getString("NombreEquipo"));
+                    equipo.setLigas(new LigaConexiones().get(rs.getString("IdLiga")));
+                    equipo.setPuntosTotales(rs.getInt("PuntosTotales"));
+                    equipo.setUsuarios(new UsuarioConexiones().get(rs.getString("IdUsuario")));
+                    equipos.add(equipo);
+                }
+            }
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return equipos;
+    }
+
+    @Override
+    public ArrayList<EquiposUsuarios> getByUser(String idUser) {
+        ArrayList<EquiposUsuarios> equipos = new ArrayList<>();
+        try{
+            Connection connection = Conexion.obtenerConexion();
+            if (connection == null) {
+            } else {
+                ResultSet rs = null;
+                String query ="Select * FROM EquiposUsuarios WHERE IdUsuario='"+idUser+"'";
+
+                Statement stmt = (Statement) connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+
+                rs = stmt.executeQuery(query);
+                while(rs.next()){
+                    EquiposUsuarios equipo = new EquiposUsuarios();
+                    equipo.setIdEquipo(rs.getInt("IdEquipo"));
+                    equipo.setDinero(rs.getInt("Dinero"));
+                    equipo.setEquipos(new EquipoConexiones().get(rs.getString("IdEquipo")));
+                    equipo.setNombreEquipo(rs.getString("NombreEquipo"));
+                    equipo.setLigas(new LigaConexiones().get(rs.getString("IdLiga")));
+                    equipo.setPuntosTotales(rs.getInt("PuntosTotales"));
+                    equipo.setUsuarios(new UsuarioConexiones().get(rs.getString("IdUsuario")));
+                    equipos.add(equipo);
+                }
+            }
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return equipos;
+    }
+
+    @Override
+    public ArrayList<EquiposUsuarios> getByLiga(String idLiga) {
+        ArrayList<EquiposUsuarios> equipos = new ArrayList<>();
+        try{
+            Connection connection = Conexion.obtenerConexion();
+            if (connection == null) {
+            } else {
+                ResultSet rs = null;
+                String query ="Select * FROM EquiposUsuarios WHERE IdLiga='"+idLiga+"'";
+
+                Statement stmt = (Statement) connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+
+                rs = stmt.executeQuery(query);
+                while(rs.next()){
+                    EquiposUsuarios equipo = new EquiposUsuarios();
+                    equipo.setIdEquipo(rs.getInt("IdEquipo"));
+                    equipo.setDinero(rs.getInt("Dinero"));
+                    equipo.setEquipos(new EquipoConexiones().get(rs.getString("IdEquipo")));
+                    equipo.setNombreEquipo(rs.getString("NombreEquipo"));
+                    equipo.setLigas(new LigaConexiones().get(rs.getString("IdLiga")));
+                    equipo.setUsuarios(new UsuarioConexiones().get(rs.getString("IdUsuario")));
+                    equipo.setPuntosTotales(rs.getInt("PuntosTotales"));
+                    equipos.add(equipo);
+                }
+            }
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return equipos;
+    }
+
+    @Override
+    public EquiposUsuarios getEquipo(String id) {
+        EquiposUsuarios equipo = new EquiposUsuarios();
+        try{
+            Connection connection = Conexion.obtenerConexion();
+            if (connection == null) {
+            } else {
+                ResultSet rs = null;
+                String query ="Select * FROM EquiposUsuarios WHERE IdEquipo='"+id+"'";
+
+                Statement stmt = (Statement) connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+
+                rs = stmt.executeQuery(query);
+                if (rs.next()){
+                    equipo.setIdEquipo(rs.getInt("IdEquipo"));
+                    equipo.setDinero(rs.getInt("Dinero"));
+                    equipo.setEquipos(new EquipoConexiones().get(rs.getString("IdEquipo")));
+                    equipo.setNombreEquipo(rs.getString("NombreEquipo"));
+                    equipo.setLigas(new LigaConexiones().get(rs.getString("IdLiga")));
+                    equipo.setUsuarios(new UsuarioConexiones().get(rs.getString("IdUsuario")));
+                    equipo.setPuntosTotales(rs.getInt("PuntosTotales"));
+                }
+            }
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return equipo;
+    }
+}

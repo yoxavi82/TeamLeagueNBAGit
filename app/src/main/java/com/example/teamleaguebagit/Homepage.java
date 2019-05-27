@@ -18,6 +18,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.example.teamleaguebagit.Conexiones.LigaConexiones;
+import com.example.teamleaguebagit.pojos.PasswordLigas;
 
 public class Homepage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     Button crear,unir;
@@ -54,29 +58,49 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
                     case R.id.inicio:
                         break;
                     case R.id.ali:
-                        i = new Intent(Homepage.super.getApplication(), Alineacion.class);
-                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(i);
+                        if(Actual.ligaActual!=null) {
+                            i = new Intent(Homepage.super.getApplication(), Alineacion.class);
+                            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(i);
+                        }else{
+                            errorLiga();
+                        }
                         break;
                     case R.id.mercado:
-                        i = new Intent(Homepage.super.getApplication(), Mercado.class);
-                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(i);
+                        if(Actual.ligaActual!=null) {
+                            i = new Intent(Homepage.super.getApplication(), Mercado.class);
+                            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(i);
+                        }else{
+                            errorLiga();
+                        }
                         break;
                     case R.id.jornada:
-                        i = new Intent(Homepage.super.getApplication(), Jornada.class);
-                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(i);
+                        if(Actual.ligaActual!=null) {
+                            i = new Intent(Homepage.super.getApplication(), Jornada.class);
+                            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(i);
+                        }else{
+                            errorLiga();
+                        }
                         break;
                     case R.id.clasificacion:
-                        i = new Intent(Homepage.super.getApplication(), Clasificacion.class);
-                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(i);
+                        if(Actual.ligaActual!=null) {
+                            i = new Intent(Homepage.super.getApplication(), Clasificacion.class);
+                            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(i);
+                        }else{
+                            errorLiga();
+                        }
                         break;
                 }
                 return false;
             }
         });
+    }
+
+    private void errorLiga() {
+        Toast.makeText(this,"Selecciona una liga",Toast.LENGTH_SHORT).show();
     }
 
     //Pulsar para atrás
@@ -100,11 +124,9 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
     }
 
     public void crearLiga(View view){
-        System.out.println("Crear");
     }
 
     public void unirseLiga(View view){
-        System.out.println("Unirse");
     }
     //Crear menu lateral
     @Override
@@ -140,9 +162,6 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             case R.id.config:
                 break;
         }
-
-//        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-//        drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 }

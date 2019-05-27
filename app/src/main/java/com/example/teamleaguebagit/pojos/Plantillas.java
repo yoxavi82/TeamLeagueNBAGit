@@ -1,5 +1,5 @@
 package com.example.teamleaguebagit.pojos;
-// Generated 09-may-2019 19:56:04 by Hibernate Tools 5.1.10.Final
+// Generated 24-may-2019 19:04:20 by Hibernate Tools 5.1.10.Final
 
 import java.util.Date;
 
@@ -15,22 +15,24 @@ public class Plantillas implements java.io.Serializable {
 	private int precio;
 	private Date fechaCompra;
 	private Integer puja;
+	private int titular;
 
 	public Plantillas() {
 	}
 
 	public Plantillas(PlantillasId id, EquiposUsuarios equiposUsuarios, Jugadores jugadores, Ligas ligas, int precio,
-			Date fechaCompra) {
+			Date fechaCompra, int titular) {
 		this.id = id;
 		this.equiposUsuarios = equiposUsuarios;
 		this.jugadores = jugadores;
 		this.ligas = ligas;
 		this.precio = precio;
 		this.fechaCompra = fechaCompra;
+		this.titular = titular;
 	}
 
 	public Plantillas(PlantillasId id, EquiposUsuarios equiposUsuarios, Jugadores jugadores, Ligas ligas, int precio,
-			Date fechaCompra, Integer puja) {
+			Date fechaCompra, Integer puja, int titular) {
 		this.id = id;
 		this.equiposUsuarios = equiposUsuarios;
 		this.jugadores = jugadores;
@@ -38,6 +40,7 @@ public class Plantillas implements java.io.Serializable {
 		this.precio = precio;
 		this.fechaCompra = fechaCompra;
 		this.puja = puja;
+		this.titular = titular;
 	}
 
 	public PlantillasId getId() {
@@ -94,6 +97,14 @@ public class Plantillas implements java.io.Serializable {
 
 	public void setPuja(Integer puja) {
 		this.puja = puja;
+	}
+
+	public int getTitular() {
+		return this.titular;
+	}
+
+	public void setTitular(int titular) {
+		this.titular = titular;
 	}
 
 }

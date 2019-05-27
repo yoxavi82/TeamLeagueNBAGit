@@ -4,8 +4,8 @@ import com.example.teamleaguebagit.pojos.Ligas;
 import com.example.teamleaguebagit.pojos.Usuarios;
 
 public class Actual {
-    static Usuarios usuarioActual;
-    static Ligas ligaActual;
+    static Usuarios usuarioActual=null;
+    static Ligas ligaActual=null;
     static Boolean iniciarSesion=true;
 
     public Actual(Usuarios j, Ligas l) {

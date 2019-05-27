@@ -1,11 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.example.teamleaguebagit.Conexiones;
 
-import android.widget.Toast;
 
 import com.example.teamleaguebagit.ConexionInterficies.UsuarioRepository;
 import com.example.teamleaguebagit.pojos.PasswordUsuarios;
@@ -15,7 +9,6 @@ import com.mysql.jdbc.Statement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  *
@@ -45,20 +38,21 @@ public class UsuarioConexiones implements UsuarioRepository {
 
     @Override
     public boolean update(Usuarios usuario) {
-//        Session session = SessionFactoryUtil.getSessionFactory().openSession();
-//        Transaction tx = null;
-//        try {
-//            tx = session.beginTransaction();
-//            session.update(usuario);
-//            tx.commit();
-//        } catch (HibernateException e) {
-//            if (tx != null)
-//                tx.rollback();
-//            e.printStackTrace();
-//            return false;
-//        } finally {
-//            session.close();
-//        }
+        try{
+            Connection connection = Conexion.obtenerConexion();
+            if (connection == null) {
+            } else {
+                String query ="UPDATE Usuarios SET " +
+                        "Nombre='"+usuario.getNombre()+"',Apellidos='"+usuario.getApellidos()+"',Correo='"+usuario.getCorreo()
+                        +"',FechaNacimiento='"+usuario.getFechaNacimiento()+"'";
+
+                Statement stmt = (Statement) connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+
+                stmt.executeUpdate(query);
+            }
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
         return true;
     }
 
@@ -91,42 +85,63 @@ public class UsuarioConexiones implements UsuarioRepository {
 
     @Override
     public Usuarios get(String id) {
-//        Session session = SessionFactoryUtil.getSessionFactory().openSession();
-//        Transaction tx = null;
-        Usuarios buscado = new Usuarios();
-//        try {
-//            tx = session.beginTransaction();
-//            buscado =  (Usuarios) session.get(Usuarios.class, id);
-//            tx.commit();
-//        } catch (HibernateException e) {
-//            if (tx != null)
-//                tx.rollback();
-//            e.printStackTrace();
-//        } finally {
-//            session.close();
-//        }
-        return buscado;
+        Usuarios user = new Usuarios();
+        try{
+            Connection connection = Conexion.obtenerConexion();
+            if (connection == null) {
+            } else {
+                ResultSet rs = null;
+                String query ="Select * FROM Usuarios WHERE IdUsuario='"+id+"'";
+
+                Statement stmt = (Statement) connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+
+                rs = stmt.executeQuery(query);
+                if(rs.next()){
+                    user.setApellidos(rs.getString("Apellidos"));
+                    user.setNombre(rs.getString("Nombre"));
+                    user.setIdUsuario(rs.getString("IdUsuario"));
+                    user.setFechaNacimiento(rs.getDate("FechaNacimiento"));
+                    user.setCorreo(rs.getString("Correo"));
+                }else{
+                    return null;
+                }
+            }
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return user;
     }
 
     @Override
     public ArrayList<Usuarios> getAll() {
-//        Session session = SessionFactoryUtil.getSessionFactory().openSession();
-//        Transaction tx = null;
-        List usuarios = new ArrayList();
-//        try {
-//            tx = session.beginTransaction();
-//            usuarios = session.createQuery("FROM Usuarios").list();
-//            tx.commit();
-//        } catch (HibernateException e) {
-//            if (tx != null)
-//                tx.rollback();
-//            e.printStackTrace();
-//        } finally {
-//            session.close();
-//        }
-        return (ArrayList<Usuarios>) usuarios;
+        ArrayList<Usuarios> users = new ArrayList<>();
+        try{
+            Connection connection = Conexion.obtenerConexion();
+            if (connection == null) {
+            } else {
+                ResultSet rs = null;
+                String query ="Select * FROM Usuarios";
+
+                Statement stmt = (Statement) connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+
+                rs = stmt.executeQuery(query);
+                while (rs.next()){
+                    Usuarios user = new Usuarios();
+                    user.setApellidos(rs.getString("Apellidos"));
+                    user.setNombre(rs.getString("Nombre"));
+                    user.setIdUsuario(rs.getString("IdUsuario"));
+                    user.setFechaNacimiento(rs.getDate("FechaNacimiento"));
+                    user.setCorreo(rs.getString("Correo"));
+                    users.add(user);
+                }
+            }
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return users;
     }
 
+//TODO
     @Override
     public boolean registrarPassword(PasswordUsuarios passwordUsuarios) {
         try{
@@ -139,8 +154,6 @@ public class UsuarioConexiones implements UsuarioRepository {
                 Statement stmt = (Statement) connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 
                 stmt.executeUpdate(query);
-//                rs.next();
-//                connection.close();
             }
         }catch (Exception ex){
             ex.printStackTrace();

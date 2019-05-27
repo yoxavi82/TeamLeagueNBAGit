@@ -1,5 +1,5 @@
 package com.example.teamleaguebagit.pojos;
-// Generated 09-may-2019 19:56:04 by Hibernate Tools 5.1.10.Final
+// Generated 24-may-2019 19:04:20 by Hibernate Tools 5.1.10.Final
 
 import java.util.Date;
 import java.util.HashSet;
@@ -17,8 +17,8 @@ public class Usuarios implements java.io.Serializable {
 	private Date fechaNacimiento;
 	private int admin;
 	private Set<EquiposUsuarios> equiposUsuarioses = new HashSet<EquiposUsuarios>(0);
-	private Set<Ligas> ligases = new HashSet<Ligas>(0);
 	private PasswordUsuarios passwordUsuarios;
+	private Set<Ligas> ligases = new HashSet<Ligas>(0);
 
 	public Usuarios() {
 	}
@@ -33,7 +33,7 @@ public class Usuarios implements java.io.Serializable {
 	}
 
 	public Usuarios(String idUsuario, String nombre, String apellidos, String correo, Date fechaNacimiento, int admin,
-			Set<EquiposUsuarios> equiposUsuarioses, Set<Ligas> ligases, PasswordUsuarios passwordUsuarios) {
+			Set<EquiposUsuarios> equiposUsuarioses, PasswordUsuarios passwordUsuarios, Set<Ligas> ligases) {
 		this.idUsuario = idUsuario;
 		this.nombre = nombre;
 		this.apellidos = apellidos;
@@ -41,8 +41,8 @@ public class Usuarios implements java.io.Serializable {
 		this.fechaNacimiento = fechaNacimiento;
 		this.admin = admin;
 		this.equiposUsuarioses = equiposUsuarioses;
-		this.ligases = ligases;
 		this.passwordUsuarios = passwordUsuarios;
+		this.ligases = ligases;
 	}
 
 	public String getIdUsuario() {
@@ -101,20 +101,20 @@ public class Usuarios implements java.io.Serializable {
 		this.equiposUsuarioses = equiposUsuarioses;
 	}
 
-	public Set<Ligas> getLigases() {
-		return this.ligases;
-	}
-
-	public void setLigases(Set<Ligas> ligases) {
-		this.ligases = ligases;
-	}
-
 	public PasswordUsuarios getPasswordUsuarios() {
 		return this.passwordUsuarios;
 	}
 
 	public void setPasswordUsuarios(PasswordUsuarios passwordUsuarios) {
 		this.passwordUsuarios = passwordUsuarios;
+	}
+
+	public Set<Ligas> getLigases() {
+		return this.ligases;
+	}
+
+	public void setLigases(Set<Ligas> ligases) {
+		this.ligases = ligases;
 	}
 
 }

@@ -1,5 +1,5 @@
 package com.example.teamleaguebagit.pojos;
-// Generated 09-may-2019 19:56:04 by Hibernate Tools 5.1.10.Final
+// Generated 24-may-2019 19:04:20 by Hibernate Tools 5.1.10.Final
 
 import java.util.HashSet;
 import java.util.Set;
@@ -11,9 +11,9 @@ public class Ligas implements java.io.Serializable {
 
 	private String idLiga;
 	private Usuarios usuarios;
-	private Set<Plantillas> plantillases = new HashSet<Plantillas>(0);
 	private PasswordLigas passwordLigas;
 	private Set<EquiposUsuarios> equiposUsuarioses = new HashSet<EquiposUsuarios>(0);
+	private Set<Plantillas> plantillases = new HashSet<Plantillas>(0);
 
 	public Ligas() {
 	}
@@ -23,13 +23,13 @@ public class Ligas implements java.io.Serializable {
 		this.usuarios = usuarios;
 	}
 
-	public Ligas(String idLiga, Usuarios usuarios, Set<Plantillas> plantillases, PasswordLigas passwordLigas,
-			Set<EquiposUsuarios> equiposUsuarioses) {
+	public Ligas(String idLiga, Usuarios usuarios, PasswordLigas passwordLigas, Set<EquiposUsuarios> equiposUsuarioses,
+			Set<Plantillas> plantillases) {
 		this.idLiga = idLiga;
 		this.usuarios = usuarios;
-		this.plantillases = plantillases;
 		this.passwordLigas = passwordLigas;
 		this.equiposUsuarioses = equiposUsuarioses;
+		this.plantillases = plantillases;
 	}
 
 	public String getIdLiga() {
@@ -48,14 +48,6 @@ public class Ligas implements java.io.Serializable {
 		this.usuarios = usuarios;
 	}
 
-	public Set<Plantillas> getPlantillases() {
-		return this.plantillases;
-	}
-
-	public void setPlantillases(Set<Plantillas> plantillases) {
-		this.plantillases = plantillases;
-	}
-
 	public PasswordLigas getPasswordLigas() {
 		return this.passwordLigas;
 	}
@@ -70,6 +62,14 @@ public class Ligas implements java.io.Serializable {
 
 	public void setEquiposUsuarioses(Set<EquiposUsuarios> equiposUsuarioses) {
 		this.equiposUsuarioses = equiposUsuarioses;
+	}
+
+	public Set<Plantillas> getPlantillases() {
+		return this.plantillases;
+	}
+
+	public void setPlantillases(Set<Plantillas> plantillases) {
+		this.plantillases = plantillases;
 	}
 
 }

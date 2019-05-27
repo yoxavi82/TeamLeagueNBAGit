@@ -1,5 +1,5 @@
 package com.example.teamleaguebagit.pojos;
-// Generated 09-may-2019 19:56:04 by Hibernate Tools 5.1.10.Final
+// Generated 24-may-2019 19:04:20 by Hibernate Tools 5.1.10.Final
 
 import java.util.HashSet;
 import java.util.Set;
@@ -15,29 +15,32 @@ public class EquiposUsuarios implements java.io.Serializable {
 	private Usuarios usuarios;
 	private String nombreEquipo;
 	private int dinero;
+	private int puntosTotales;
 	private Set<Plantillas> plantillases = new HashSet<Plantillas>(0);
 
 	public EquiposUsuarios() {
 	}
 
 	public EquiposUsuarios(int idEquipo, Equipos equipos, Ligas ligas, Usuarios usuarios, String nombreEquipo,
-			int dinero) {
+			int dinero, int puntosTotales) {
 		this.idEquipo = idEquipo;
 		this.equipos = equipos;
 		this.ligas = ligas;
 		this.usuarios = usuarios;
 		this.nombreEquipo = nombreEquipo;
 		this.dinero = dinero;
+		this.puntosTotales = puntosTotales;
 	}
 
 	public EquiposUsuarios(int idEquipo, Equipos equipos, Ligas ligas, Usuarios usuarios, String nombreEquipo,
-			int dinero, Set<Plantillas> plantillases) {
+			int dinero, int puntosTotales, Set<Plantillas> plantillases) {
 		this.idEquipo = idEquipo;
 		this.equipos = equipos;
 		this.ligas = ligas;
 		this.usuarios = usuarios;
 		this.nombreEquipo = nombreEquipo;
 		this.dinero = dinero;
+		this.puntosTotales = puntosTotales;
 		this.plantillases = plantillases;
 	}
 
@@ -87,6 +90,14 @@ public class EquiposUsuarios implements java.io.Serializable {
 
 	public void setDinero(int dinero) {
 		this.dinero = dinero;
+	}
+
+	public int getPuntosTotales() {
+		return this.puntosTotales;
+	}
+
+	public void setPuntosTotales(int puntosTotales) {
+		this.puntosTotales = puntosTotales;
 	}
 
 	public Set<Plantillas> getPlantillases() {
