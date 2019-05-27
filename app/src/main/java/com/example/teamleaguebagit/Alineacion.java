@@ -1,5 +1,6 @@
 package com.example.teamleaguebagit;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
@@ -12,6 +13,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -94,22 +96,24 @@ public class Alineacion extends AppCompatActivity  implements NavigationView.OnN
                 switch (menuItem.getItemId()) {
                     case R.id.inicio:
                         i = new Intent(Alineacion.super.getApplication(), Homepage.class);
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(i);
                         break;
                     case R.id.ali:
-                        i = new Intent(Alineacion.super.getApplication(), Alineacion.class);
-                        startActivity(i);
                         break;
                     case R.id.mercado:
                         i = new Intent(Alineacion.super.getApplication(), Mercado.class);
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(i);
                         break;
                     case R.id.jornada:
                         i = new Intent(Alineacion.super.getApplication(), Jornada.class);
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(i);
                         break;
                     case R.id.clasificacion:
                         i = new Intent(Alineacion.super.getApplication(), Clasificacion.class);
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(i);
                         break;
                 }
@@ -127,16 +131,12 @@ public class Alineacion extends AppCompatActivity  implements NavigationView.OnN
                 new RecyclerItemClickListener(this, recyclerView ,new RecyclerItemClickListener.OnItemClickListener() {
                     @Override public void onItemClick(View view, int position) {
                         View parent = (View)view.getParent();
-
-
-
                         if(cambio == null) {
                             anteriorPos=position;
                             if (parent.getId() == R.id.suplentes)
                                 cambio = myImageListSuplentes.get(position);
                             else
                                 cambio = myImageListNoConv.get(position);
-
                         }else{
                             if(anteriorId!=-1) {
                                 ImageView imagAnt = findViewById(anteriorId);
@@ -150,7 +150,6 @@ public class Alineacion extends AppCompatActivity  implements NavigationView.OnN
                                     myImageListNoConv.remove(position);
                                     myImageListNoConv.add(position, cambio);
                                 }
-
                             }else{
                                 if (parent.getId() == R.id.suplentes) {
                                     if(parentAnterior.getId()==R.id.noConvocados) {
@@ -159,7 +158,6 @@ public class Alineacion extends AppCompatActivity  implements NavigationView.OnN
                                         myImageListNoConv.add(anteriorPos, actual);
                                         myImageListSuplentes.remove(position);
                                         myImageListSuplentes.add(position, cambio);
-
                                     }else{
                                         Drawable actual = myImageListSuplentes.get(position);
                                         myImageListSuplentes.remove(anteriorPos);
@@ -182,58 +180,47 @@ public class Alineacion extends AppCompatActivity  implements NavigationView.OnN
                                         myImageListNoConv.add(position, cambio);
                                     }
                                 }
-
                             }
                             initNoConv();
                             initSuplentes();
                             cambio = null;
                             anteriorId = -1;
                             anteriorPos = -1;
-
-
-
                         }
                         parentAnterior= (View)view.getParent();
-
                     }
-
                     @Override public void onLongItemClick(View view, int position) {
-
-
                         // do whatever
                     }
                 })
         );
-
         //imageModelArrayList = eatFruits();
         //adapter = new PlayerAdapter(this, imageModelArrayList);
         //recyclerView.setAdapter(adapter);
         initSuplentes();
         initNoConv();
-
         suplentes.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false));
         noConvocados.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false));
-
-    }
-
-    public void unirseLiga(View view){
-        System.out.println("unir");
-    }
-
-    public  void crearLiga(View view){
-        System.out.println("crear");
-
     }
 
     //Pulsar para atrás
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setTitle(R.string.Atencion);
+        alert.setMessage(R.string.MensajeSalirApp);
+        alert.setNegativeButton(R.string.Salir, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                finishAffinity();
+                System.exit(0);
+            }
+        });
+        alert.setPositiveButton(R.string.Cancelar, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        });
+        alert.show();
     }
 
     //Crear menu lateral
@@ -243,25 +230,29 @@ public class Alineacion extends AppCompatActivity  implements NavigationView.OnN
         return true;
     }
 
-
     //Opciones para menu lateral
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.inicio:
-                System.out.println("unir");
+            case R.id.salir:
+                AlertDialog.Builder alert = new AlertDialog.Builder(this);
+                alert.setTitle(R.string.Atencion);
+                alert.setMessage(R.string.CerrarSesionPregunta);
+                alert.setNegativeButton(R.string.CerrarSesion, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                    }
+                });
+                alert.setPositiveButton(R.string.Cancelar, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                });
+                alert.show();
                 break;
-            case R.id.ali:
-                System.out.println("unir");
-                break;
-            case R.id.mercado:
-                System.out.println("unir");
-                break;
-            case R.id.jornada:
-                System.out.println("unir");
-                break;
-            case R.id.clasificacion:
-                System.out.println("unir");
+            case R.id.config:
                 break;
         }
 
@@ -304,11 +295,9 @@ public class Alineacion extends AppCompatActivity  implements NavigationView.OnN
 
     public void clickjugador(View view){
         ImageView img = findViewById(view.getId());
-
         if(cambio == null) {
             anteriorId= view.getId();
             cambio =img.getDrawable();
-
         }else{
             if(anteriorId==-1) {
                 if (parentAnterior.getId() == R.id.noConvocados) {
@@ -324,48 +313,34 @@ public class Alineacion extends AppCompatActivity  implements NavigationView.OnN
                 ImageView imgAnt = findViewById(anteriorId);
                 imgAnt.setImageDrawable(img.getDrawable());
                 img.setImageDrawable(cambio);
-
             }
             initNoConv();
             initSuplentes();
             cambio = null;
             anteriorId = -1;
             anteriorPos = -1;
-
-
         }
-
-        System.out.println("hola<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
     }
 
-
     private void initNoConv(){
-
         ArrayList<PlayerModel> list = new ArrayList<>();
-
         for(int i = 0; i < myImageListNoConv.size(); i++){
             PlayerModel playerModel = new PlayerModel();
             playerModel.setName(myImageNameListNoConv.get(i));
             playerModel.setImage_drawable(myImageListNoConv.get(i));
-
             list.add(playerModel);
         }
-
         noConvocados.setAdapter(new PlayerAdapter(this, list));
-
     }
+
     private void initSuplentes(){
-
         ArrayList<PlayerModel> list = new ArrayList<>();
-
         for(int i = 0; i < myImageListSuplentes.size(); i++){
             PlayerModel playerModel = new PlayerModel();
             playerModel.setName(myImageNameListSuplentes.get(i));
             playerModel.setImage_drawable(myImageListSuplentes.get(i));
-
             list.add(playerModel);
         }
-
         suplentes.setAdapter(new PlayerAdapter(this, list));
 
     }
@@ -373,7 +348,6 @@ public class Alineacion extends AppCompatActivity  implements NavigationView.OnN
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         // TODO Auto-generated method stub
-
         int action = MotionEventCompat.getActionMasked(event);
         System.out.println(event.getDeviceId());
         switch (action) {
@@ -386,7 +360,6 @@ public class Alineacion extends AppCompatActivity  implements NavigationView.OnN
             case (MotionEvent.ACTION_CANCEL):
                 return true;
             case (MotionEvent.ACTION_OUTSIDE):
-
                 return true;
             default:
                 return super.onTouchEvent(event);

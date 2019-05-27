@@ -1,0 +1,14 @@
+
+package com.example.teamleaguebagit.ConexionInterficies;
+
+import com.example.teamleaguebagit.pojos.Plantillas;
+
+import java.util.ArrayList;
+
+public interface PlantillaRepository {
+    boolean addPlantilla(Plantillas plantilla);
+    boolean updatePlantilla(Plantillas plantilla);
+    ArrayList<Plantillas> getByIdJugador(String idJugador);
+    ArrayList<Plantillas> getByIdLoiga(String idLiga);
+    ArrayList<Plantillas> getByIdEquipo(String idEquipo);    
+}

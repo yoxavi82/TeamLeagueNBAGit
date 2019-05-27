@@ -24,7 +24,7 @@
         android:id="@+id/scrollView3"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="57dp"
         app:layout_constraintBottom_toTopOf="@+id/bottom_navigation_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -34,9 +34,7 @@
             android:id="@+id/layoutPrincipal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="73dp"
             android:orientation="vertical"
-            android:paddingTop="20dp"
             design:layout_constraintBottom_toBottomOf="parent"
             design:layout_constraintEnd_toEndOf="parent"
             design:layout_constraintStart_toStartOf="parent"
@@ -50,12 +48,15 @@
 
                 <LinearLayout
                     android:id="@+id/linearLayout2"
-                    android:layout_width="383dp"
+                    android:layout_width="0dp"
                     android:layout_height="65dp"
+                    android:layout_marginStart="4dp"
                     android:layout_marginTop="65dp"
+                    android:layout_marginEnd="4dp"
                     android:orientation="horizontal"
-                    design:layout_constraintTop_toTopOf="parent"
-                    tools:layout_editor_absoluteX="6dp">
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    design:layout_constraintTop_toTopOf="parent">
 
                     <ImageView
                         android:id="@+id/imageView11"
@@ -76,12 +77,15 @@
 
                 <LinearLayout
                     android:id="@+id/linearLayout3"
-                    android:layout_width="379dp"
+                    android:layout_width="0dp"
                     android:layout_height="65dp"
+                    android:layout_marginStart="6dp"
                     android:layout_marginTop="45dp"
+                    android:layout_marginEnd="6dp"
                     android:orientation="horizontal"
-                    design:layout_constraintTop_toBottomOf="@+id/linearLayout2"
-                    tools:layout_editor_absoluteX="8dp">
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    design:layout_constraintTop_toBottomOf="@+id/linearLayout2">
 
                     <ImageView
                         android:id="@+id/imageView5"
@@ -104,12 +108,16 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="379dp"
+                    android:id="@+id/linearLayout"
+                    android:layout_width="0dp"
                     android:layout_height="65dp"
+                    android:layout_marginStart="6dp"
                     android:layout_marginTop="8dp"
+                    android:layout_marginEnd="6dp"
                     android:orientation="horizontal"
-                    design:layout_constraintTop_toBottomOf="@+id/linearLayout3"
-                    tools:layout_editor_absoluteX="8dp">
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    design:layout_constraintTop_toBottomOf="@+id/linearLayout3">
 
                     <ImageView
                         android:id="@+id/imageView12"
@@ -170,12 +178,6 @@
                 android:layout_marginLeft="300dp"
                 android:text="Confirmar"
                 android:textAlignment="textEnd" />
-
-            <android.support.constraint.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="100dp">
-
-            </android.support.constraint.ConstraintLayout>
 
         </LinearLayout>
     </ScrollView>

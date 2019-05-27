@@ -15,11 +15,9 @@ public class MenuBottomHomepage extends AppCompatActivity {
         setContentView(R.layout.activity_menu_bottom_homepage);
     }
     public void crearLiga(View view){
-        System.out.println("Crear");
     }
 
     public void unirseLiga(View view){
-        System.out.println("Unirse");
     }
 
 }

@@ -2,6 +2,7 @@ package com.example.teamleaguebagit.MenuBottom;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 
 import com.example.teamleaguebagit.R;
 
@@ -11,5 +12,6 @@ public class MenuBottomAlineacion extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_bottom_alineacion);
     }
+    public void clickjugador(View view){}
 }
 
