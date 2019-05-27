@@ -3,29 +3,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <item android:title="Mis ligas">
+    <item android:title="@string/mis_ligas">
         <menu>
             <item
                 android:id="@+id/liga1"
                 android:icon="@drawable/pelota"
-                android:title="Mi liga 1" />
+                android:title="@string/mi_liga_1" />
             <item
                 android:id="@+id/liga2"
                 android:icon="@drawable/pelota"
-                android:title="Mi liga 2" />
+                android:title="@string/mi_liga_2" />
         </menu>
     </item>
 
-    <item android:title="Usuario">
+    <item android:title="@string/usuario">
         <menu>
             <item
                 android:id="@+id/config"
                 android:icon="@drawable/ajustes"
-                android:title="Configuración" />
+                android:title="@string/configuraci_n" />
             <item
-                android:id="@+id/exit"
+                android:id="@+id/salir"
                 android:icon="@drawable/salir"
-                android:title="Salir" />
+                android:title="@string/cerrar_sesi_n" />
         </menu>
     </item>
 

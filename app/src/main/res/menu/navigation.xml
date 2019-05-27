@@ -5,32 +5,30 @@
         android:id="@+id/inicio"
         android:enabled="true"
         android:icon="@drawable/ic_home_black_24dp"
-        android:title="Inicio" />
+        android:title="@string/inicio" />
 
     <item
         android:id="@+id/ali"
         android:enabled="true"
         android:icon="@drawable/alineacion"
-        android:title="Alineación" />
+        android:title="@string/alineaci_n" />
 
     <item
         android:id="@+id/mercado"
         android:enabled="true"
         android:icon="@drawable/mercado"
-        android:title="Mercado" />
+        android:title="@string/mercado" />
 
     <item
         android:id="@+id/clasificacion"
         android:enabled="true"
         android:icon="@drawable/clasificacion"
-        android:title="Clasificación" />
+        android:title="@string/clasificaci_n" />
 
     <item
         android:id="@+id/jornada"
         android:enabled="true"
         android:icon="@drawable/jornada"
-        android:title="Jornada" />
-
-
+        android:title="@string/jornada" />
 
 </menu>
