@@ -1,4 +1,4 @@
-package com.example.teamleaguebagit;
+package com.example.teamleaguebagit.Conexiones;
 
 import android.os.StrictMode;
 import android.widget.Toast;
