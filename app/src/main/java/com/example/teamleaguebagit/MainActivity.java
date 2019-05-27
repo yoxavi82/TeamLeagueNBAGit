@@ -12,6 +12,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.teamleaguebagit.Conexiones.Conexion;
+
+import java.sql.Connection;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -46,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
             Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.ToastErrorMain),Toast.LENGTH_SHORT);
             toast.show();
         }else {
+            Connection conexion = Conexion.obtenerConexion();
             if(loginCorrecto){
                 if (recordarUser.isChecked()) {
                     SharedPreferences prefs = getSharedPreferences("Usuario", Context.MODE_PRIVATE);
