@@ -12,17 +12,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.teamleaguebagit.R;
-
-import java.sql.Connection;
+import com.example.teamleaguebagit.Conexiones.UsuarioConexiones;
+import com.example.teamleaguebagit.pojos.PasswordUsuarios;
 
 public class MainActivity extends AppCompatActivity {
 
     Button entrar,resgitrar;
     CheckBox recordarUser;
     ImageView info;
-    TextView usuario,password;
-    Boolean loginCorrecto = true;
+    TextView usuario,password;;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,36 +35,44 @@ public class MainActivity extends AppCompatActivity {
         resgitrar = findViewById(R.id.RegistrarMain);
         usuario = findViewById(R.id.Usuario);
         password = findViewById(R.id.Password);
-        if(contra!=null&&!contra.isEmpty()&&username!=null&&!contra.isEmpty()){
-            password.setText(contra+"");
-            usuario.setText(username+"");
-            login(entrar);
+        if(Actual.getIniciarSesion()){
+            if(contra!=null&&!contra.isEmpty()&&username!=null&&!contra.isEmpty()){
+                password.setText(contra+"");
+                usuario.setText(username+"");
+                login(entrar);
+            }
         }
     }
 
     public  void login(View view){
         if(usuario.getText().toString().isEmpty()||password.getText().toString().isEmpty()){
-            Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.ToastErrorMain),Toast.LENGTH_SHORT);
-            toast.show();
+            errorLogin(R.string.ToastErrorMain);
         }else {
-            Connection conexion = Conexion.obtenerConexion();
-            if(loginCorrecto){
-                if (recordarUser.isChecked()) {
-                    SharedPreferences prefs = getSharedPreferences("Usuario", Context.MODE_PRIVATE);
-                    SharedPreferences.Editor editor = prefs.edit();
-                    editor.putString("Username", usuario.getText() + "");
-                    editor.putString("Password", password.getText() + "");
-                    editor.commit();
+            UsuarioConexiones user = new UsuarioConexiones();
+            PasswordUsuarios pass = user.login(usuario.getText().toString());
+            if(pass.getPassword()!=null){
+                if(pass.getPassword().equals(password.getText().toString())){
+                    if (recordarUser.isChecked()) {
+                        SharedPreferences prefs = getSharedPreferences("Usuario", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = prefs.edit();
+                        editor.putString("Username", usuario.getText() + "");
+                        editor.putString("Password", password.getText() + "");
+                        editor.commit();
+                    }
+                    Intent intent = new Intent(this, Homepage.class);
+                    startActivity(intent);
+                }else{
+                    errorLogin(R.string.ErrorLogin);
                 }
-                Intent intent = new Intent(this, Homepage.class);
-                startActivity(intent);
             }else{
-                Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.ErrorLogin),Toast.LENGTH_SHORT);
-                toast.show();
+                errorLogin(R.string.ErrorLogin);
             }
-
-
         }
+    }
+
+    private void errorLogin(int p) {
+        Toast toast = Toast.makeText(getApplicationContext(), getString(p), Toast.LENGTH_SHORT);
+        toast.show();
     }
 
     public void registro(View view){

@@ -29,22 +29,15 @@ public class UsuarioConexiones implements UsuarioRepository {
             Connection connection = Conexion.obtenerConexion();
             if (connection == null) {
             } else {
-
-                //do something with your connection, in this case I executed a query
-                ResultSet rs = null;
                 String query ="Insert into Usuarios (IdUsuario,Nombre,Apellidos,Correo,FechaNacimiento,Admin)" +
                         " VALUES ('"+usuario.getIdUsuario()+"','"+usuario.getNombre()+"','"+usuario.getApellidos()
                         +"','"+usuario.getCorreo()+"','"+usuario.getFechaNacimiento()+"',0)";
 
                 Statement stmt = (Statement) connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-
                 stmt.executeUpdate(query);
-//                rs.next();
-//                connection.close();
             }
 
-        }catch (Exception ex)
-        {
+        }catch (Exception ex){
             ex.printStackTrace();
         }
         return true;
@@ -70,22 +63,30 @@ public class UsuarioConexiones implements UsuarioRepository {
     }
 
     @Override
-    public PasswordUsuarios login(Usuarios usuario) {
-//        Session session = SessionFactoryUtil.getSessionFactory().openSession();
-//        Transaction tx = null;
+    public PasswordUsuarios login(String user) {
         PasswordUsuarios buscado = new PasswordUsuarios();
-//        try {
-//            tx = session.beginTransaction();
-//            buscado = (PasswordUsuarios) session.get(PasswordUsuarios.class, usuario.getIdUsuario());
-//            tx.commit();
-//        } catch (HibernateException e) {
-//            if (tx != null)
-//                tx.rollback();
-//            e.printStackTrace();
-//        } finally {
-//            session.close();
-//        }
+        try{
+            Connection connection = Conexion.obtenerConexion();
+            if (connection == null) {
+            } else {
+                ResultSet rs = null;
+                String query ="Select * FROM PasswordUsuarios WHERE IdUsuario='"+user+"'";
+
+                Statement stmt = (Statement) connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+
+                rs = stmt.executeQuery(query);
+                if(rs.next()){
+                    buscado.setPassword(rs.getString("Password"));
+                    buscado.setIdUsuario(user);
+                }else{
+                    return null;
+                }
+            }
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
         return buscado;
+
     }
 
     @Override
@@ -124,5 +125,26 @@ public class UsuarioConexiones implements UsuarioRepository {
 //            session.close();
 //        }
         return (ArrayList<Usuarios>) usuarios;
+    }
+
+    @Override
+    public boolean registrarPassword(PasswordUsuarios passwordUsuarios) {
+        try{
+            Connection connection = Conexion.obtenerConexion();
+            if (connection == null) {
+            } else {
+                String query ="Insert into PasswordUsuarios (IdUsuario,Password) VALUES" +
+                        " ('"+passwordUsuarios.getIdUsuario()+"','"+passwordUsuarios.getPassword()+"')";
+
+                Statement stmt = (Statement) connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+
+                stmt.executeUpdate(query);
+//                rs.next();
+//                connection.close();
+            }
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return true;
     }
 }

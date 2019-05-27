@@ -118,6 +118,7 @@ public class Mercado extends AppCompatActivity  implements NavigationView.OnNavi
                 alert.setMessage(R.string.CerrarSesionPregunta);
                 alert.setNegativeButton(R.string.CerrarSesion, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
+                        Actual.setIniciarSesion();
                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);

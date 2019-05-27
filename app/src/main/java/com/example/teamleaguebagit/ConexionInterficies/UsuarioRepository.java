@@ -9,7 +9,8 @@ import java.util.ArrayList;
 public interface UsuarioRepository {
     boolean register(Usuarios usuario);
     boolean update(Usuarios usuario);
-    PasswordUsuarios login(Usuarios usuario);
+    PasswordUsuarios login(String user);
     Usuarios get(String id);
     ArrayList<Usuarios> getAll();
+    boolean registrarPassword(PasswordUsuarios passwordUsuarios);
 }

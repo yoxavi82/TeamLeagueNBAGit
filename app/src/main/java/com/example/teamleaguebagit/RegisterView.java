@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.teamleaguebagit.Conexiones.UsuarioConexiones;
+import com.example.teamleaguebagit.pojos.PasswordUsuarios;
 import com.example.teamleaguebagit.pojos.Usuarios;
 
 import java.sql.Connection;
@@ -27,7 +28,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class RegisterView extends AppCompatActivity {
-    TextView usuario,nombre,apellidos,correo;
+    TextView usuario,nombre,apellidos,correo,contra;
     String fechaDia,fechaMes,fechaAño;
     String fechaNacimiento;
     Spinner dia,mes,año;
@@ -47,6 +48,7 @@ public class RegisterView extends AppCompatActivity {
         nombre = findViewById(R.id.Nombre);
         apellidos = findViewById(R.id.Apellidos);
         correo = findViewById(R.id.Correo);
+        contra = findViewById(R.id.Password);
         dia = findViewById(R.id.dia);
         mes = findViewById(R.id.mes);
         año = findViewById(R.id.año);
@@ -135,8 +137,10 @@ public class RegisterView extends AppCompatActivity {
             Date date1=new SimpleDateFormat("dd/MM/yyyy").parse(fechaNacimiento);
             Usuarios registrado = new Usuarios(usuario.getText().toString(),nombre.getText().toString(),
                     apellidos.getText().toString(),correo.getText().toString(), new java.sql.Date( date1.getTime()),0);
+            PasswordUsuarios passRegistrado = new PasswordUsuarios(registrado,contra.getText().toString());
             UsuarioConexiones con = new UsuarioConexiones();
             con.register(registrado);
+            con.registrarPassword(passRegistrado);
         }
     }
 }
