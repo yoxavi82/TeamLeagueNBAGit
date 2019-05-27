@@ -200,7 +200,8 @@ public class Alineacion extends AppCompatActivity  implements NavigationView.OnN
 
                     }
 
-                    @Override public void onLongItemClick(View view, int position) {
+                    @Override
+                    public void onLongItemClick(View view, int position) {
 
 
                         // do whatever
@@ -274,33 +275,33 @@ public class Alineacion extends AppCompatActivity  implements NavigationView.OnN
     }
     public void llenarArrayDraw(){
         ImageView img= findViewById(R.id.imageView11);
-        img.setImageResource(R.drawable.uno);
-        myImageListSuplentes.add( img.getDrawable() );
-        img.setImageResource(R.drawable.dos);
-        myImageListSuplentes.add( img.getDrawable() );
-        img.setImageResource(R.drawable.tres);
-        myImageListSuplentes.add( img.getDrawable() );
-        img.setImageResource(R.drawable.uno);
-        myImageListSuplentes.add( img.getDrawable() );
-        img.setImageResource(R.drawable.dos);
-        myImageListSuplentes.add( img.getDrawable() );
-        img.setImageResource(R.drawable.tres);
-        myImageListSuplentes.add( img.getDrawable() );
-        img.setImageResource(R.drawable.pelota);
-
-        img.setImageResource(R.drawable.uno);
-        myImageListNoConv.add( img.getDrawable() );
-        img.setImageResource(R.drawable.dos);
-        myImageListNoConv.add( img.getDrawable() );
-        img.setImageResource(R.drawable.tres);
-        myImageListNoConv.add( img.getDrawable() );
-        img.setImageResource(R.drawable.uno);
-        myImageListNoConv.add( img.getDrawable() );
-        img.setImageResource(R.drawable.dos);
-        myImageListNoConv.add( img.getDrawable() );
-        img.setImageResource(R.drawable.tres);
-        myImageListNoConv.add( img.getDrawable() );
-        img.setImageResource(R.drawable.pelota);
+//        img.setImageResource(R.drawable.uno);
+//        myImageListSuplentes.add( img.getDrawable() );
+//        img.setImageResource(R.drawable.dos);
+//        myImageListSuplentes.add( img.getDrawable() );
+//        img.setImageResource(R.drawable.tres);
+//        myImageListSuplentes.add( img.getDrawable() );
+//        img.setImageResource(R.drawable.uno);
+//        myImageListSuplentes.add( img.getDrawable() );
+//        img.setImageResource(R.drawable.dos);
+//        myImageListSuplentes.add( img.getDrawable() );
+//        img.setImageResource(R.drawable.tres);
+//        myImageListSuplentes.add( img.getDrawable() );
+//        img.setImageResource(R.drawable.pelota);
+//
+//        img.setImageResource(R.drawable.uno);
+//        myImageListNoConv.add( img.getDrawable() );
+//        img.setImageResource(R.drawable.dos);
+//        myImageListNoConv.add( img.getDrawable() );
+//        img.setImageResource(R.drawable.tres);
+//        myImageListNoConv.add( img.getDrawable() );
+//        img.setImageResource(R.drawable.uno);
+//        myImageListNoConv.add( img.getDrawable() );
+//        img.setImageResource(R.drawable.dos);
+//        myImageListNoConv.add( img.getDrawable() );
+//        img.setImageResource(R.drawable.tres);
+//        myImageListNoConv.add( img.getDrawable() );
+//        img.setImageResource(R.drawable.pelota);
 
 
     }
