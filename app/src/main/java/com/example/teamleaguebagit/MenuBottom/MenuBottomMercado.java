@@ -4,7 +4,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.example.teamleaguebagit.R;
-
 public class MenuBottomMercado extends AppCompatActivity {
 
     @Override

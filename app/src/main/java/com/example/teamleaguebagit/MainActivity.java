@@ -12,6 +12,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.teamleaguebagit.R;
+
 public class MainActivity extends AppCompatActivity {
 
     Button entrar,resgitrar;
