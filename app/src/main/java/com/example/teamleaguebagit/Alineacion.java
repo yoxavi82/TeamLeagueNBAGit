@@ -34,7 +34,6 @@ public class Alineacion extends AppCompatActivity  implements NavigationView.OnN
     boolean moving = false;
     LinearLayout a;
     View parentAnterior;
-    LinearLayout layout;
     LinearLayout layourtPrincipal;
     private RecyclerView recyclerView;
     private ArrayList<PlayerModel> imageModelArrayList;
@@ -57,9 +56,7 @@ public class Alineacion extends AppCompatActivity  implements NavigationView.OnN
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alineacion);
-        //xavi
-        layout = findViewById(R.id.layout);
-        //test = findViewById(R.id.test);
+
         layourtPrincipal = findViewById(R.id.layoutPrincipal);
         llenarArrayDraw();
         suplentes = (RecyclerView) findViewById(R.id.suplentes);
