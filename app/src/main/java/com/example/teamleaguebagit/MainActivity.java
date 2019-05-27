@@ -12,7 +12,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.teamleaguebagit.R;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -20,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
     CheckBox recordarUser;
     ImageView info;
     TextView usuario,password;
+    Boolean loginCorrecto = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,15 +46,21 @@ public class MainActivity extends AppCompatActivity {
             Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.ToastErrorMain),Toast.LENGTH_SHORT);
             toast.show();
         }else {
-            if (recordarUser.isChecked()) {
-                SharedPreferences prefs = getSharedPreferences("Usuario", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = prefs.edit();
-                editor.putString("Username", usuario.getText() + "");
-                editor.putString("Password", password.getText() + "");
-                editor.commit();
+            if(loginCorrecto){
+                if (recordarUser.isChecked()) {
+                    SharedPreferences prefs = getSharedPreferences("Usuario", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putString("Username", usuario.getText() + "");
+                    editor.putString("Password", password.getText() + "");
+                    editor.commit();
+                }
                 Intent intent = new Intent(this, Homepage.class);
                 startActivity(intent);
+            }else{
+                Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.ErrorLogin),Toast.LENGTH_SHORT);
+                toast.show();
             }
+
 
         }
     }

@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
@@ -34,8 +33,6 @@ public class Alineacion extends AppCompatActivity  implements NavigationView.OnN
     boolean moving = false;
     LinearLayout a;
     View parentAnterior;
-    LinearLayout layout;
-    LinearLayout layourtPrincipal;
     private RecyclerView recyclerView;
     private ArrayList<PlayerModel> imageModelArrayList;
     Integer anterior=null;
@@ -57,10 +54,6 @@ public class Alineacion extends AppCompatActivity  implements NavigationView.OnN
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alineacion);
-        //xavi
-        layout = findViewById(R.id.layout);
-        //test = findViewById(R.id.test);
-        layourtPrincipal = findViewById(R.id.layoutPrincipal);
         llenarArrayDraw();
         suplentes = (RecyclerView) findViewById(R.id.suplentes);
         suplentes.setBackgroundColor(Color.parseColor("#FFA400"));
@@ -127,7 +120,7 @@ public class Alineacion extends AppCompatActivity  implements NavigationView.OnN
     private void inintRecycleView(RecyclerView recyclerView) {
 
         recyclerView.addOnItemTouchListener(
-                new RecyclerItemClickListener(this, recyclerView ,new RecyclerItemClickListener.OnItemClickListener() {
+                new RecyclerTouchListener(this, recyclerView ,new RecyclerTouchListener.ClickListener() {
                     @Override public void onItemClick(View view, int position) {
                         View parent = (View)view.getParent();
 
@@ -350,7 +343,7 @@ public class Alineacion extends AppCompatActivity  implements NavigationView.OnN
         for(int i = 0; i < myImageListNoConv.size(); i++){
             PlayerModel playerModel = new PlayerModel();
             playerModel.setName(myImageNameListNoConv.get(i));
-            playerModel.setImage_drawable(myImageListNoConv.get(i));
+//            playerModel.setImage_drawable(myImageListNoConv.get(i));
 
             list.add(playerModel);
         }
@@ -365,7 +358,7 @@ public class Alineacion extends AppCompatActivity  implements NavigationView.OnN
         for(int i = 0; i < myImageListSuplentes.size(); i++){
             PlayerModel playerModel = new PlayerModel();
             playerModel.setName(myImageNameListSuplentes.get(i));
-            playerModel.setImage_drawable(myImageListSuplentes.get(i));
+//            playerModel.setImage_drawable(myImageListSuplentes.get(i));
 
             list.add(playerModel);
         }

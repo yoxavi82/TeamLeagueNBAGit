@@ -67,4 +67,5 @@
     <string name="clasificaci_n">Clasificación</string>
     <string name="jornada">Jornada</string>
     <string name="ToastErrorMain">Debes introducir una contraseña y usuario</string>
+    <string name="ErrorLogin">Usuario y/o contraseña incorrecto</string>
 </resources>

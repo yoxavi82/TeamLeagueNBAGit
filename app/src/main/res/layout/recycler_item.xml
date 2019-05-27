@@ -29,8 +29,8 @@
 
                 android:layout_height="50dp"
                 android:gravity="center"
-                android:scaleType="fitXY"
-                android:src="@drawable/dos" />
+                android:scaleType="fitXY"/>
+                <!--android:src="@drawable/dos" />-->
 
             <TextView
                 android:id="@+id/tv"
