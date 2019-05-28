@@ -13,16 +13,28 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.teamleaguebagit.pojos.EquiposUsuarios;
+import com.example.teamleaguebagit.pojos.Jugadores;
+import com.example.teamleaguebagit.pojos.Plantillas;
+
+import java.util.ArrayList;
 import java.util.Collections;
 
 public class Clasificacion extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener{
     BottomNavigationView navigationBottom;
+    View formElementsView;
+    ArrayList<lista_clasificacion> lista;
+    ListView lv, lv_plantilla;
+    TextView nombre_usuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +43,12 @@ public class Clasificacion extends AppCompatActivity  implements NavigationView.
         setContentView(R.layout.activity_clasificacion);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         TextView titulo = findViewById(R.id.toolbar_title);
+
+        LayoutInflater inflater = getLayoutInflater();
+        formElementsView = inflater.inflate(R.layout.confirmar,  null);
+        lista = new ArrayList<lista_clasificacion>();
+        lv = (ListView) findViewById(R.id.lista_clasificacion);
+        lv_plantilla = (ListView) findViewById(R.id.lv_plantilla);
 
         setSupportActionBar(toolbar);
 
@@ -80,8 +98,52 @@ public class Clasificacion extends AppCompatActivity  implements NavigationView.
 
             }
         });
+    }
 
+    public void initLista(){
+        ArrayList <EquiposUsuarios> li = null;
+        ArrayList<lista_clasificacion> lis = new ArrayList<lista_clasificacion>();
+        for (EquiposUsuarios e: li){
+            lista_clasificacion l = new lista_clasificacion(e.getUsuarios().getIdUsuario(), e.getPuntosTotales(), e.getUsuarios());
+            lista.add(l);
+        }
+        //Falta ordenarlos
+        AdapterListaClasificacionGeneral adapter = new AdapterListaClasificacionGeneral(this, lista);
+        lv.setAdapter(adapter);
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                LayoutInflater inflater = getLayoutInflater();
+                final View view1 = inflater.inflate(R.layout.vista_usuario, null);
+                final AlertDialog dialogo = new AlertDialog.Builder(Clasificacion.this).setView(view1).create();
+                nombre_usuario = view1.findViewById(R.id.vista_usuario_nombre);
+                nombre_usuario.setText(lista.get(position).user.getIdUsuario());
+                ArrayList<Jugadores> plantilla = null; //consulta a base de datos sobre plantilla entera sobre usuario
+                AdapterListaPlantillaPorUsuario lista_p = new AdapterListaPlantillaPorUsuario(Clasificacion.this,plantilla);
+                lv_plantilla.setAdapter(lista_p);
+                //Hasta aqui esta rellenada el arrayList del dialogo abierto
+                lv_plantilla.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        LayoutInflater inflater = getLayoutInflater();
+                        final View view1 = inflater.inflate(R.layout.vista_jugador, null);
+                        final AlertDialog dialogo = new AlertDialog.Builder(Clasificacion.this).setView(view1).create();
+                        TextView nombre = view1.findViewById(R.id.vista_jugador_nombre);
+                        TextView precio = view1.findViewById(R.id.vista_jugador_precio_compra);
+                        TextView puntos = view1.findViewById(R.id.vista_jugador_puntos);
+                        TextView equipo = view1.findViewById(R.id.vista_jugador_equipo);
+                        TextView posicion = view1.findViewById(R.id.vista_jugador_pos);
+                        TextView fecha = view1.findViewById(R.id.vista_jugador_fecha);
+                        TextView precio_compra = view1.findViewById(R.id.vista_jugador_precio_compra);
+                        Jugadores jug = null; //consulta datos jugador
+                        Plantillas datos = null; //consulta por id de jugador + id liga para saber fecha y precio de compra
+                        //añadir datos a los text view
+
+                    }
+                });
+            }
+        });
     }
 
     //Pulsar para atrás

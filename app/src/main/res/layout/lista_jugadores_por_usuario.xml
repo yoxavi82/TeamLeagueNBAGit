@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="80dp">
 
@@ -8,20 +10,16 @@
         android:layout_width="148dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="140dp"
+        android:layout_marginLeft="180dp"
         android:layout_marginTop="26dp"
         android:text="Large Text"
         android:textAlignment="center"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
-    <TextView
-        android:id="@+id/Posicion"
+    <ImageView
+        android:id="@+id/lista_imagen_jugador"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:fontFamily="sans-serif-black"
-        android:text="1"
-        android:textColor="@android:color/holo_orange_dark"
-        android:textSize="50sp" />
+        tools:srcCompat="@tools:sample/avatars[2]" />
 
 </RelativeLayout>

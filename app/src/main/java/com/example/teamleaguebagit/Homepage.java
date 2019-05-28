@@ -35,7 +35,6 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
         Toolbar toolbar =findViewById(R.id.toolbar);
         TextView titulo = findViewById(R.id.toolbar_title);
 
-
         crear = findViewById(R.id.crearId);
         unir = findViewById(R.id.unirseId);
         setSupportActionBar(toolbar);
@@ -62,7 +61,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
                     case R.id.inicio:
                         break;
                     case R.id.ali:
-                        if(Actual.ligaActual!=null) {
+                        if(isInLeague()) {
                             i = new Intent(Homepage.super.getApplication(), Alineacion.class);
                             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(i);
@@ -71,7 +70,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
                         }
                         break;
                     case R.id.mercado:
-                        if(Actual.ligaActual!=null) {
+                        if(isInLeague()) {
                             i = new Intent(Homepage.super.getApplication(), Mercado.class);
                             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(i);
@@ -80,7 +79,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
                         }
                         break;
                     case R.id.jornada:
-                        if(Actual.ligaActual!=null) {
+                        if(isInLeague()) {
                             i = new Intent(Homepage.super.getApplication(), Jornada.class);
                             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(i);
@@ -89,7 +88,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
                         }
                         break;
                     case R.id.clasificacion:
-                        if(Actual.ligaActual!=null) {
+                        if(isInLeague()) {
                             i = new Intent(Homepage.super.getApplication(), Clasificacion.class);
                             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(i);
@@ -101,6 +100,11 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
                 return false;
             }
         });
+    }
+
+    private boolean isInLeague() {
+        //return Actual.ligaActual != null;
+        return true;
     }
 
     private void errorLiga() {

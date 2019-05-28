@@ -150,7 +150,6 @@ public class UsuarioConexiones implements UsuarioRepository {
             } else {
                 String query ="Insert into PasswordUsuarios (IdUsuario,Password) VALUES" +
                         " ('"+passwordUsuarios.getIdUsuario()+"','"+passwordUsuarios.getPassword()+"')";
-
                 Statement stmt = (Statement) connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 
                 stmt.executeUpdate(query);

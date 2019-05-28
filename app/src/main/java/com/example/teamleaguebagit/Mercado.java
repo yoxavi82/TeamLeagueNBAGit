@@ -13,15 +13,28 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.teamleaguebagit.R;
+import com.example.teamleaguebagit.pojos.Jugadores;
+
+import java.util.ArrayList;
 
 public class Mercado extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener{
     BottomNavigationView navigationBottom;
+    View formElementsView;
+    ArrayList<Jugadores> lista;
+    ListView lv;
+    EditText precio ;
+    TextView  alerta_puja;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +43,11 @@ public class Mercado extends AppCompatActivity  implements NavigationView.OnNavi
         setContentView(R.layout.activity_mercado);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         TextView titulo = findViewById(R.id.toolbar_title);
+        LayoutInflater inflater = getLayoutInflater();
+        formElementsView = inflater.inflate(R.layout.confirmar,  null);
+        lista = new ArrayList<Jugadores>();
+        lv = (ListView) findViewById(R.id.lista_mercado);
+        initMercado();
 
 
         setSupportActionBar(toolbar);
@@ -80,8 +98,60 @@ public class Mercado extends AppCompatActivity  implements NavigationView.OnNavi
 
             }
         });
+    }
 
-
+    public void initMercado(){
+        Jugadores j1 = new Jugadores("1", "Alvaro", "Vazquez", "5", 1, 20000000, "Interior", 5, 250, 97 );
+        Jugadores j2 = new Jugadores("2", "Xavi", "Vazquez", "7", 1, 100000, "Exterior", 5, 25, 97 );
+        Jugadores j3 = new Jugadores("3", "Alberto", "Vazquez", "10", 1, 20000, "Base", 5, 200, 97 );
+        Jugadores j4 = new Jugadores("4", "LeBron", "James", "23", 1, 40000000, "Base", 5, 900, 97 );
+        lista.add(j1);
+        lista.add(j2);
+        lista.add(j3);
+        lista.add(j4);
+        AdapterListaMercado adapter = new AdapterListaMercado(this, lista);
+        lv.setAdapter(adapter);
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+                LayoutInflater inflater = getLayoutInflater();
+                final View view1 = inflater.inflate(R.layout.confirmar_puja, null);
+                final AlertDialog dialogo = new AlertDialog.Builder(Mercado.this).setView(view1).setCancelable(false).setPositiveButton("Confirmar", null).setNegativeButton("Cancelar", null).create();
+                precio = view1.findViewById(R.id.preciopuja);
+                alerta_puja = view1.findViewById(R.id.alerta_puja);
+                alerta_puja.setVisibility(View.GONE);
+                final int precioInicial = lista.get(position).getPrecioMercado();
+                precio.setText(precioInicial + "");
+                dialogo.setOnShowListener(new DialogInterface.OnShowListener() {
+                    @Override
+                    public void onShow(final DialogInterface dialog) {
+                        Button button = ((AlertDialog) dialogo).getButton(AlertDialog.BUTTON_POSITIVE);
+                        button.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                int precioActual = Integer.parseInt(precio.getText().toString());
+                                if (precioActual< precioInicial){
+                                    if (alerta_puja.getVisibility() == View.GONE){
+                                        alerta_puja.setVisibility(View.VISIBLE);
+                                    }
+                                }
+                                else{
+                                    dialogo.dismiss();
+                                }
+                            }
+                        });
+                        Button button2 = ((AlertDialog) dialogo).getButton(AlertDialog.BUTTON_NEGATIVE);
+                        button2.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                dialogo.dismiss();
+                            }
+                        });
+                    }
+                });
+                dialogo.show();
+            }
+        });
     }
 
     //Pulsar para atrás
