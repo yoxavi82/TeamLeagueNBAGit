@@ -54,7 +54,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/username"
+        android:id="@+id/id_liga"
         android:layout_width="276dp"
         android:layout_height="47dp"
         android:layout_marginStart="16dp"
@@ -66,15 +66,15 @@
         app:layout_constraintTop_toBottomOf="@+id/Titulo" />
 
     <EditText
-        android:id="@+id/Nombre"
+        android:id="@+id/Contraseña"
         android:layout_width="276dp"
         android:layout_height="46dp"
         android:layout_marginTop="12dp"
         android:ems="10"
         android:hint="Nombre"
         android:inputType="textPersonName"
-        app:layout_constraintStart_toStartOf="@+id/username"
-        app:layout_constraintTop_toBottomOf="@+id/username" />
+        app:layout_constraintStart_toStartOf="@+id/id_liga"
+        app:layout_constraintTop_toBottomOf="@+id/id_liga" />
 
     <EditText
         android:id="@+id/Apellidos"
@@ -84,8 +84,8 @@
         android:ems="10"
         android:hint="Apellidos"
         android:inputType="textPersonName"
-        app:layout_constraintStart_toStartOf="@+id/Nombre"
-        app:layout_constraintTop_toBottomOf="@+id/Nombre" />
+        app:layout_constraintStart_toStartOf="@+id/Contraseña"
+        app:layout_constraintTop_toBottomOf="@+id/Contraseña" />
 
     <EditText
         android:id="@+id/Correo"
@@ -121,8 +121,8 @@
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.444"
-        app:layout_constraintStart_toEndOf="@+id/username"
-        app:layout_constraintTop_toTopOf="@+id/username"
+        app:layout_constraintStart_toEndOf="@+id/id_liga"
+        app:layout_constraintTop_toTopOf="@+id/id_liga"
         app:srcCompat="@drawable/verificado" />
 
     <EditText
