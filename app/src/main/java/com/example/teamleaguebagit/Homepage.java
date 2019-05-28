@@ -48,7 +48,9 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-//        nombreNav.setText(Actual.getUsuarioActual().getNombre()+" "+Actual.getUsuarioActual().getApellidos());
+        View headView = navigationView.getHeaderView(0);
+        TextView nombre = headView.findViewById(R.id.NombreUser);
+        nombre.setText(Actual.getUsuarioActual().getNombre()+" "+Actual.getUsuarioActual().getApellidos());
 
         navigationBottom  = findViewById(R.id.bottom_navigation_view);
         navigationBottom.setSelectedItemId(R.id.inicio);

@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -40,6 +41,10 @@ public class Clasificacion extends AppCompatActivity  implements NavigationView.
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        View headView = navigationView.getHeaderView(0);
+        TextView nombre = headView.findViewById(R.id.NombreUser);
+        nombre.setText(Actual.getUsuarioActual().getNombre()+" "+Actual.getUsuarioActual().getApellidos());
 
         navigationBottom  = (BottomNavigationView) findViewById(R.id.bottom_navigation_view);
         navigationBottom.setSelectedItemId(R.id.clasificacion);

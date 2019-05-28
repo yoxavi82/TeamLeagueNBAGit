@@ -42,6 +42,10 @@ public class Mercado extends AppCompatActivity  implements NavigationView.OnNavi
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        View headView = navigationView.getHeaderView(0);
+        TextView nombre = headView.findViewById(R.id.NombreUser);
+        nombre.setText(Actual.getUsuarioActual().getNombre()+" "+Actual.getUsuarioActual().getApellidos());
+
         navigationBottom  = (BottomNavigationView) findViewById(R.id.bottom_navigation_view);
         navigationBottom.setSelectedItemId(R.id.mercado);
         navigationBottom.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {

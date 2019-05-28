@@ -15,6 +15,8 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 public class Jornada extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener{
     BottomNavigationView navigationBottom;
@@ -36,6 +38,10 @@ public class Jornada extends AppCompatActivity  implements NavigationView.OnNavi
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        View headView = navigationView.getHeaderView(0);
+        TextView nombre = headView.findViewById(R.id.NombreUser);
+        nombre.setText(Actual.getUsuarioActual().getNombre()+" "+Actual.getUsuarioActual().getApellidos());
 
         navigationBottom  = findViewById(R.id.bottom_navigation_view);
         navigationBottom.setSelectedItemId(R.id.jornada);

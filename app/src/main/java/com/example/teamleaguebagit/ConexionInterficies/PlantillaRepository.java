@@ -9,6 +9,6 @@ public interface PlantillaRepository {
     boolean addPlantilla(Plantillas plantilla);
     boolean updatePlantilla(Plantillas plantilla);
     ArrayList<Plantillas> getByIdJugador(String idJugador);
-    ArrayList<Plantillas> getByIdLoiga(String idLiga);
+    ArrayList<Plantillas> getByIdLiga(String idLiga);
     ArrayList<Plantillas> getByIdEquipo(String idEquipo);    
 }
