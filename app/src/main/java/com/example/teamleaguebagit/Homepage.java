@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.design.widget.NavigationView;
@@ -19,9 +18,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.example.teamleaguebagit.Conexiones.LigaConexiones;
-import com.example.teamleaguebagit.pojos.PasswordLigas;
 
 public class Homepage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     Button crear,unir;
@@ -108,7 +104,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
     }
 
     private void errorLiga() {
-        Toast.makeText(this,"Selecciona una liga",Toast.LENGTH_SHORT).show();
+        Toast.makeText(this,getString(R.string.SelectLeague),Toast.LENGTH_SHORT).show();
     }
 
     //Pulsar para atrás
@@ -136,6 +132,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
 
     public void unirseLiga(View view){
     }
+
     //Crear menu lateral
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

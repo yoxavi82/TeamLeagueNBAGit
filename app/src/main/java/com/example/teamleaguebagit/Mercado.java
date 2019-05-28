@@ -6,7 +6,6 @@ import android.content.pm.ActivityInfo;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
@@ -23,15 +22,21 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.teamleaguebagit.R;
+import com.example.teamleaguebagit.Conexiones.JugadorConexiones;
+import com.example.teamleaguebagit.Conexiones.PlantillaConexiones;
 import com.example.teamleaguebagit.pojos.Jugadores;
+import com.example.teamleaguebagit.pojos.Plantillas;
 
+import java.text.ParseException;
+import java.util.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public class Mercado extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener{
     BottomNavigationView navigationBottom;
     View formElementsView;
     ArrayList<Jugadores> lista;
+    ArrayList<Plantillas> plantillasMercado;
     ListView lv;
     EditText precio ;
     TextView  alerta_puja;
@@ -47,8 +52,11 @@ public class Mercado extends AppCompatActivity  implements NavigationView.OnNavi
         formElementsView = inflater.inflate(R.layout.confirmar,  null);
         lista = new ArrayList<Jugadores>();
         lv = (ListView) findViewById(R.id.lista_mercado);
-        initMercado();
-
+        try {
+            initMercado();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
         setSupportActionBar(toolbar);
 
@@ -100,15 +108,15 @@ public class Mercado extends AppCompatActivity  implements NavigationView.OnNavi
         });
     }
 
-    public void initMercado(){
-        Jugadores j1 = new Jugadores("1", "Alvaro", "Vazquez", "5", 1, 20000000, "Interior", 5, 250, 97 );
-        Jugadores j2 = new Jugadores("2", "Xavi", "Vazquez", "7", 1, 100000, "Exterior", 5, 25, 97 );
-        Jugadores j3 = new Jugadores("3", "Alberto", "Vazquez", "10", 1, 20000, "Base", 5, 200, 97 );
-        Jugadores j4 = new Jugadores("4", "LeBron", "James", "23", 1, 40000000, "Base", 5, 900, 97 );
-        lista.add(j1);
-        lista.add(j2);
-        lista.add(j3);
-        lista.add(j4);
+    public void initMercado() throws ParseException {
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+        Date date = formato.parse(new Date().toString());
+        PlantillaConexiones conexionesPlantilla = new PlantillaConexiones();
+        plantillasMercado = conexionesPlantilla.getByDate(new java.sql.Date( date.getTime()));
+        JugadorConexiones conexionesJugadores = new JugadorConexiones();
+        for(int i =0;i<plantillasMercado.size();i++){
+            lista.add(conexionesJugadores.getById(plantillasMercado.get(i).getJugadores().getIdJugador()));
+        }
         AdapterListaMercado adapter = new AdapterListaMercado(this, lista);
         lv.setAdapter(adapter);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
