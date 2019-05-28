@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/degradado"
+    tools:context=".CrearLigaActivity">
+
+    <TextView
+        android:id="@+id/Titulo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="76dp"
+        android:layout_marginEnd="104dp"
+        android:text="Crear Liga"
+        android:textSize="40dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/id_liga"
+        android:layout_width="208dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="72dp"
+        android:layout_marginEnd="76dp"
+        android:ems="10"
+        android:hint="Nombre de la liga"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Titulo" />
+
+    <EditText
+        android:id="@+id/Contraseña"
+        android:layout_width="208dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="44dp"
+        android:ems="10"
+        android:hint="Contraseña de la liga"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="@+id/id_liga"
+        app:layout_constraintTop_toBottomOf="@+id/id_liga" />
+
+    <Button
+        android:id="@+id/registrar"
+        android:layout_width="109dp"
+        android:layout_height="67dp"
+        android:layout_marginTop="48dp"
+        android:background="@android:color/black"
+        android:onClick="registrarLiga"
+        android:text="Crear liga"
+        android:textColor="@android:color/holo_orange_dark"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/Contraseña"
+        app:layout_constraintTop_toBottomOf="@+id/Contraseña" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="20dp" />
+
+</android.support.constraint.ConstraintLayout>

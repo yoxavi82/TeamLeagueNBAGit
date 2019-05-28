@@ -22,6 +22,9 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.teamleaguebagit.Conexiones.EquipoConexiones;
+import com.example.teamleaguebagit.Conexiones.EquipoUsuarioConexiones;
+import com.example.teamleaguebagit.Conexiones.LigaConexiones;
 import com.example.teamleaguebagit.pojos.EquiposUsuarios;
 import com.example.teamleaguebagit.pojos.Jugadores;
 import com.example.teamleaguebagit.pojos.Plantillas;
@@ -63,6 +66,7 @@ public class Clasificacion extends AppCompatActivity  implements NavigationView.
         View headView = navigationView.getHeaderView(0);
         TextView nombre = headView.findViewById(R.id.NombreUser);
         nombre.setText(Actual.getUsuarioActual().getNombre()+" "+Actual.getUsuarioActual().getApellidos());
+        initLista();
 
         navigationBottom  = (BottomNavigationView) findViewById(R.id.bottom_navigation_view);
         navigationBottom.setSelectedItemId(R.id.clasificacion);
@@ -101,7 +105,7 @@ public class Clasificacion extends AppCompatActivity  implements NavigationView.
     }
 
     public void initLista(){
-        ArrayList <EquiposUsuarios> li = null;
+        ArrayList <EquiposUsuarios> li = new EquipoUsuarioConexiones().getByLiga(Actual.getLigaActual().getIdLiga());
         ArrayList<lista_clasificacion> lis = new ArrayList<lista_clasificacion>();
         for (EquiposUsuarios e: li){
             lista_clasificacion l = new lista_clasificacion(e.getUsuarios().getIdUsuario(), e.getPuntosTotales(), e.getUsuarios());

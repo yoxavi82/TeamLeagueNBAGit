@@ -127,10 +127,14 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
         alert.show();
     }
 
-    public void crearLiga(View view){
+    public void unirseLiga(View view){
+        Intent intent = new Intent(this, BuscarLigaActivity.class);
+        startActivity(intent);
     }
 
-    public void unirseLiga(View view){
+    public void crearLiga(View view){
+        Intent intent = new Intent(this, CrearLigaActivity.class);
+        startActivity(intent);
     }
 
     //Crear menu lateral

@@ -31,4 +31,13 @@ public class Conexion {
         }
         return null;
     }
+    public static void cerrarConexion(Connection connection){
+        try {
+            if(connection!=null){
+                connection.close();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

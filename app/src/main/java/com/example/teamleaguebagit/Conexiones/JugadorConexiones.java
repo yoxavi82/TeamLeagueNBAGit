@@ -63,7 +63,7 @@ public class JugadorConexiones implements JugadorRepository {
                     jugador.setApellido(rs.getString("Apellido"));
                     jugador.setDorsal(rs.getString("Dorsal"));
                     jugador.setNombre(rs.getString("Nombre"));
-                    jugador.setEquipos(new EquipoConexiones().get(rs.getString("Equipos")));
+                    jugador.setEquipos(new EquipoConexiones().get(rs.getString("IdEquipo")));
                     jugador.setIdJugador(rs.getString("IdJugador"));
                     jugador.setLesionado(rs.getInt("Lesionado"));
                     jugador.setPrecioMercado(rs.getInt("PrecioMercado"));
