@@ -1,7 +1,5 @@
 package com.example.teamleaguebagit;
 
-import android.os.Looper;
-import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -16,12 +14,6 @@ import com.example.teamleaguebagit.Conexiones.UsuarioConexiones;
 import com.example.teamleaguebagit.pojos.PasswordUsuarios;
 import com.example.teamleaguebagit.pojos.Usuarios;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
