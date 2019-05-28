@@ -109,10 +109,8 @@ public class Mercado extends AppCompatActivity  implements NavigationView.OnNavi
     }
 
     public void initMercado() throws ParseException {
-        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-        Date date = formato.parse(new Date().toString());
         PlantillaConexiones conexionesPlantilla = new PlantillaConexiones();
-        plantillasMercado = conexionesPlantilla.getByDate(new java.sql.Date( date.getTime()));
+        plantillasMercado = conexionesPlantilla.getByDate(new java.sql.Date( new Date().getTime()));
         JugadorConexiones conexionesJugadores = new JugadorConexiones();
         for(int i =0;i<plantillasMercado.size();i++){
             lista.add(conexionesJugadores.getById(plantillasMercado.get(i).getJugadores().getIdJugador()));

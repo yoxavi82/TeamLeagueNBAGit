@@ -32,7 +32,6 @@ import java.util.Arrays;
 
 public class Alineacion extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener{
     BottomNavigationView navigationBottom;
-    ImageView suplente1,suplente2,suplente3,suplente4,suplente5,suplente6,test;
     boolean moving = false;
     LinearLayout a;
     View parentAnterior;
