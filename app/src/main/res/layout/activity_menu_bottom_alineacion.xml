@@ -59,7 +59,7 @@
                     design:layout_constraintTop_toTopOf="parent">
 
                     <ImageView
-                        android:id="@+id/imageView11"
+                        android:id="@+id/int1"
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -67,7 +67,7 @@
                         design:srcCompat="@drawable/pelota" />
 
                     <ImageView
-                        android:id="@+id/imageView6"
+                        android:id="@+id/int2"
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -88,17 +88,18 @@
                     design:layout_constraintTop_toBottomOf="@+id/linearLayout2">
 
                     <ImageView
-                        android:id="@+id/imageView5"
+                        android:id="@+id/ext2"
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:alpha="1"
                         android:onClick="clickjugador"
                         android:paddingRight="50dp"
                         android:src="@drawable/pelota"
                         app:srcCompat="@drawable/dos" />
 
                     <ImageView
-                        android:id="@+id/imageView3"
+                        android:id="@+id/ext3"
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -120,7 +121,7 @@
                     design:layout_constraintTop_toBottomOf="@+id/linearLayout3">
 
                     <ImageView
-                        android:id="@+id/imageView12"
+                        android:id="@+id/ext1"
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
