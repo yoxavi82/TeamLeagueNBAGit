@@ -1,0 +1,38 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/degradado">
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="355dp"
+        android:layout_height="49dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="monospace"
+        android:text="Confirma el precio de la puja"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/preciopuja"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="100"
+        android:layout_marginTop="69dp"
+        android:layout_marginLeft="60dp"
+        android:layout_marginRight="50dp"
+        android:inputType="numberDecimal" />
+
+    <TextView
+        android:id="@+id/alerta_puja"
+        android:layout_width="301dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="115dp"
+        android:text="La puja debe ser superior al precio de mercado"
+        android:textAlignment="center"
+        android:textColor="@android:color/holo_red_dark" />
+
+</RelativeLayout>
