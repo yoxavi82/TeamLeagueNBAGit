@@ -1,4 +1,4 @@
-package cfgs.example.teamleaguenbagit;
+package cfgs.example.teamleaguebagit;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
