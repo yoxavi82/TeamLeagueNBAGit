@@ -1,16 +1,29 @@
 package com.example.teamleaguebagit;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
-import java.net.URI;
+import com.example.teamleaguebagit.Conexiones.EquipoConexiones;
+import com.example.teamleaguebagit.Conexiones.EquipoUsuarioConexiones;
+import com.example.teamleaguebagit.pojos.EquiposUsuarios;
+import com.example.teamleaguebagit.pojos.Ligas;
+
 import java.util.ArrayList;
 
 public class creacion_equipo extends AppCompatActivity {
     ListView lv;
+    static final String[] siglasEquipos={"ATL","BKN","BOS","CLE","LAC","DAL","GS","CHA","HOU","NY","LAL","CHI","MEM","MIA","MIL","MIN","OKC"
+            ,"ORL","IND","NO","PHI","DET","POR","SAC","PHX","DEN","TOR","SA","UTA","WSH"};
+    String siglasActuales;
+    TextView nombreEquipoUsuario,ayuda;
 
 
     @Override
@@ -18,6 +31,8 @@ public class creacion_equipo extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.lista_equipos_nba);
         lv = findViewById(R.id.lv_imagenes);
+        nombreEquipoUsuario = findViewById(R.id.nombreEquipoUsuario);
+        ayuda = findViewById(R.id.ayuda);
         añadirFotos();
     }
 
@@ -46,13 +61,14 @@ public class creacion_equipo extends AppCompatActivity {
         Drawable DET  = ContextCompat.getDrawable(getApplicationContext(), R.drawable.pistons);
         Drawable POR  = ContextCompat.getDrawable(getApplicationContext(), R.drawable.portland);
         Drawable SAC  = ContextCompat.getDrawable(getApplicationContext(), R.drawable.sacramento);
-        Drawable FHX  = ContextCompat.getDrawable(getApplicationContext(), R.drawable.suns);
+        Drawable PHX  = ContextCompat.getDrawable(getApplicationContext(), R.drawable.suns);
         Drawable DEN  = ContextCompat.getDrawable(getApplicationContext(), R.drawable.denver);
         Drawable TOR  = ContextCompat.getDrawable(getApplicationContext(), R.drawable.toronto);
         Drawable SA  = ContextCompat.getDrawable(getApplicationContext(), R.drawable.spurs);
         Drawable UTA  = ContextCompat.getDrawable(getApplicationContext(), R.drawable.uta);
         Drawable WSH  = ContextCompat.getDrawable(getApplicationContext(), R.drawable.whas);
-        ArrayList<Drawable> fotos = new ArrayList<Drawable>();
+        final ArrayList<Drawable> fotos = new ArrayList<Drawable>();
+        final ArrayList<String> nombres = new ArrayList<>();
         fotos.add(ATL);
         fotos.add(BOS);
         fotos.add(BKN);
@@ -62,7 +78,7 @@ public class creacion_equipo extends AppCompatActivity {
         fotos.add(DEN);
         fotos.add(DET);
         fotos.add(DAL);
-        fotos.add(FHX);
+        fotos.add(PHX);
         fotos.add(GS);
         fotos.add(HOU);
         fotos.add(IND);
@@ -83,8 +99,39 @@ public class creacion_equipo extends AppCompatActivity {
         fotos.add(TOR);
         fotos.add(UTA);
         fotos.add(WSH);
-        AdapterListaSeleccionarFoto adapter = new AdapterListaSeleccionarFoto(this, fotos);
+        final AdapterListaSeleccionarFoto adapter = new AdapterListaSeleccionarFoto(this, fotos);
         lv.setAdapter(adapter);
-
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                ayuda.setVisibility(View.INVISIBLE);
+                siglasActuales=siglasEquipos[position];
+            }
+        });
+    }
+    public void crearEquipoUsuario(View view){
+        if(siglasActuales!=null&&!nombreEquipoUsuario.getText().toString().isEmpty()){
+            Intent i = getIntent();
+            Bundle extras = i.getExtras();
+            Ligas liga = (Ligas) extras.get("liga");
+            EquipoUsuarioConexiones con = new EquipoUsuarioConexiones();
+            EquiposUsuarios equipo = new EquiposUsuarios();
+            equipo.setUsuarios(Actual.getUsuarioActual());
+            equipo.setPuntosTotales(0);
+            equipo.setLigas(liga);
+            equipo.setDinero(10000000);
+            equipo.setNombreEquipo(nombreEquipoUsuario.getText().toString());
+            equipo.setEquipos(new EquipoConexiones().get(siglasActuales));
+            if(con.register(equipo)){
+                Actual.setLigaActual(liga);
+                i = new Intent(this, Homepage.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                i.putExtra("liga",liga);
+                startActivity(i);
+            }
+        }else{
+            Toast toast = Toast.makeText(this,"Escribe el nombre de tu equipo y selecciona un equipo",Toast.LENGTH_SHORT);
+            toast.show();
+        }
     }
 }

@@ -12,7 +12,6 @@ public class Conexion {
     static String passwrd = "HD5V4w6oyv";
 
     public static Connection obtenerConexion(){
-
         try {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
@@ -30,14 +29,5 @@ public class Conexion {
             e.printStackTrace();
         }
         return null;
-    }
-    public static void cerrarConexion(Connection connection){
-        try {
-            if(connection!=null){
-                connection.close();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 }
