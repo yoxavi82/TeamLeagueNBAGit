@@ -101,19 +101,13 @@ public class creacion_equipo extends AppCompatActivity {
         fotos.add(WSH);
         final AdapterListaSeleccionarFoto adapter = new AdapterListaSeleccionarFoto(this, fotos);
         lv.setAdapter(adapter);
-        lv.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-             @Override
-             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                 ayuda.setVisibility(View.INVISIBLE);
-                 siglasActuales=siglasEquipos[position];
-             }
-
-             @Override
-             public void onNothingSelected(AdapterView<?> parent) {
-
-             }
-         }
-        );
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                ayuda.setVisibility(View.INVISIBLE);
+                siglasActuales=siglasEquipos[position];
+            }
+        });
     }
     public void crearEquipoUsuario(View view){
         if(siglasActuales!=null&&!nombreEquipoUsuario.getText().toString().isEmpty()){
@@ -125,6 +119,7 @@ public class creacion_equipo extends AppCompatActivity {
             equipo.setUsuarios(Actual.getUsuarioActual());
             equipo.setPuntosTotales(0);
             equipo.setLigas(liga);
+            equipo.setDinero(10000000);
             equipo.setNombreEquipo(nombreEquipoUsuario.getText().toString());
             equipo.setEquipos(new EquipoConexiones().get(siglasActuales));
             if(con.register(equipo)){

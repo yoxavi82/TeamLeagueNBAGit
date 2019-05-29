@@ -36,10 +36,8 @@ public class CrearLigaActivity extends AppCompatActivity {
         LigaConexiones crearLiga = new LigaConexiones();
         UsuarioConexiones crearUsu = new UsuarioConexiones();
         if (crearLiga.get(idLiga) == null){
-            Usuarios user = new Usuarios("Alvatros0000005", "Alvaro", "s", "aaa@gail.com",new java.sql.Date(new Date().getTime()) , 1);
-            crearUsu.register(user);
-            crearLiga.register(idLiga, user);
-            Ligas liga = new Ligas(idLiga, user);
+            crearLiga.register(idLiga, Actual.getUsuarioActual());
+            Ligas liga = new Ligas(idLiga, Actual.getUsuarioActual());
             PasswordLigas pass = new PasswordLigas(liga, contra);
             if(crearLiga.registerPass(pass)){
                 Intent i =new Intent(this, creacion_equipo.class);

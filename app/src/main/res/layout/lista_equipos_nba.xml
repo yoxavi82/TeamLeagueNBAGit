@@ -20,9 +20,9 @@
     <ListView
         android:id="@+id/lv_imagenes"
         android:layout_width="379dp"
-        android:layout_height="344dp"
-        android:layout_marginTop="44dp"
-        android:layout_marginEnd="8dp"
+        android:layout_height="311dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ayuda" />
 
@@ -50,10 +50,10 @@
 
     <Button
         android:id="@+id/CrearEquipoUsuario"
-        android:layout_width="107dp"
-        android:layout_height="46dp"
-        android:layout_marginTop="48dp"
-        android:layout_marginEnd="140dp"
+        android:layout_width="122dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="24dp"
         android:background="@android:color/black"
         android:onClick="crearEquipoUsuario"
         android:text="Crear equipo"
