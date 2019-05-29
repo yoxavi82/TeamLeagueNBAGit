@@ -29,6 +29,7 @@ public class UsuarioConexiones implements UsuarioRepository {
                 Statement stmt = (Statement) connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
                 stmt.executeUpdate(query);
             }
+            Conexion.cerrarConexion(connection);
 
         }catch (Exception ex){
             ex.printStackTrace();
@@ -50,6 +51,7 @@ public class UsuarioConexiones implements UsuarioRepository {
 
                 stmt.executeUpdate(query);
             }
+            Conexion.cerrarConexion(connection);
         }catch (Exception ex){
             ex.printStackTrace();
         }
@@ -76,6 +78,7 @@ public class UsuarioConexiones implements UsuarioRepository {
                     return null;
                 }
             }
+            Conexion.cerrarConexion(connection);
         }catch (Exception ex){
             ex.printStackTrace();
         }
@@ -106,6 +109,7 @@ public class UsuarioConexiones implements UsuarioRepository {
                     return null;
                 }
             }
+            Conexion.cerrarConexion(connection);
         }catch (Exception ex){
             ex.printStackTrace();
         }
@@ -135,6 +139,7 @@ public class UsuarioConexiones implements UsuarioRepository {
                     users.add(user);
                 }
             }
+            Conexion.cerrarConexion(connection);
         }catch (Exception ex){
             ex.printStackTrace();
         }
@@ -154,6 +159,7 @@ public class UsuarioConexiones implements UsuarioRepository {
 
                 stmt.executeUpdate(query);
             }
+            Conexion.cerrarConexion(connection);
         }catch (Exception ex){
             ex.printStackTrace();
         }

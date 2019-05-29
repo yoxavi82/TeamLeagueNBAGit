@@ -31,7 +31,7 @@ public class PartidosConexiones implements PartidosRepository {
                 Statement stmt = (Statement) connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
                 stmt.executeUpdate(query);
             }
-
+            Conexion.cerrarConexion(connection);
         }catch (Exception ex){
             ex.printStackTrace();
         }
@@ -60,6 +60,7 @@ public class PartidosConexiones implements PartidosRepository {
                     partidos.add(partido);
                 }
             }
+            Conexion.cerrarConexion(connection);
         }catch (Exception ex){
             ex.printStackTrace();
         }
@@ -87,6 +88,7 @@ public class PartidosConexiones implements PartidosRepository {
                     partido.setIdPartido(rs.getInt("IdPartido"));
                 }
             }
+            Conexion.cerrarConexion(connection);
         }catch (Exception ex){
             ex.printStackTrace();
         }
@@ -116,6 +118,7 @@ public class PartidosConexiones implements PartidosRepository {
                     partidos.add(partido);
                 }
             }
+            Conexion.cerrarConexion(connection);
         }catch (Exception ex){
             ex.printStackTrace();
         }
@@ -144,6 +147,7 @@ public class PartidosConexiones implements PartidosRepository {
                     partidos.add(partido);
                 }
             }
+            Conexion.cerrarConexion(connection);
         }catch (Exception ex){
             ex.printStackTrace();
         }

@@ -31,7 +31,7 @@ public class PuntuacionConexiones implements PuntuacionRepository {
                 Statement stmt = (Statement) connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
                 stmt.executeUpdate(query);
             }
-
+            Conexion.cerrarConexion(connection);
         }catch (Exception ex){
             ex.printStackTrace();
         }
@@ -60,6 +60,7 @@ public class PuntuacionConexiones implements PuntuacionRepository {
                     punts.add(punt);
                 }
             }
+            Conexion.cerrarConexion(connection);
         }catch (Exception ex){
             ex.printStackTrace();
         }
@@ -87,6 +88,7 @@ public class PuntuacionConexiones implements PuntuacionRepository {
                     punts.add(punt);
                 }
             }
+            Conexion.cerrarConexion(connection);
         }catch (Exception ex){
             ex.printStackTrace();
         }
@@ -114,6 +116,7 @@ public class PuntuacionConexiones implements PuntuacionRepository {
                     punts.add(punt);
                 }
             }
+            Conexion.cerrarConexion(connection);
         }catch (Exception ex){
             ex.printStackTrace();
         }

@@ -27,6 +27,7 @@ public class EquipoUsuarioConexiones implements EquipoUsuarioRepository {
 
                 Statement stmt = (Statement) connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
                 stmt.executeUpdate(query);
+                Conexion.cerrarConexion(connection);
             }
 
         }catch (Exception ex){
@@ -59,6 +60,7 @@ public class EquipoUsuarioConexiones implements EquipoUsuarioRepository {
                     equipo.setUsuarios(new UsuarioConexiones().get(rs.getString("IdUsuario")));
                     equipos.add(equipo);
                 }
+                Conexion.cerrarConexion(connection);
             }
         }catch (Exception ex){
             ex.printStackTrace();
@@ -121,6 +123,7 @@ public class EquipoUsuarioConexiones implements EquipoUsuarioRepository {
                     equipo.setPuntosTotales(rs.getInt("PuntosTotales"));
                     equipos.add(equipo);
                 }
+                Conexion.cerrarConexion(connection);
             }
         }catch (Exception ex){
             ex.printStackTrace();
@@ -150,6 +153,7 @@ public class EquipoUsuarioConexiones implements EquipoUsuarioRepository {
                     equipo.setUsuarios(new UsuarioConexiones().get(rs.getString("IdUsuario")));
                     equipo.setPuntosTotales(rs.getInt("PuntosTotales"));
                 }
+                Conexion.cerrarConexion(connection);
             }
         }catch (Exception ex){
             ex.printStackTrace();

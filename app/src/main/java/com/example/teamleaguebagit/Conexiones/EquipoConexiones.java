@@ -34,6 +34,7 @@ public class EquipoConexiones implements EquipoRepository {
                     equipo.setLogo(rs.getString("Logo"));
                     equipo.setCampo(rs.getString("Campo"));
                 }
+                Conexion.cerrarConexion(connection);
             }
         }catch (Exception ex){
             ex.printStackTrace();
@@ -63,6 +64,7 @@ public class EquipoConexiones implements EquipoRepository {
                     equipo.setCampo(rs.getString("Campo"));
                     equipos.add(equipo);
                 }
+                Conexion.cerrarConexion(connection);
             }
         }catch (Exception ex){
             ex.printStackTrace();

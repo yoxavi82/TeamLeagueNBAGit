@@ -39,6 +39,7 @@ public class JugadorConexiones implements JugadorRepository {
                     jugador.setImagen(rs.getBytes("Imagen"));
                     buscado.add(jugador);
                 }
+                Conexion.cerrarConexion(connection);
             }
         }catch (Exception ex){
             ex.printStackTrace();
@@ -75,6 +76,7 @@ public class JugadorConexiones implements JugadorRepository {
                 }else {
                     return null;
                 }
+                Conexion.cerrarConexion(connection);
             }
         }catch (Exception ex){
             ex.printStackTrace();
@@ -111,6 +113,7 @@ public class JugadorConexiones implements JugadorRepository {
                     jugador.setImagen(rs.getBytes("Imagen"));
                     buscado.add(jugador);
                 }
+                Conexion.cerrarConexion(connection);
             }
         }catch (Exception ex){
             ex.printStackTrace();
