@@ -55,7 +55,7 @@ public class PartidosConexiones implements PartidosRepository {
                     Partidos partido = new Partidos();
                     partido.setEquiposByIdLocal(new EquipoConexiones().get(rs.getString("IdLocal")));
                     partido.setEquiposByIdVisitante(new EquipoConexiones().get(rs.getString("IdVisitante")));
-                    partido.setSemana(rs.getInt("Semana"));
+                    partido.setSemana(rs.getDate("Semana"));
                     partido.setIdPartido(rs.getInt("IdPartido"));
                     partidos.add(partido);
                 }
@@ -83,7 +83,7 @@ public class PartidosConexiones implements PartidosRepository {
 
                     partido.setEquiposByIdLocal(new EquipoConexiones().get(rs.getString("IdLocal")));
                     partido.setEquiposByIdVisitante(new EquipoConexiones().get(rs.getString("IdVisitante")));
-                    partido.setSemana(rs.getInt("Semana"));
+                    partido.setSemana(rs.getDate("Semana"));
                     partido.setIdPartido(rs.getInt("IdPartido"));
                 }
             }
@@ -111,7 +111,7 @@ public class PartidosConexiones implements PartidosRepository {
                     Partidos partido = new Partidos();
                     partido.setEquiposByIdLocal(new EquipoConexiones().get(rs.getString("IdLocal")));
                     partido.setEquiposByIdVisitante(new EquipoConexiones().get(rs.getString("IdVisitante")));
-                    partido.setSemana(rs.getInt("Semana"));
+                    partido.setSemana(rs.getDate("Semana"));
                     partido.setIdPartido(rs.getInt("IdPartido"));
                     partidos.add(partido);
                 }
@@ -139,7 +139,7 @@ public class PartidosConexiones implements PartidosRepository {
                     Partidos partido = new Partidos();
                     partido.setEquiposByIdLocal(new EquipoConexiones().get(rs.getString("IdLocal")));
                     partido.setEquiposByIdVisitante(new EquipoConexiones().get(rs.getString("IdVisitante")));
-                    partido.setSemana(rs.getInt("Semana"));
+                    partido.setSemana(rs.getDate("Semana"));
                     partido.setIdPartido(rs.getInt("IdPartido"));
                     partidos.add(partido);
                 }

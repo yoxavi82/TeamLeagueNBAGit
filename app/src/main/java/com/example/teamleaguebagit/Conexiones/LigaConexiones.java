@@ -98,12 +98,13 @@ public class LigaConexiones implements LigaRepository {
                     PasswordLigas pass = new PasswordLigas();
                     pass.setPassword(rs.getString("Password"));
                     pass.setIdLiga(rs.getString("IdLiga"));
+                    liga.add(pass);
                 }
             }
         }catch (Exception ex){
             ex.printStackTrace();
         }
-        return (ArrayList<PasswordLigas>) liga;
+        return liga;
     }
 
     @Override

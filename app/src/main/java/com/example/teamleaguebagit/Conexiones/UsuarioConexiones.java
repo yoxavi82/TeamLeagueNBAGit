@@ -149,7 +149,7 @@ public class UsuarioConexiones implements UsuarioRepository {
             if (connection == null) {
             } else {
                 String query ="Insert into PasswordUsuarios (IdUsuario,Password) VALUES" +
-                        " ('"+passwordUsuarios.getIdUsuario()+"','"+passwordUsuarios.getPassword()+"')";
+                        " ('"+passwordUsuarios.getUsuarios().getIdUsuario()+"','"+passwordUsuarios.getPassword()+"')";
                 Statement stmt = (Statement) connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 
                 stmt.executeUpdate(query);

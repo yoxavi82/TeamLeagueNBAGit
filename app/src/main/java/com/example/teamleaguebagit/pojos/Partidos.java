@@ -1,6 +1,7 @@
 package com.example.teamleaguebagit.pojos;
 // Generated 24-may-2019 19:04:20 by Hibernate Tools 5.1.10.Final
 
+import java.sql.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -12,19 +13,19 @@ public class Partidos implements java.io.Serializable {
 	private int idPartido;
 	private Equipos equiposByIdVisitante;
 	private Equipos equiposByIdLocal;
-	private int semana;
+	private Date semana;
 	private Set<Puntuaciones> puntuacioneses = new HashSet<Puntuaciones>(0);
 
 	public Partidos() {
 	}
 
-	public Partidos(int idPartido, Equipos equiposByIdVisitante, int semana) {
+	public Partidos(int idPartido, Equipos equiposByIdVisitante, Date semana) {
 		this.idPartido = idPartido;
 		this.equiposByIdVisitante = equiposByIdVisitante;
 		this.semana = semana;
 	}
 
-	public Partidos(int idPartido, Equipos equiposByIdVisitante, Equipos equiposByIdLocal, int semana,
+	public Partidos(int idPartido, Equipos equiposByIdVisitante, Equipos equiposByIdLocal, Date semana,
 			Set<Puntuaciones> puntuacioneses) {
 		this.idPartido = idPartido;
 		this.equiposByIdVisitante = equiposByIdVisitante;
@@ -57,11 +58,11 @@ public class Partidos implements java.io.Serializable {
 		this.equiposByIdLocal = equiposByIdLocal;
 	}
 
-	public int getSemana() {
+	public Date getSemana() {
 		return this.semana;
 	}
 
-	public void setSemana(int semana) {
+	public void setSemana(Date semana) {
 		this.semana = semana;
 	}
 

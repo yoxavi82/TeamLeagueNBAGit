@@ -2,6 +2,7 @@ package com.example.teamleaguebagit;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -9,8 +10,15 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.example.teamleaguebagit.Conexiones.LigaConexiones;
+import com.example.teamleaguebagit.pojos.Ligas;
+import com.example.teamleaguebagit.pojos.PasswordLigas;
 
 import java.util.ArrayList;
 
@@ -18,6 +26,8 @@ public class BuscarLigaActivity extends AppCompatActivity {
     private EditText nombre_liga;
     View formElementsView;
     ArrayList<lista_ligas> lista, lista2;
+    ArrayList<PasswordLigas> passwordLigas,ligas2;
+    TextView contraLiga,error;
     ListView lv;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,8 +38,14 @@ public class BuscarLigaActivity extends AppCompatActivity {
         formElementsView = inflater.inflate(R.layout.confirmar,  null);
         lista = new ArrayList<lista_ligas>();
         lista2 = new ArrayList<lista_ligas>();
+        ligas2 = new ArrayList<>();
         lv = (ListView) findViewById(R.id.listView);
-
+        passwordLigas=new LigaConexiones().getAll();
+        for(PasswordLigas pass : passwordLigas){
+            lista_ligas listaLiga = new lista_ligas();
+            listaLiga.setNombre_liga(pass.getIdLiga());
+            lista.add(listaLiga);
+        }
         nombre_liga.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -45,97 +61,71 @@ public class BuscarLigaActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
                 String nuevoTexto = s.toString();
                 initLiga(nuevoTexto);
-
             }
         });
-    /*
-        ArrayList<lista_ligas> lista = new ArrayList<lista_ligas>();
-
-        ListView lv = (ListView) findViewById(R.id.listView);
-
-        lista_ligas l = new lista_ligas("Los mejores pechos", "3/17");
-
-        lista.add(l);
-
-        AdapterListaBuscarLiga adapter = new AdapterListaBuscarLiga(this, lista);
-
-        lv.setAdapter(adapter); */
-
-
-
     }
 
     public void initLiga(String palabra){
         lista2.clear();
-        lista.clear();
-        lista_ligas l = new lista_ligas("Los mejores pechos", "3/17");
-
-        lista_ligas e = new lista_ligas("Los mejores porrros", "3/17");
-
-        lista_ligas d = new lista_ligas("jojojojo", "3/17");
-
-        lista_ligas g = new lista_ligas("mejores jejejee", "3/17");
-
-        lista_ligas h = new lista_ligas("Los mejores jejejee", "3/17");
-
-        lista_ligas j = new lista_ligas("jijiijij", "3/17");
-
-        lista_ligas k = new lista_ligas("super", "3/17");
-
-        lista_ligas t = new lista_ligas("lest go", "3/17");
-
-
-        lista_ligas vv = new lista_ligas("Los mejores churros", "3/17");
-
-        lista_ligas tt = new lista_ligas("josefa", "3/17");
-
-        lista.add(l);
-        lista.add(e);
-        lista.add(d);
-        lista.add(g);
-        lista.add(h);
-        lista.add(j);
-        lista.add(k);
-        lista.add(t);
-
-        lista.add(vv);
-
-        lista.add(tt);
+        if(ligas2!=null)ligas2.clear();
 
         for(int i = 0; i < lista.size(); i++){
             if (lista.get(i).nombre_liga.contains(palabra)){
                 lista2.add(lista.get(i));
+                ligas2.add(passwordLigas.get(i));
             }
         }
 
         AdapterListaBuscarLiga adapter = new AdapterListaBuscarLiga(this, lista2);
 
         lv.setAdapter(adapter);
-
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                final AlertDialog.Builder dialogo = new AlertDialog.Builder(BuscarLigaActivity.this).setView(R.layout.confirmar);
-                dialogo.setCancelable(false);
-                dialogo.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialogo, int id) {
-
-                    }
-                }).setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialogo, int id) {
-
+            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+                LayoutInflater inflater = getLayoutInflater();
+                Boolean yaEnLiga = false;
+                Ligas actual = new LigaConexiones().get(ligas2.get(position).getIdLiga());
+                for(Ligas liga:Actual.ligasUsuarioActual){
+                    if(liga==actual)yaEnLiga=true;
+                }
+                if(yaEnLiga){
+                    Toast.makeText(getApplicationContext(),"Ya estas en esta liga",Toast.LENGTH_SHORT).show();
+                }else{
+                final View view1 = inflater.inflate(R.layout.confirmar, null);
+                final android.support.v7.app.AlertDialog dialogo = new android.support.v7.app.AlertDialog.Builder(BuscarLigaActivity.this).setView(view1).setCancelable(false).setPositiveButton("Confirmar", null).setNegativeButton("Cancelar", null).create();
+                contraLiga = view1.findViewById(R.id.PasswordLigaUnirse);
+                error = view1.findViewById(R.id.errorPasswordLiga);
+                contraLiga.setText("");
+                dialogo.setOnShowListener(new DialogInterface.OnShowListener() {
+                    @Override
+                    public void onShow(final DialogInterface dialog) {
+                        Button button = ((android.support.v7.app.AlertDialog) dialogo).getButton(android.support.v7.app.AlertDialog.BUTTON_POSITIVE);
+                        button.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                if(contraLiga.getText().toString().equals(ligas2.get(position).getPassword())){
+                                    Intent i =new Intent(BuscarLigaActivity.super.getApplication(), creacion_equipo.class);
+                                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                    i.putExtra("liga",new LigaConexiones().get(ligas2.get(position).getIdLiga()));
+                                    startActivity(i);
+                                    dialogo.dismiss();
+                                }else{
+                                    error.setVisibility(View.VISIBLE);
+                                }
+                            }
+                        });
+                        Button button2 = ((android.support.v7.app.AlertDialog) dialogo).getButton(android.support.v7.app.AlertDialog.BUTTON_NEGATIVE);
+                        button2.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                dialogo.dismiss();
+                            }
+                        });
                     }
                 });
-
                 dialogo.show();
+            }
             }
         });
     }
-
-    private void crearEquipo(String idLiga){
-        String sql = "SELECT IdJugador FROM Jugadores WHERE IdJugador NOT IN (SELECT IdJugador FROM Plantillas WHERE IdLiga = " + idLiga + ")";
-    }
-
-
 }
