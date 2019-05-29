@@ -84,7 +84,6 @@ public class PlantillaConexiones implements PlantillaRepository {
                     plantilla.setLigas(new LigaConexiones().get(rs.getString("IdLiga")));
                     plantillas.add(plantilla);
                 }
-                Conexion.cerrarConexion(connection);
             }
         }catch (Exception ex){
             ex.printStackTrace();
@@ -116,7 +115,6 @@ public class PlantillaConexiones implements PlantillaRepository {
                     plantilla.setLigas(new LigaConexiones().get(rs.getString("IdLiga")));
                     plantillas.add(plantilla);
                 }
-                Conexion.cerrarConexion(connection);
             }
         }catch (Exception ex){
             ex.printStackTrace();
@@ -148,7 +146,6 @@ public class PlantillaConexiones implements PlantillaRepository {
                     plantilla.setLigas(new LigaConexiones().get(rs.getString("IdLiga")));
                     plantillas.add(plantilla);
                 }
-                Conexion.cerrarConexion(connection);
             }
         }catch (Exception ex){
             ex.printStackTrace();
@@ -178,7 +175,6 @@ public class PlantillaConexiones implements PlantillaRepository {
                     plantilla.setLigas(new LigaConexiones().get(rs.getString("IdLiga")));
                     plantillas.add(plantilla);
                 }
-                Conexion.cerrarConexion(connection);
             }
         }catch (Exception ex){
             ex.printStackTrace();

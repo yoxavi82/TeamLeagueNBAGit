@@ -41,7 +41,7 @@ public class LigaConexiones implements LigaRepository {
             Connection connection = Conexion.obtenerConexion();
             if (connection == null) {
             } else {
-                String query ="Insert into PasswordLigas (IdLiga,Password) VALUES ('"+passwordLigas.getIdLiga()
+                String query ="Insert into PasswordLigas (IdLiga,Password) VALUES ('"+passwordLigas.getLigas().getIdLiga()
                         +"','"+passwordLigas.getPassword()+"')";
 
                 Statement stmt = (Statement) connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
