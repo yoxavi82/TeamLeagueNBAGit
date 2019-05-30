@@ -66,7 +66,7 @@ public class AdapterListaMercado extends BaseAdapter {
         imagen.setImageResource(R.drawable.pelota);
 
 
-        TextView nombre = v.findViewById(R.id.lista_nombre_jugador);
+        TextView nombre = v.findViewById(R.id.lista_nombre_misligas);
         nombre.setText(dir.getNombre() + " " + dir.getApellido());
 
         TextView precio = (TextView) v.findViewById(R.id.lista_precio_jugador);

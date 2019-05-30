@@ -13,13 +13,32 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.TextView;
+
+import com.example.teamleaguebagit.Conexiones.EquipoUsuarioConexiones;
+import com.example.teamleaguebagit.Conexiones.JugadorConexiones;
+import com.example.teamleaguebagit.Conexiones.LigaConexiones;
+import com.example.teamleaguebagit.Conexiones.PartidosConexiones;
+import com.example.teamleaguebagit.Conexiones.PlantillaConexiones;
+import com.example.teamleaguebagit.Conexiones.PuntuacionConexiones;
+import com.example.teamleaguebagit.pojos.EquiposUsuarios;
+import com.example.teamleaguebagit.pojos.Jugadores;
+import com.example.teamleaguebagit.pojos.Partidos;
+import com.example.teamleaguebagit.pojos.Plantillas;
+
+import java.util.ArrayList;
+import java.util.Date;
 
 public class Jornada extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener{
     BottomNavigationView navigationBottom;
+    ListView lv;
+    ArrayList<Jugadores> lista_puntucion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +46,7 @@ public class Jornada extends AppCompatActivity  implements NavigationView.OnNavi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_jornada);
         Toolbar toolbar = findViewById(R.id.toolbar);
+        lv = findViewById(R.id.lv_jornada);
 
 
         setSupportActionBar(toolbar);
@@ -136,5 +156,67 @@ public class Jornada extends AppCompatActivity  implements NavigationView.OnNavi
                 break;
         }
         return true;
+    }
+
+    public void initJornada(){
+        PartidosConexiones Cpartido = new PartidosConexiones();
+        final PlantillaConexiones Cplantilla = new PlantillaConexiones();
+        JugadorConexiones Cjugadores = new JugadorConexiones();
+        final PuntuacionConexiones Cpunt = new PuntuacionConexiones();
+        final ArrayList<Partidos> partidos = Cpartido.getBySemana(new java.sql.Date(new Date().getDay()));
+        final ArrayList<lista_jornada> lista_jornada = new ArrayList<lista_jornada>();
+        final ArrayList <EquiposUsuarios> lista_usuarios = new EquipoUsuarioConexiones().getByLiga(Actual.getLigaActual().getIdLiga());
+        for (EquiposUsuarios e : lista_usuarios){
+            ArrayList<Plantillas> plantillas = Cplantilla.getTitulares(Actual.getLigaActual().getIdLiga(), e.getNombreEquipo());
+            lista_jornada j = new lista_jornada(e.getUsuarios().getIdUsuario(), 0);
+            int puntuacion = 0;
+            for (Partidos p : partidos){
+                for (Plantillas plan : plantillas){
+                    if (e.getNombreEquipo().equals(p.getEquiposByIdLocal().getNombre()) | e.getNombreEquipo().equals(p.getEquiposByIdVisitante().getNombre())){
+                        int pIndividual = Cpunt.getPuntuacionJugador(plan.getJugadores().getIdJugador(), p.getIdPartido());
+                        puntuacion += pIndividual;
+                    }
+                }
+            }
+            j.setPuntuacion(puntuacion);
+            lista_jornada.add(j);
+        }
+        AdapterListaJornada adapter = new AdapterListaJornada(this, lista_jornada);
+        lv.setAdapter(adapter);
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                LayoutInflater inflater = getLayoutInflater();
+                final View view1 = inflater.inflate(R.layout.vista_jornada_jugadores_puntuaciones, null);
+                ListView lv = view1.findViewById(R.id.lv_jornada);
+                final AlertDialog dialogo = new AlertDialog.Builder(Jornada.this).setView(view1).create();
+                ArrayList<lista_jornada> lista_jugadores = new ArrayList<lista_jornada>();
+                ArrayList<Plantillas> plantillas = Cplantilla.getTitulares(Actual.getLigaActual().getIdLiga(), lista_usuarios.get(position).getNombreEquipo());
+                for (Partidos p : partidos){
+                    lista_jornada j = null;
+                    for (Plantillas plan : plantillas){
+                        if (lista_usuarios.get(position).getNombreEquipo().equals(p.getEquiposByIdLocal().getNombre()) | lista_usuarios.get(position).getNombreEquipo().equals(p.getEquiposByIdVisitante().getNombre())){
+                            j.setNombre_usuario(plan.getJugadores().getNombre() + " " + plan.getJugadores().getApellido());
+                            j.setPuntuacion(Cpunt.getPuntuacionJugador(plan.getJugadores().getIdJugador(), p.getIdPartido()));
+                        }
+                    }
+                    lista_jugadores.add(j);
+                }
+                AdapterListaJornada adapter = new AdapterListaJornada(Jornada.this, lista_jugadores);
+                lv.setAdapter(adapter);
+            }
+        });
+
+
+
+
+
+
+
+
+
+
+
+
     }
 }

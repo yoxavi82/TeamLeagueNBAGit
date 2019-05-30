@@ -10,4 +10,5 @@ public interface PuntuacionRepository {
     ArrayList<Puntuaciones> getByPartido(String idPartido);
     ArrayList<Puntuaciones> getByJugador(String idJugador);
     ArrayList<Puntuaciones> getAll();
+    int getPuntuacionJugador (String idJugador, int idPartido);
 }

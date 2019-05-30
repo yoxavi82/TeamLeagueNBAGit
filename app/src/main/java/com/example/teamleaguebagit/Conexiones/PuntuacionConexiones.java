@@ -31,7 +31,6 @@ public class PuntuacionConexiones implements PuntuacionRepository {
                 Statement stmt = (Statement) connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
                 stmt.executeUpdate(query);
             }
-            Conexion.cerrarConexion(connection);
         }catch (Exception ex){
             ex.printStackTrace();
         }
@@ -60,7 +59,6 @@ public class PuntuacionConexiones implements PuntuacionRepository {
                     punts.add(punt);
                 }
             }
-            Conexion.cerrarConexion(connection);
         }catch (Exception ex){
             ex.printStackTrace();
         }
@@ -88,7 +86,6 @@ public class PuntuacionConexiones implements PuntuacionRepository {
                     punts.add(punt);
                 }
             }
-            Conexion.cerrarConexion(connection);
         }catch (Exception ex){
             ex.printStackTrace();
         }
@@ -116,10 +113,34 @@ public class PuntuacionConexiones implements PuntuacionRepository {
                     punts.add(punt);
                 }
             }
-            Conexion.cerrarConexion(connection);
         }catch (Exception ex){
             ex.printStackTrace();
         }
         return punts;
+    }
+
+    @Override
+    public int getPuntuacionJugador(String idJugador, int idPartido) {
+        Puntuaciones puntos = new Puntuaciones();
+        try{
+            Connection connection = Conexion.obtenerConexion();
+            if (connection == null) {
+            } else {
+                ResultSet rs = null;
+                String query ="Select * FROM Puntuaciones WHERE IdJugador='"+idJugador+"' AND IdPartido=" + idPartido;
+
+                Statement stmt = (Statement) connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+
+                rs = stmt.executeQuery(query);
+                while(rs.next()){
+                    puntos.setJugadores(new JugadorConexiones().getById(rs.getString("IdJugador")));
+                    puntos.setPartidos(new PartidosConexiones().getById(rs.getString("IdPartido")));
+                    puntos.setPuntuacion(rs.getInt("Puntuacion"));
+                }
+            }
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return puntos.getPuntuacion();
     }
 }

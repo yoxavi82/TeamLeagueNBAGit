@@ -5,7 +5,7 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/lista_nombre_jugador"
+        android:id="@+id/lista_nombre_misligas"
         android:layout_width="93dp"
         android:layout_height="match_parent"
         android:gravity="center_vertical"

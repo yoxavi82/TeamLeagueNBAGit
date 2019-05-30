@@ -11,12 +11,12 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 
-public class AdapterListaClasificacionGeneral extends BaseAdapter {
+public class AdapterListaJornada extends BaseAdapter {
 
     protected Activity activity;
-    protected ArrayList<lista_clasificacion> items;
+    protected ArrayList<lista_jornada> items;
 
-    public AdapterListaClasificacionGeneral(Activity activity, ArrayList<lista_clasificacion> items) {
+    public AdapterListaJornada(Activity activity, ArrayList<lista_jornada> items) {
         this.activity = activity;
         this.items = items;
     }
@@ -30,7 +30,7 @@ public class AdapterListaClasificacionGeneral extends BaseAdapter {
         items.clear();
     }
 
-    public void addAll(ArrayList<lista_clasificacion> lista) {
+    public void addAll(ArrayList<lista_jornada> lista) {
         for (int i = 0; i < lista.size(); i++) {
             items.add(lista.get(i));
         }
@@ -52,16 +52,16 @@ public class AdapterListaClasificacionGeneral extends BaseAdapter {
 
         if (convertView == null) {
             LayoutInflater inf = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            v = inf.inflate(R.layout.list_item_layout, null);
+            v = inf.inflate(R.layout.list_jornada_item, null);
         }
 
-        lista_clasificacion dir = items.get(position);
+        lista_jornada dir = items.get(position);
 
         TextView title = v.findViewById(R.id.lista_nombre_misligas);
-        title.setText(dir.getNombre());
+        title.setText(dir.nombre_usuario);
 
         TextView pos = v.findViewById(R.id.puntos_jornada);
-        pos.setText(dir.getClasificacion() + "");
+        pos.setText(dir.getPuntuacion() + "");
 
 
 

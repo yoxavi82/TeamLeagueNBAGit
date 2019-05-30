@@ -11,6 +11,7 @@ public interface PlantillaRepository {
     boolean updatePlantilla(Plantillas plantilla);
     ArrayList<Plantillas> getByIdJugador(String idJugador);
     ArrayList<Plantillas> getByIdLiga(String idLiga);
-    ArrayList<Plantillas> getByIdEquipo(String idEquipo);
+    ArrayList<Plantillas> getByIdEquipo(int idEquipo);
     ArrayList<Plantillas> getByDate(Date date);
+    ArrayList<Plantillas> getTitulares(String idLiga, String idEquipo);
 }
