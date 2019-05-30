@@ -37,18 +37,18 @@ import java.util.Date;
 
 import org.jetbrains.annotations.NotNull;
 
-import static com.example.teamleaguebagit.Actual.ligasList;
 
 public class Jornada extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener{
     BottomNavigationView navigationBottom;
     NavigationView navView;
+    ListView lv;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_jornada);
         Toolbar toolbar = findViewById(R.id.toolbar);
-
+        lv = findViewById(R.id.lv_jornada);
          navView = (NavigationView) findViewById(R.id.nav_view);
 
         initMenu();
@@ -186,6 +186,7 @@ public class Jornada extends AppCompatActivity  implements NavigationView.OnNavi
             j.setPuntuacion(puntuacion);
             lista_jornada.add(j);
         }
+
         AdapterListaJornada adapter = new AdapterListaJornada(this, lista_jornada);
         lv.setAdapter(adapter);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -229,8 +230,8 @@ public class Jornada extends AppCompatActivity  implements NavigationView.OnNavi
     private Menu initMenu() {
         Menu m = navView.getMenu();
         m.findItem(R.id.ligas).getSubMenu().clear();
-        for(int i = 0; i< ligasList.size(); i++) {
-            m.findItem(R.id.ligas).getSubMenu().add(ligasList.get(i).getIdLiga());
+        for(int i = 0; i< Actual.ligasUsuarioActual.size(); i++) {
+            m.findItem(R.id.ligas).getSubMenu().add(Actual.ligasUsuarioActual.get(i).getIdLiga());
         }
         return m;
 

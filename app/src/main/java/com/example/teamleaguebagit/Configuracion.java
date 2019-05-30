@@ -25,9 +25,11 @@ import android.widget.TextView;
 import com.example.teamleaguebagit.Conexiones.EquipoUsuarioConexiones;
 import com.example.teamleaguebagit.Conexiones.JugadorConexiones;
 import com.example.teamleaguebagit.Conexiones.PlantillaConexiones;
+import com.example.teamleaguebagit.Conexiones.UsuarioConexiones;
 import com.example.teamleaguebagit.pojos.Jugadores;
 import com.example.teamleaguebagit.pojos.Ligas;
 import com.example.teamleaguebagit.pojos.Plantillas;
+import com.example.teamleaguebagit.pojos.Usuarios;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -64,7 +66,7 @@ public class Configuracion extends AppCompatActivity{
                         EquipoUsuarioConexiones con = new EquipoUsuarioConexiones();
                         con.abandonar(Actual.getUsuarioActual().getIdUsuario(), misLigas.get(position).getIdLiga());
                         misLigas.remove(position);
-                        Actual.setLigasUsuarioActual(misLigas);
+                        Actual.setEquiposUsuarios(new EquipoUsuarioConexiones().getByUser(Actual.getUsuarioActual().getIdUsuario()));
                         initMisLigas();
                     }
                 });
@@ -77,6 +79,16 @@ public class Configuracion extends AppCompatActivity{
                 dialogo.show();
             }
         });
+    }
+
+    public void update(View v){
+        Usuarios u = Actual.getUsuarioActual();
+        u.setApellidos(configuracion_apellido.getText().toString());
+        u.setNombre(configuracion_nombre.getText().toString());
+        UsuarioConexiones usuarioConexiones = new UsuarioConexiones();
+        usuarioConexiones.update(u);
+        Intent i = new Intent(this, Homepage.class);
+        startActivity(i);
     }
 
 }

@@ -201,8 +201,9 @@ public class PlantillaConexiones implements PlantillaRepository {
     @Override
     public ArrayList<Plantillas> getTitulares(String idLiga, String idEquipo) {
         ArrayList<Plantillas> plantillas = new ArrayList<>();
+        Connection connection = null;
         try{
-            Connection connection = Conexion.obtenerConexion();
+            connection = Conexion.obtenerConexion();
             if (connection == null) {
             } else {
                 ResultSet rs = null;

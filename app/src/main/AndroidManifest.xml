@@ -16,6 +16,7 @@
         <activity android:name="com.example.teamleaguebagit.Alineacion" />
         <activity android:name="com.example.teamleaguebagit.MenuBottom.MenuBottomJornada" />
         <activity android:name="com.example.teamleaguebagit.Jornada" />
+        <activity android:name="com.example.teamleaguebagit.Configuracion" />
         <activity android:name="com.example.teamleaguebagit.Clasificacion" />
         <activity
             android:name="com.example.teamleaguebagit.ranking.Ranking"

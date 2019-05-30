@@ -182,6 +182,8 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
                 alert.show();
                 break;
             case R.id.config:
+                Intent i = new Intent(this, Configuracion.class);
+                startActivity(i);
                 break;
 
 
