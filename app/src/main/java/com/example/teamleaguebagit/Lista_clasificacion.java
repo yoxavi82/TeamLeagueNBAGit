@@ -2,12 +2,12 @@ package com.example.teamleaguebagit;
 
 import com.example.teamleaguebagit.pojos.Usuarios;
 
-public class lista_clasificacion {
+public class Lista_clasificacion {
     String nombre;
     int clasificacion;
     Usuarios user;
 
-    public lista_clasificacion(String nombre, int clasificacion, Usuarios user) {
+    public Lista_clasificacion(String nombre, int clasificacion, Usuarios user) {
         this.nombre = nombre;
         this.clasificacion = clasificacion;
         this.user = user;

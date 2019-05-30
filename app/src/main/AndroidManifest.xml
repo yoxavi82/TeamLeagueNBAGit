@@ -39,7 +39,7 @@
         </activity>
         <activity android:name=".CrearLigaActivity"/>
         <activity android:name=".BuscarLigaActivity"/>
-        <activity android:name=".creacion_equipo"/>
+        <activity android:name=".Creacion_equipo"/>
 
 
         <meta-data

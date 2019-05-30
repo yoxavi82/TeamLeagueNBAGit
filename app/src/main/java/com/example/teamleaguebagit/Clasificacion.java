@@ -6,7 +6,6 @@ import android.content.pm.ActivityInfo;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
@@ -18,13 +17,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.teamleaguebagit.Conexiones.EquipoConexiones;
 import com.example.teamleaguebagit.Conexiones.EquipoUsuarioConexiones;
-import com.example.teamleaguebagit.Conexiones.LigaConexiones;
 import com.example.teamleaguebagit.pojos.EquiposUsuarios;
 import com.example.teamleaguebagit.pojos.Jugadores;
 import com.example.teamleaguebagit.pojos.Plantillas;
@@ -32,14 +28,15 @@ import com.example.teamleaguebagit.pojos.Plantillas;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-import java.util.Collections;
+
+import static com.example.teamleaguebagit.Actual.ligasUsuarioActual;
 
 import static com.example.teamleaguebagit.Actual.ligasUsuarioActual;
 
 public class Clasificacion extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener{
     BottomNavigationView navigationBottom;
     View formElementsView;
-    ArrayList<lista_clasificacion> lista;
+    ArrayList<Lista_clasificacion> lista;
     ListView lv, lv_plantilla;
     TextView nombre_usuario;
     NavigationView navView;
@@ -55,7 +52,7 @@ public class Clasificacion extends AppCompatActivity  implements NavigationView.
 
         LayoutInflater inflater = getLayoutInflater();
         formElementsView = inflater.inflate(R.layout.confirmar,  null);
-        lista = new ArrayList<lista_clasificacion>();
+        lista = new ArrayList<Lista_clasificacion>();
         lv = (ListView) findViewById(R.id.lista_clasificacion);
         lv_plantilla = (ListView) findViewById(R.id.lv_plantilla);
 
@@ -116,9 +113,9 @@ public class Clasificacion extends AppCompatActivity  implements NavigationView.
 
     public void initLista(){
         ArrayList <EquiposUsuarios> li = new EquipoUsuarioConexiones().getByLiga(Actual.getLigaActual().getIdLiga());
-        ArrayList<lista_clasificacion> lis = new ArrayList<lista_clasificacion>();
+        ArrayList<Lista_clasificacion> lis = new ArrayList<Lista_clasificacion>();
         for (EquiposUsuarios e: li){
-            lista_clasificacion l = new lista_clasificacion(e.getUsuarios().getIdUsuario(), e.getPuntosTotales(), e.getUsuarios());
+            Lista_clasificacion l = new Lista_clasificacion(e.getUsuarios().getIdUsuario(), e.getPuntosTotales(), e.getUsuarios());
             lista.add(l);
         }
         //Falta ordenarlos

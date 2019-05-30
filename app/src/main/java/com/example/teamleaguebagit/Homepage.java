@@ -24,7 +24,17 @@ import org.jetbrains.annotations.NotNull;
 import static com.example.teamleaguebagit.Actual.ligasUsuarioActual;
 
 import com.example.teamleaguebagit.Conexiones.EquipoUsuarioConexiones;
-import com.example.teamleaguebagit.Conexiones.LigaConexiones;
+import com.example.teamleaguebagit.Conexiones.JugadorConexiones;
+import com.example.teamleaguebagit.Conexiones.PlantillaConexiones;
+import com.example.teamleaguebagit.pojos.Jugadores;
+import com.example.teamleaguebagit.pojos.Ligas;
+import com.example.teamleaguebagit.pojos.Plantillas;
+
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Date;
+
+import static com.example.teamleaguebagit.Actual.ligasUsuarioActual;
 
 public class Homepage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     Button crear,unir;
@@ -44,6 +54,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
         if(Actual.getLigaSesion()==null)
             Actual.setEquiposUsuarios(new EquipoUsuarioConexiones().getByUser(Actual.getUsuarioActual().getIdUsuario()));
         initMenu();
+
 
         crear = findViewById(R.id.crearId);
         unir = findViewById(R.id.unirseId);
@@ -186,9 +197,13 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
                 break;
 
 
-                default:
-                    Toast toast= Toast.makeText(this,item.getTitle()+"", Toast.LENGTH_LONG);
-
+            default:
+                for(Ligas liga: ligasUsuarioActual){
+                    if(item.getTitle().equals(liga.getIdLiga()))Actual.setLigaActual(liga);
+                }
+                Toast toast= Toast.makeText(this,"Liga "+item.getTitle()+" seleccionada", Toast.LENGTH_SHORT);
+                toast.show();
+                break;
         }
         return true;
     }

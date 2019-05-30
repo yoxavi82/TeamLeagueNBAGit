@@ -1,13 +1,13 @@
 package com.example.teamleaguebagit;
 
-public class lista_ligas {
+public class Lista_ligas {
 
     String nombre_liga;
     String participantes;
 
-    public lista_ligas(){}
+    public Lista_ligas(){}
 
-    public lista_ligas(String nombre_liga, String p) {
+    public Lista_ligas(String nombre_liga, String p) {
         this.nombre_liga = nombre_liga;
         this.participantes = p;
     }

@@ -14,9 +14,9 @@ import java.util.ArrayList;
 public class AdapterListaBuscarLiga extends BaseAdapter {
 
     protected Activity activity;
-    protected ArrayList<lista_ligas> items;
+    protected ArrayList<Lista_ligas> items;
 
-    public AdapterListaBuscarLiga(Activity activity, ArrayList<lista_ligas> items) {
+    public AdapterListaBuscarLiga(Activity activity, ArrayList<Lista_ligas> items) {
         this.activity = activity;
         this.items = items;
     }
@@ -30,7 +30,7 @@ public class AdapterListaBuscarLiga extends BaseAdapter {
         items.clear();
     }
 
-    public void addAll(ArrayList<lista_ligas> lista) {
+    public void addAll(ArrayList<Lista_ligas> lista) {
         for (int i = 0; i < lista.size(); i++) {
             items.add(lista.get(i));
         }
@@ -55,7 +55,7 @@ public class AdapterListaBuscarLiga extends BaseAdapter {
             v = inf.inflate(R.layout.list_item_layout, null);
         }
 
-        lista_ligas dir = items.get(position);
+        Lista_ligas dir = items.get(position);
 
         TextView title = v.findViewById(R.id.nombre_liga);
         title.setText(dir.getNombre_liga());

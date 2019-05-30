@@ -1,6 +1,5 @@
 package com.example.teamleaguebagit;
 
-import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -25,7 +24,7 @@ import java.util.ArrayList;
 public class BuscarLigaActivity extends AppCompatActivity {
     private EditText nombre_liga;
     View formElementsView;
-    ArrayList<lista_ligas> lista, lista2;
+    ArrayList<Lista_ligas> lista, lista2;
     ArrayList<PasswordLigas> passwordLigas,ligas2;
     TextView contraLiga,error;
     ListView lv;
@@ -36,13 +35,13 @@ public class BuscarLigaActivity extends AppCompatActivity {
         nombre_liga = findViewById(R.id.nombre_liga);
         LayoutInflater inflater = getLayoutInflater();
         formElementsView = inflater.inflate(R.layout.confirmar,  null);
-        lista = new ArrayList<lista_ligas>();
-        lista2 = new ArrayList<lista_ligas>();
+        lista = new ArrayList<Lista_ligas>();
+        lista2 = new ArrayList<Lista_ligas>();
         ligas2 = new ArrayList<>();
         lv = (ListView) findViewById(R.id.listView);
         passwordLigas=new LigaConexiones().getAll();
         for(PasswordLigas pass : passwordLigas){
-            lista_ligas listaLiga = new lista_ligas();
+            Lista_ligas listaLiga = new Lista_ligas();
             listaLiga.setNombre_liga(pass.getIdLiga());
             lista.add(listaLiga);
         }
@@ -105,7 +104,7 @@ public class BuscarLigaActivity extends AppCompatActivity {
                                 @Override
                                 public void onClick(View view) {
                                     if(contraLiga.getText().toString().equals(ligas2.get(position).getPassword())){
-                                        Intent i =new Intent(BuscarLigaActivity.super.getApplication(), creacion_equipo.class);
+                                        Intent i =new Intent(BuscarLigaActivity.super.getApplication(), Creacion_equipo.class);
                                         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                         i.putExtra("liga",new LigaConexiones().get(ligas2.get(position).getIdLiga()));
                                         startActivity(i);
