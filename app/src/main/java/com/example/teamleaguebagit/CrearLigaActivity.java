@@ -1,7 +1,5 @@
 package com.example.teamleaguebagit;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -13,10 +11,6 @@ import com.example.teamleaguebagit.Conexiones.LigaConexiones;
 import com.example.teamleaguebagit.Conexiones.UsuarioConexiones;
 import com.example.teamleaguebagit.pojos.Ligas;
 import com.example.teamleaguebagit.pojos.PasswordLigas;
-import com.example.teamleaguebagit.pojos.Usuarios;
-
-import java.util.ArrayList;
-import java.util.Date;
 
 public class CrearLigaActivity extends AppCompatActivity {
     private EditText nombre_liga, contraseña;
@@ -40,7 +34,7 @@ public class CrearLigaActivity extends AppCompatActivity {
             Ligas liga = new Ligas(idLiga, Actual.getUsuarioActual());
             PasswordLigas pass = new PasswordLigas(liga, contra);
             if(crearLiga.registerPass(pass)){
-                Intent i =new Intent(this, creacion_equipo.class);
+                Intent i =new Intent(this, Creacion_equipo.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 i.putExtra("liga",liga);
                 startActivity(i);

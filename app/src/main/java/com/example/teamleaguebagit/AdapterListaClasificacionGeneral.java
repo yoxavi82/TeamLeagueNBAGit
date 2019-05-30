@@ -8,17 +8,15 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.example.teamleaguebagit.pojos.EquiposUsuarios;
-
 import java.util.ArrayList;
 
 
 public class AdapterListaClasificacionGeneral extends BaseAdapter {
 
     protected Activity activity;
-    protected ArrayList<lista_clasificacion> items;
+    protected ArrayList<Lista_clasificacion> items;
 
-    public AdapterListaClasificacionGeneral(Activity activity, ArrayList<lista_clasificacion> items) {
+    public AdapterListaClasificacionGeneral(Activity activity, ArrayList<Lista_clasificacion> items) {
         this.activity = activity;
         this.items = items;
     }
@@ -32,7 +30,7 @@ public class AdapterListaClasificacionGeneral extends BaseAdapter {
         items.clear();
     }
 
-    public void addAll(ArrayList<lista_clasificacion> lista) {
+    public void addAll(ArrayList<Lista_clasificacion> lista) {
         for (int i = 0; i < lista.size(); i++) {
             items.add(lista.get(i));
         }
@@ -57,7 +55,7 @@ public class AdapterListaClasificacionGeneral extends BaseAdapter {
             v = inf.inflate(R.layout.list_item_layout, null);
         }
 
-        lista_clasificacion dir = items.get(position);
+        Lista_clasificacion dir = items.get(position);
 
         TextView title = v.findViewById(R.id.lista_nombre_jugador);
         title.setText(dir.getNombre());

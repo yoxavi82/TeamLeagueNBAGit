@@ -39,6 +39,37 @@ public class EquipoUsuarioConexiones implements EquipoUsuarioRepository {
         return true;
     }
 
+    public EquiposUsuarios getByLigaAndUser(String user,String liga){
+        EquiposUsuarios equipo = new EquiposUsuarios();
+        Connection connection= null;
+        try{
+            connection = Conexion.obtenerConexion();
+            if (connection == null) {
+            } else {
+                ResultSet rs = null;
+                String query ="Select * FROM EquiposUsuarios WHERE IdLiga='"+liga+"' AND IdUsuario='"+user+"'";
+
+                Statement stmt = (Statement) connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+
+                rs = stmt.executeQuery(query);
+                if (rs.next()){
+                    equipo.setIdEquipo(rs.getInt("IdEquipo"));
+                    equipo.setDinero(rs.getInt("Dinero"));
+                    equipo.setEquipos(new EquipoConexiones().get(rs.getString("IdEquipo")));
+                    equipo.setNombreEquipo(rs.getString("NombreEquipo"));
+                    equipo.setLigas(new LigaConexiones().get(rs.getString("IdLiga")));
+                    equipo.setUsuarios(new UsuarioConexiones().get(rs.getString("IdUsuario")));
+                    equipo.setPuntosTotales(rs.getInt("PuntosTotales"));
+                }
+            }
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }finally {
+            Conexion.cerrarConexion(connection);
+        }
+        return equipo;
+    }
+
     @Override
     public ArrayList<EquiposUsuarios> getAll() {
         ArrayList<EquiposUsuarios> equipos = new ArrayList<>();

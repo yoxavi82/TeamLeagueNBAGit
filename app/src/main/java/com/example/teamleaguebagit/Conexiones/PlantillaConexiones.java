@@ -16,8 +16,9 @@ import java.util.List;
  *
  * @author alber
  */
-//TODO
+
 public class PlantillaConexiones implements PlantillaRepository {
+
     @Override
     public boolean addPlantilla(Plantillas plantilla) {
         Connection connection= null;
@@ -26,8 +27,8 @@ public class PlantillaConexiones implements PlantillaRepository {
             if (connection == null) {
             } else {
                 String query ="Insert into Plantillas (IdJugador,IdLiga,IdEquipo,Precio,FechaCompra,Puja,Titular)" +
-                        " VALUES ('"+plantilla.getJugadores().getIdJugador()+"','"+plantilla.getLigas().getIdLiga()+"','"
-                        +plantilla.getEquiposUsuarios().getIdEquipo()+"',"+plantilla.getPrecio()+",'"+plantilla.getFechaCompra()
+                        " VALUES ('"+plantilla.getJugadores().getIdJugador()+"','"+plantilla.getLigas().getIdLiga()+"',"
+                        +plantilla.getEquiposUsuarios().getIdEquipo()+","+plantilla.getPrecio()+",'"+plantilla.getFechaCompra()
                         +"',"+plantilla.getPuja()+","+plantilla.getTitular()+")";
 
                 Statement stmt = (Statement) connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
@@ -65,6 +66,30 @@ public class PlantillaConexiones implements PlantillaRepository {
         }
         return true;
     }
+
+    public int getCountJugador(String idJugador) {
+        Connection connection = null;
+        int numero = -1;
+        try {
+            connection = Conexion.obtenerConexion();
+            if (connection == null) {
+            } else {
+                ResultSet rs = null;
+                String query = "Select COUNT(IdLiga) FROM Plantillas WHERE IdJugador='" + idJugador + "'";
+
+
+                Statement stmt = (Statement) connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+
+                rs = stmt.executeQuery(query);
+                numero = rs.getInt("COUNT(IdLiga)");
+            }
+            }catch(Exception ex){
+                ex.printStackTrace();
+            }finally{
+                Conexion.cerrarConexion(connection);
+            }
+            return numero;
+        }
 
     @Override
     public ArrayList<Plantillas> getByIdJugador(String idJugador) {

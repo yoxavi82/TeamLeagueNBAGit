@@ -13,17 +13,27 @@ import android.widget.Toast;
 
 import com.example.teamleaguebagit.Conexiones.EquipoConexiones;
 import com.example.teamleaguebagit.Conexiones.EquipoUsuarioConexiones;
+import com.example.teamleaguebagit.Conexiones.JugadorConexiones;
+import com.example.teamleaguebagit.Conexiones.PlantillaConexiones;
+import com.example.teamleaguebagit.Conexiones.PuntuacionConexiones;
 import com.example.teamleaguebagit.pojos.EquiposUsuarios;
+import com.example.teamleaguebagit.pojos.Jugadores;
 import com.example.teamleaguebagit.pojos.Ligas;
+import com.example.teamleaguebagit.pojos.Plantillas;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 
-public class creacion_equipo extends AppCompatActivity {
+public class Creacion_equipo extends AppCompatActivity {
     ListView lv;
     static final String[] siglasEquipos={"ATL","BKN","BOS","CLE","LAC","DAL","GS","CHA","HOU","NY","LAL","CHI","MEM","MIA","MIL","MIN","OKC"
             ,"ORL","IND","NO","PHI","DET","POR","SAC","PHX","DEN","TOR","SA","UTA","WSH"};
     String siglasActuales;
     TextView nombreEquipoUsuario,ayuda;
+    Ligas liga;
+    EquiposUsuarios equipo;
 
 
     @Override
@@ -113,9 +123,9 @@ public class creacion_equipo extends AppCompatActivity {
         if(siglasActuales!=null&&!nombreEquipoUsuario.getText().toString().isEmpty()){
             Intent i = getIntent();
             Bundle extras = i.getExtras();
-            Ligas liga = (Ligas) extras.get("liga");
+            liga = (Ligas) extras.get("liga");
             EquipoUsuarioConexiones con = new EquipoUsuarioConexiones();
-            EquiposUsuarios equipo = new EquiposUsuarios();
+            equipo = new EquiposUsuarios();
             equipo.setUsuarios(Actual.getUsuarioActual());
             equipo.setPuntosTotales(0);
             equipo.setLigas(liga);
@@ -126,6 +136,7 @@ public class creacion_equipo extends AppCompatActivity {
                 Actual.getLigaSesion().add(liga);
                 Actual.getEquiposUsuariosSesion().add(equipo);
                 Actual.setLigaActual(liga);
+                generarEquipo();
                 i = new Intent(this, Homepage.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i);
@@ -133,6 +144,49 @@ public class creacion_equipo extends AppCompatActivity {
         }else{
             Toast toast = Toast.makeText(this,"Escribe el nombre de tu equipo y selecciona un equipo",Toast.LENGTH_SHORT);
             toast.show();
+        }
+    }
+
+    private void generarEquipo() {
+        ArrayList<Plantillas> jugadores= new ArrayList<>();
+        for(int i=1;i<5;i++){
+            ArrayList<Jugadores> jugadores1Estrellas = new JugadorConexiones().getByStarsRandom(i);
+            int ayuda=0;
+            switch (i){
+                case 1:
+                    ayuda=4;
+                    break;
+                case 2:
+                    ayuda= 5;
+                    break;
+                case 3:
+                    ayuda=3;
+                    break;
+                case 4:
+                    ayuda=1;
+                    break;
+            }
+            for (int j=0;j<ayuda;j++){
+                Plantillas plantilla = new Plantillas();
+                plantilla.setLigas(Actual.getLigaActual());
+                plantilla.setTitular(0);
+                plantilla.setPuja(0);
+                plantilla.setJugadores(jugadores1Estrellas.get(j));
+                plantilla.setEquiposUsuarios(new EquipoUsuarioConexiones().getByLigaAndUser(Actual.getUsuarioActual().getIdUsuario(),
+                        Actual.getLigaActual().getIdLiga()));
+                plantilla.setFechaCompra(new java.sql.Date(new Date().getTime()));
+                plantilla.setPrecio(i*1000000);
+                new PlantillaConexiones().addPlantilla(plantilla);
+//        Plantillas la = new Plantillas();
+//        la.setEquiposUsuarios(Actual.getEquiposUsuariosSesion().get(0));
+//        la.setFechaCompra(new java.sql.Date(new Date().getTime()));
+//        la.setJugadores(new JugadorConexiones().getById("ATL_11"));
+//        la.setLigas(Actual.getLigaActual());
+//        la.setPrecio(0);
+//        la.setTitular(0);
+//        la.setPuja(0);
+//        plant.addPlantilla(la);
+            }
         }
     }
 }

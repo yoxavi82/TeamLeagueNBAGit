@@ -20,10 +20,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.teamleaguebagit.Conexiones.EquipoUsuarioConexiones;
-import com.example.teamleaguebagit.Conexiones.LigaConexiones;
+import com.example.teamleaguebagit.Conexiones.JugadorConexiones;
+import com.example.teamleaguebagit.Conexiones.PlantillaConexiones;
+import com.example.teamleaguebagit.pojos.Jugadores;
 import com.example.teamleaguebagit.pojos.Ligas;
+import com.example.teamleaguebagit.pojos.Plantillas;
 
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Date;
 
 import static com.example.teamleaguebagit.Actual.ligasUsuarioActual;
 
@@ -143,6 +148,16 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
     public void unirseLiga(View view){
         Intent intent = new Intent(this, BuscarLigaActivity.class);
         startActivity(intent);
+//        PlantillaConexiones plant = new PlantillaConexiones();
+//        Plantillas la = new Plantillas();
+//        la.setEquiposUsuarios(Actual.getEquiposUsuariosSesion().get(0));
+//        la.setFechaCompra(new java.sql.Date(new Date().getTime()));
+//        la.setJugadores(new JugadorConexiones().getById("ATL_11"));
+//        la.setLigas(Actual.getLigaActual());
+//        la.setPrecio(0);
+//        la.setTitular(0);
+//        la.setPuja(0);
+//        plant.addPlantilla(la);
     }
 
     public void crearLiga(View view){
@@ -185,14 +200,13 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
                 break;
 
 
-                default:
-                    for(Ligas liga: ligasUsuarioActual){
-                        if(item.getTitle().equals(liga.getIdLiga()))Actual.setLigaActual(liga);
-                    }
-                    Toast toast= Toast.makeText(this,"Liga "+item.getTitle()+" seleccionada", Toast.LENGTH_SHORT);
-                    toast.show();
-                    break;
-
+            default:
+                for(Ligas liga: ligasUsuarioActual){
+                    if(item.getTitle().equals(liga.getIdLiga()))Actual.setLigaActual(liga);
+                }
+                Toast toast= Toast.makeText(this,"Liga "+item.getTitle()+" seleccionada", Toast.LENGTH_SHORT);
+                toast.show();
+                break;
         }
         return true;
     }
