@@ -22,7 +22,7 @@ public class Actual {
     public static void setEquiposUsuarios(ArrayList<EquiposUsuarios> equipos){
         ligasUsuarioActual.clear();
         for(EquiposUsuarios eq: equipos){
-            ligasUsuarioActual.add(new LigaConexiones().get(eq.getLigas().getIdLiga()));
+            ligasUsuarioActual.add(eq.getLigas());
         }
         equiposUsuarios = equipos;
     }

@@ -123,10 +123,11 @@ public class creacion_equipo extends AppCompatActivity {
             equipo.setNombreEquipo(nombreEquipoUsuario.getText().toString());
             equipo.setEquipos(new EquipoConexiones().get(siglasActuales));
             if(con.register(equipo)){
+                Actual.getLigaSesion().add(liga);
+                Actual.getEquiposUsuariosSesion().add(equipo);
                 Actual.setLigaActual(liga);
                 i = new Intent(this, Homepage.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                i.putExtra("liga",liga);
                 startActivity(i);
             }
         }else{

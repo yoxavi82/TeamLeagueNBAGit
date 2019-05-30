@@ -20,8 +20,9 @@ import java.util.List;
 public class PlantillaConexiones implements PlantillaRepository {
     @Override
     public boolean addPlantilla(Plantillas plantilla) {
+        Connection connection= null;
         try{
-            Connection connection = Conexion.obtenerConexion();
+            connection = Conexion.obtenerConexion();
             if (connection == null) {
             } else {
                 String query ="Insert into Plantillas (IdJugador,IdLiga,IdEquipo,Precio,FechaCompra,Puja,Titular)" +
@@ -35,14 +36,17 @@ public class PlantillaConexiones implements PlantillaRepository {
 
         }catch (Exception ex){
             ex.printStackTrace();
+        }finally {
+            Conexion.cerrarConexion(connection);
         }
         return true;
     }
 
     @Override
     public boolean updatePlantilla(Plantillas plantilla) {
+        Connection connection= null;
         try{
-            Connection connection = Conexion.obtenerConexion();
+            connection = Conexion.obtenerConexion();
             if (connection == null) {
             } else {
                 String query ="Update Plantillas Set IdJugador='"+plantilla.getJugadores().getIdJugador()+"'," +
@@ -56,6 +60,8 @@ public class PlantillaConexiones implements PlantillaRepository {
 
         }catch (Exception ex){
             ex.printStackTrace();
+        }finally {
+            Conexion.cerrarConexion(connection);
         }
         return true;
     }
@@ -63,8 +69,9 @@ public class PlantillaConexiones implements PlantillaRepository {
     @Override
     public ArrayList<Plantillas> getByIdJugador(String idJugador) {
         ArrayList<Plantillas> plantillas = new ArrayList<>();
+        Connection connection= null;
         try{
-            Connection connection = Conexion.obtenerConexion();
+            connection = Conexion.obtenerConexion();
             if (connection == null) {
             } else {
                 ResultSet rs = null;
@@ -87,6 +94,8 @@ public class PlantillaConexiones implements PlantillaRepository {
             }
         }catch (Exception ex){
             ex.printStackTrace();
+        }finally {
+            Conexion.cerrarConexion(connection);
         }
         return plantillas;
     }
@@ -94,8 +103,9 @@ public class PlantillaConexiones implements PlantillaRepository {
     @Override
     public ArrayList<Plantillas> getByIdLiga(String idLiga) {
         ArrayList<Plantillas> plantillas = new ArrayList<>();
+        Connection connection= null;
         try{
-            Connection connection = Conexion.obtenerConexion();
+            connection = Conexion.obtenerConexion();
             if (connection == null) {
             } else {
                 ResultSet rs = null;
@@ -118,6 +128,8 @@ public class PlantillaConexiones implements PlantillaRepository {
             }
         }catch (Exception ex){
             ex.printStackTrace();
+        }finally {
+            Conexion.cerrarConexion(connection);
         }
         return plantillas;
     }
@@ -125,8 +137,9 @@ public class PlantillaConexiones implements PlantillaRepository {
     @Override
     public ArrayList<Plantillas> getByIdEquipo(String idEquipo) {
         ArrayList<Plantillas> plantillas = new ArrayList<>();
+        Connection connection= null;
         try{
-            Connection connection = Conexion.obtenerConexion();
+            connection = Conexion.obtenerConexion();
             if (connection == null) {
             } else {
                 ResultSet rs = null;
@@ -149,6 +162,8 @@ public class PlantillaConexiones implements PlantillaRepository {
             }
         }catch (Exception ex){
             ex.printStackTrace();
+        }finally {
+            Conexion.cerrarConexion(connection);
         }
         return plantillas;
     }
@@ -156,8 +171,9 @@ public class PlantillaConexiones implements PlantillaRepository {
     @Override
     public ArrayList<Plantillas> getByDate(Date date) {
         ArrayList<Plantillas> plantillas = new ArrayList<>();
+        Connection connection= null;
         try{
-            Connection connection = Conexion.obtenerConexion();
+            connection = Conexion.obtenerConexion();
             if (connection == null) {
             } else {
                 ResultSet rs = null;
@@ -178,6 +194,8 @@ public class PlantillaConexiones implements PlantillaRepository {
             }
         }catch (Exception ex){
             ex.printStackTrace();
+        }finally {
+            Conexion.cerrarConexion(connection);
         }
         return plantillas;
     }

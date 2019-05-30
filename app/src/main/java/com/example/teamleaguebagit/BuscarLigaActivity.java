@@ -85,47 +85,48 @@ public class BuscarLigaActivity extends AppCompatActivity {
                 LayoutInflater inflater = getLayoutInflater();
                 Boolean yaEnLiga = false;
                 Ligas actual = new LigaConexiones().get(ligas2.get(position).getIdLiga());
-                for(Ligas liga:Actual.ligasUsuarioActual){
-                    if(liga==actual)yaEnLiga=true;
+                for(Ligas liga: Actual.ligasUsuarioActual){
+                    if(liga.getIdLiga().equals(actual.getIdLiga()))
+                        yaEnLiga=true;
                 }
                 if(yaEnLiga){
                     Toast.makeText(getApplicationContext(),"Ya estas en esta liga",Toast.LENGTH_SHORT).show();
                 }else{
-                final View view1 = inflater.inflate(R.layout.confirmar, null);
-                final android.support.v7.app.AlertDialog dialogo = new android.support.v7.app.AlertDialog.Builder(BuscarLigaActivity.this).setView(view1).setCancelable(false).setPositiveButton("Confirmar", null).setNegativeButton("Cancelar", null).create();
-                contraLiga = view1.findViewById(R.id.PasswordLigaUnirse);
-                error = view1.findViewById(R.id.errorPasswordLiga);
-                contraLiga.setText("");
-                dialogo.setOnShowListener(new DialogInterface.OnShowListener() {
-                    @Override
-                    public void onShow(final DialogInterface dialog) {
-                        Button button = ((android.support.v7.app.AlertDialog) dialogo).getButton(android.support.v7.app.AlertDialog.BUTTON_POSITIVE);
-                        button.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                if(contraLiga.getText().toString().equals(ligas2.get(position).getPassword())){
-                                    Intent i =new Intent(BuscarLigaActivity.super.getApplication(), creacion_equipo.class);
-                                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                    i.putExtra("liga",new LigaConexiones().get(ligas2.get(position).getIdLiga()));
-                                    startActivity(i);
-                                    dialogo.dismiss();
-                                }else{
-                                    error.setVisibility(View.VISIBLE);
+                    final View view1 = inflater.inflate(R.layout.confirmar, null);
+                    final android.support.v7.app.AlertDialog dialogo = new android.support.v7.app.AlertDialog.Builder(BuscarLigaActivity.this).setView(view1).setCancelable(false).setPositiveButton("Confirmar", null).setNegativeButton("Cancelar", null).create();
+                    contraLiga = view1.findViewById(R.id.PasswordLigaUnirse);
+                    error = view1.findViewById(R.id.errorPasswordLiga);
+                    contraLiga.setText("");
+                    dialogo.setOnShowListener(new DialogInterface.OnShowListener() {
+                        @Override
+                        public void onShow(final DialogInterface dialog) {
+                            Button button = ((android.support.v7.app.AlertDialog) dialogo).getButton(android.support.v7.app.AlertDialog.BUTTON_POSITIVE);
+                            button.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    if(contraLiga.getText().toString().equals(ligas2.get(position).getPassword())){
+                                        Intent i =new Intent(BuscarLigaActivity.super.getApplication(), creacion_equipo.class);
+                                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                        i.putExtra("liga",new LigaConexiones().get(ligas2.get(position).getIdLiga()));
+                                        startActivity(i);
+                                        dialogo.dismiss();
+                                    }else{
+                                        error.setVisibility(View.VISIBLE);
+                                    }
                                 }
-                            }
-                        });
-                        Button button2 = ((android.support.v7.app.AlertDialog) dialogo).getButton(android.support.v7.app.AlertDialog.BUTTON_NEGATIVE);
-                        button2.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                dialogo.dismiss();
-                            }
-                        });
-                    }
-                });
-                dialogo.show();
-            }
-            }
-        });
+                            });
+                            Button button2 = ((android.support.v7.app.AlertDialog) dialogo).getButton(android.support.v7.app.AlertDialog.BUTTON_NEGATIVE);
+                            button2.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    dialogo.dismiss();
+                                }
+                            });
+                        }
+                    });
+                    dialogo.show();
+                }
+                }
+            });
     }
 }
