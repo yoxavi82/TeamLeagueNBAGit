@@ -82,7 +82,8 @@ public class Alineacion extends AppCompatActivity  implements NavigationView.OnN
         initMenu();
 
         layourtPrincipal = findViewById(R.id.layoutPrincipal);
-        llenarArrayDraw();
+        //llenarArrayDraw();
+        initArrays();
         suplentes = (RecyclerView) findViewById(R.id.suplentes);
         suplentes.setBackgroundColor(Color.parseColor("#FFA400"));
 
@@ -156,6 +157,10 @@ public class Alineacion extends AppCompatActivity  implements NavigationView.OnN
         });
 
 
+    }
+
+    private void initArrays() {
+        
     }
 
     private void inintRecycleView(RecyclerView recyclerView) {
