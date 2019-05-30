@@ -22,9 +22,11 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.teamleaguebagit.Conexiones.EquipoUsuarioConexiones;
 import com.example.teamleaguebagit.Conexiones.JugadorConexiones;
 import com.example.teamleaguebagit.Conexiones.PlantillaConexiones;
 import com.example.teamleaguebagit.pojos.Jugadores;
+import com.example.teamleaguebagit.pojos.Ligas;
 import com.example.teamleaguebagit.pojos.Plantillas;
 
 import java.text.ParseException;
@@ -44,10 +46,37 @@ public class Configuracion extends AppCompatActivity{
         lv = findViewById(R.id.lv_misligas);
         configuracion_nombre.setText(Actual.getUsuarioActual().getNombre());
         configuracion_apellido.setText(Actual.getUsuarioActual().getApellidos());
+        initMisLigas();
     }
 
     public void initMisLigas() {
+        final ArrayList<Ligas> misLigas = Actual.getLigaSesion();
+        AdapterListaConfiguracion adapter = new AdapterListaConfiguracion(this, misLigas);
+        lv.setAdapter(adapter);
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+                LayoutInflater inflater = getLayoutInflater();
+                final View view1 = inflater.inflate(R.layout.confirmar_abandonar_liga, null);
+                AlertDialog.Builder dialogo = new AlertDialog.Builder(Configuracion.this).setView(view1).setCancelable(false);
+                dialogo.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,int id) {
+                        EquipoUsuarioConexiones con = new EquipoUsuarioConexiones();
+                        con.abandonar(Actual.getUsuarioActual().getIdUsuario(), misLigas.get(position).getIdLiga());
+                        misLigas.remove(position);
+                        Actual.setLigasUsuarioActual(misLigas);
+                        initMisLigas();
+                    }
+                });
+                dialogo.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,int id) {
 
+                    }
+                });
+
+                dialogo.show();
+            }
+        });
     }
 
 }

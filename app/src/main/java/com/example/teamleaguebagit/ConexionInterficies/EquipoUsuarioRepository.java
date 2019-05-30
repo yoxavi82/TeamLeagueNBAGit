@@ -11,4 +11,5 @@ public interface EquipoUsuarioRepository {
     ArrayList<EquiposUsuarios> getByUser(String idUser);
     ArrayList<EquiposUsuarios> getByLiga(String idLiga);
     EquiposUsuarios getEquipo(String id);
+    boolean abandonar(String idUsuario, String idLiga);
 }

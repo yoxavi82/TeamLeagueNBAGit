@@ -20,7 +20,7 @@ public class Actual {
     static Usuarios usuarioActual=null;
     static Ligas ligaActual=null;
     static Boolean iniciarSesion=true;
-    static ArrayList<Ligas> ligasUsuarioActual = new ArrayList();
+    static ArrayList<Ligas> ligasUsuarioActual = null;
     static ArrayList<EquiposUsuarios> equiposUsuarios = new ArrayList();
 
     public static ArrayList<EquiposUsuarios> getEquiposUsuariosSesion(){
@@ -28,7 +28,7 @@ public class Actual {
     }
 
     public static void setEquiposUsuarios(ArrayList<EquiposUsuarios> equipos){
-        ligasUsuarioActual.clear();
+        ligasUsuarioActual = new ArrayList<>();
         for(EquiposUsuarios eq: equipos){
             ligasUsuarioActual.add(eq.getLigas());
         }
