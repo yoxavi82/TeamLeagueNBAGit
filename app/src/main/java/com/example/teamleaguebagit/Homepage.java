@@ -33,11 +33,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
         setContentView(R.layout.activity_homepage);
         Toolbar toolbar =findViewById(R.id.toolbar);
         TextView titulo = findViewById(R.id.toolbar_title);
-        try {
-            Actual.setEquiposUsuarios(new EquipoUsuarioConexiones().getByUser(Actual.getUsuarioActual().getIdUsuario()));
-        }catch (Exception e){
-
-        }
+        if(Actual.getLigaSesion()==null)Actual.setEquiposUsuarios(new EquipoUsuarioConexiones().getByUser(Actual.getUsuarioActual().getIdUsuario()));
         crear = findViewById(R.id.crearId);
         unir = findViewById(R.id.unirseId);
         setSupportActionBar(toolbar);
