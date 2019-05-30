@@ -13,8 +13,9 @@ public class JugadorConexiones implements JugadorRepository {
     @Override
     public ArrayList<Jugadores> getByStars(int i) {
         ArrayList<Jugadores> buscado =new ArrayList<>();
+        Connection connection= null;
         try{
-            Connection connection = Conexion.obtenerConexion();
+            connection = Conexion.obtenerConexion();
             if (connection == null) {
             } else {
                 ResultSet rs = null;
@@ -42,6 +43,8 @@ public class JugadorConexiones implements JugadorRepository {
             }
         }catch (Exception ex){
             ex.printStackTrace();
+        }finally {
+            Conexion.cerrarConexion(connection);
         }
         return buscado;
     }
@@ -49,8 +52,9 @@ public class JugadorConexiones implements JugadorRepository {
     @Override
     public Jugadores getById(String id) {
         Jugadores jugador=new Jugadores();
+        Connection connection= null;
         try{
-            Connection connection = Conexion.obtenerConexion();
+            connection = Conexion.obtenerConexion();
             if (connection == null) {
             } else {
                 ResultSet rs = null;
@@ -78,6 +82,8 @@ public class JugadorConexiones implements JugadorRepository {
             }
         }catch (Exception ex){
             ex.printStackTrace();
+        }finally {
+            Conexion.cerrarConexion(connection);
         }
         return jugador;
     }
@@ -85,8 +91,9 @@ public class JugadorConexiones implements JugadorRepository {
     @Override
     public ArrayList<Jugadores> getByTeam(String equipo) {
         ArrayList<Jugadores> buscado =new ArrayList<>();
+        Connection connection= null;
         try{
-            Connection connection = Conexion.obtenerConexion();
+            connection = Conexion.obtenerConexion();
             if (connection == null) {
             } else {
                 ResultSet rs = null;
@@ -114,6 +121,8 @@ public class JugadorConexiones implements JugadorRepository {
             }
         }catch (Exception ex){
             ex.printStackTrace();
+        }finally {
+            Conexion.cerrarConexion(connection);
         }
         return buscado;
     }

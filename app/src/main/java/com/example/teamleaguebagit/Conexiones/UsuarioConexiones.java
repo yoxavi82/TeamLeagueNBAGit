@@ -18,8 +18,9 @@ public class UsuarioConexiones implements UsuarioRepository {
 
     @Override
     public boolean register(Usuarios usuario) {
+        Connection connection= null;
         try{
-            Connection connection = Conexion.obtenerConexion();
+            connection = Conexion.obtenerConexion();
             if (connection == null) {
             } else {
                 String query ="Insert into Usuarios (IdUsuario,Nombre,Apellidos,Correo,FechaNacimiento,Admin)" +
@@ -32,14 +33,17 @@ public class UsuarioConexiones implements UsuarioRepository {
 
         }catch (Exception ex){
             ex.printStackTrace();
+        }finally {
+            Conexion.cerrarConexion(connection);
         }
         return true;
     }
 
     @Override
     public boolean update(Usuarios usuario) {
+        Connection connection= null;
         try{
-            Connection connection = Conexion.obtenerConexion();
+            connection = Conexion.obtenerConexion();
             if (connection == null) {
             } else {
                 String query ="UPDATE Usuarios SET " +
@@ -52,6 +56,8 @@ public class UsuarioConexiones implements UsuarioRepository {
             }
         }catch (Exception ex){
             ex.printStackTrace();
+        }finally {
+            Conexion.cerrarConexion(connection);
         }
         return true;
     }
@@ -59,8 +65,9 @@ public class UsuarioConexiones implements UsuarioRepository {
     @Override
     public PasswordUsuarios login(String user) {
         PasswordUsuarios buscado = new PasswordUsuarios();
+        Connection connection= null;
         try{
-            Connection connection = Conexion.obtenerConexion();
+            connection = Conexion.obtenerConexion();
             if (connection == null) {
             } else {
                 ResultSet rs = null;
@@ -78,6 +85,8 @@ public class UsuarioConexiones implements UsuarioRepository {
             }
         }catch (Exception ex){
             ex.printStackTrace();
+        }finally {
+            Conexion.cerrarConexion(connection);
         }
         return buscado;
 
@@ -86,8 +95,9 @@ public class UsuarioConexiones implements UsuarioRepository {
     @Override
     public Usuarios get(String id) {
         Usuarios user = new Usuarios();
+        Connection connection= null;
         try{
-            Connection connection = Conexion.obtenerConexion();
+            connection = Conexion.obtenerConexion();
             if (connection == null) {
             } else {
                 ResultSet rs = null;
@@ -108,6 +118,8 @@ public class UsuarioConexiones implements UsuarioRepository {
             }
         }catch (Exception ex){
             ex.printStackTrace();
+        }finally {
+            Conexion.cerrarConexion(connection);
         }
         return user;
     }
@@ -115,8 +127,9 @@ public class UsuarioConexiones implements UsuarioRepository {
     @Override
     public ArrayList<Usuarios> getAll() {
         ArrayList<Usuarios> users = new ArrayList<>();
+        Connection connection= null;
         try{
-            Connection connection = Conexion.obtenerConexion();
+            connection = Conexion.obtenerConexion();
             if (connection == null) {
             } else {
                 ResultSet rs = null;
@@ -137,6 +150,8 @@ public class UsuarioConexiones implements UsuarioRepository {
             }
         }catch (Exception ex){
             ex.printStackTrace();
+        }finally {
+            Conexion.cerrarConexion(connection);
         }
         return users;
     }
@@ -144,18 +159,21 @@ public class UsuarioConexiones implements UsuarioRepository {
 //TODO
     @Override
     public boolean registrarPassword(PasswordUsuarios passwordUsuarios) {
+        Connection connection= null;
         try{
-            Connection connection = Conexion.obtenerConexion();
+            connection = Conexion.obtenerConexion();
             if (connection == null) {
             } else {
                 String query ="Insert into PasswordUsuarios (IdUsuario,Password) VALUES" +
-                        " ('"+passwordUsuarios.getIdUsuario()+"','"+passwordUsuarios.getPassword()+"')";
+                        " ('"+passwordUsuarios.getUsuarios().getIdUsuario()+"','"+passwordUsuarios.getPassword()+"')";
                 Statement stmt = (Statement) connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 
                 stmt.executeUpdate(query);
             }
         }catch (Exception ex){
             ex.printStackTrace();
+        }finally {
+            Conexion.cerrarConexion(connection);
         }
         return true;
     }

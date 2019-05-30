@@ -17,8 +17,9 @@ public class EquipoConexiones implements EquipoRepository {
     @Override
     public Equipos get(String id) {
         Equipos equipo = new Equipos();
+        Connection connection= null;
         try{
-            Connection connection = Conexion.obtenerConexion();
+            connection = Conexion.obtenerConexion();
             if (connection == null) {
             } else {
                 ResultSet rs = null;
@@ -37,6 +38,8 @@ public class EquipoConexiones implements EquipoRepository {
             }
         }catch (Exception ex){
             ex.printStackTrace();
+        }finally {
+            Conexion.cerrarConexion(connection);
         }
         return equipo;
     }
@@ -44,8 +47,9 @@ public class EquipoConexiones implements EquipoRepository {
     @Override
     public ArrayList<Equipos> getAll() {
         ArrayList<Equipos> equipos = new ArrayList<>();
+        Connection connection= null;
         try{
-            Connection connection = Conexion.obtenerConexion();
+            connection = Conexion.obtenerConexion();
             if (connection == null) {
             } else {
                 ResultSet rs = null;
@@ -66,6 +70,8 @@ public class EquipoConexiones implements EquipoRepository {
             }
         }catch (Exception ex){
             ex.printStackTrace();
+        }finally {
+        Conexion.cerrarConexion(connection);
         }
         return equipos;
     }

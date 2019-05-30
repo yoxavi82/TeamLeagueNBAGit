@@ -1,11 +1,16 @@
 package com.example.teamleaguebagit;
 
+import com.example.teamleaguebagit.Conexiones.LigaConexiones;
+import com.example.teamleaguebagit.pojos.EquiposUsuarios;
 import android.support.design.widget.NavigationView;
 import android.view.Menu;
 
 import com.example.teamleaguebagit.Conexiones.LigaConexiones;
 import com.example.teamleaguebagit.pojos.Ligas;
 import com.example.teamleaguebagit.pojos.Usuarios;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -15,7 +20,29 @@ public class Actual {
     static Usuarios usuarioActual=null;
     static Ligas ligaActual=null;
     static Boolean iniciarSesion=true;
-    static ArrayList<Ligas> ligasUsuarioActual=null;
+    static ArrayList<Ligas> ligasUsuarioActual = new ArrayList();
+    static ArrayList<EquiposUsuarios> equiposUsuarios = new ArrayList();
+
+    public static ArrayList<EquiposUsuarios> getEquiposUsuariosSesion(){
+        return equiposUsuarios;
+    }
+
+    public static void setEquiposUsuarios(ArrayList<EquiposUsuarios> equipos){
+        ligasUsuarioActual.clear();
+        for(EquiposUsuarios eq: equipos){
+            ligasUsuarioActual.add(eq.getLigas());
+        }
+        equiposUsuarios = equipos;
+    }
+
+    public static ArrayList<Ligas> getLigaSesion(){
+        return ligasUsuarioActual;
+    }
+
+    public static void setLigasUsuarioActual(ArrayList<Ligas> ligas){
+        ligasUsuarioActual = ligas;
+    }
+
 
     public Actual(Usuarios j, Ligas l) {
         this.usuarioActual = j;

@@ -20,8 +20,9 @@ public class PuntuacionConexiones implements PuntuacionRepository {
 
     @Override
     public boolean addPuntuacion(Puntuaciones pun) {
+        Connection connection= null;
         try{
-            Connection connection = Conexion.obtenerConexion();
+            connection = Conexion.obtenerConexion();
             if (connection == null) {
             } else {
                 String query ="Insert into Puntuaciones (IdJugador,IdPartido,Puntuacion)" +
@@ -34,16 +35,18 @@ public class PuntuacionConexiones implements PuntuacionRepository {
 
         }catch (Exception ex){
             ex.printStackTrace();
+        }finally {
+            Conexion.cerrarConexion(connection);
         }
         return true;
     }
 
     @Override
     public ArrayList<Puntuaciones> getByPartido(String idPartido) {
-
+        Connection connection= null;
         ArrayList<Puntuaciones> punts = new ArrayList<>();
         try{
-            Connection connection = Conexion.obtenerConexion();
+            connection = Conexion.obtenerConexion();
             if (connection == null) {
             } else {
                 ResultSet rs = null;
@@ -62,6 +65,8 @@ public class PuntuacionConexiones implements PuntuacionRepository {
             }
         }catch (Exception ex){
             ex.printStackTrace();
+        }finally {
+            Conexion.cerrarConexion(connection);
         }
         return punts;
     }
@@ -69,8 +74,9 @@ public class PuntuacionConexiones implements PuntuacionRepository {
     @Override
     public ArrayList<Puntuaciones> getByJugador(String idJugador) {
         ArrayList<Puntuaciones> punts = new ArrayList<>();
+        Connection connection= null;
         try{
-            Connection connection = Conexion.obtenerConexion();
+            connection = Conexion.obtenerConexion();
             if (connection == null) {
             } else {
                 ResultSet rs = null;
@@ -89,6 +95,8 @@ public class PuntuacionConexiones implements PuntuacionRepository {
             }
         }catch (Exception ex){
             ex.printStackTrace();
+        }finally {
+            Conexion.cerrarConexion(connection);
         }
         return punts;
     }
@@ -96,8 +104,9 @@ public class PuntuacionConexiones implements PuntuacionRepository {
     @Override
     public ArrayList<Puntuaciones> getAll() {
         ArrayList<Puntuaciones> punts = new ArrayList<>();
+        Connection connection= null;
         try{
-            Connection connection = Conexion.obtenerConexion();
+            connection = Conexion.obtenerConexion();
             if (connection == null) {
             } else {
                 ResultSet rs = null;
@@ -116,6 +125,8 @@ public class PuntuacionConexiones implements PuntuacionRepository {
             }
         }catch (Exception ex){
             ex.printStackTrace();
+        }finally {
+            Conexion.cerrarConexion(connection);
         }
         return punts;
     }

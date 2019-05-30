@@ -37,7 +37,7 @@ import java.util.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
-import static com.example.teamleaguebagit.Actual.ligasList;
+import static com.example.teamleaguebagit.Actual.ligasUsuarioActual;
 
 public class Mercado extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener{
     BottomNavigationView navigationBottom;
@@ -235,8 +235,8 @@ public class Mercado extends AppCompatActivity  implements NavigationView.OnNavi
     private Menu initMenu() {
         Menu m = navView.getMenu();
         m.findItem(R.id.ligas).getSubMenu().clear();
-        for(int i = 0; i< ligasList.size(); i++) {
-            m.findItem(R.id.ligas).getSubMenu().add(ligasList.get(i).getIdLiga());
+        for(int i = 0; i< ligasUsuarioActual.size(); i++) {
+            m.findItem(R.id.ligas).getSubMenu().add(ligasUsuarioActual.get(i).getIdLiga());
         }
         return m;
 

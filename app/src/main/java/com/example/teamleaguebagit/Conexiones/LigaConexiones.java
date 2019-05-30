@@ -18,8 +18,9 @@ public class LigaConexiones implements LigaRepository {
 
     @Override
     public boolean register(String id, Usuarios admin) {
+        Connection connection= null;
         try{
-            Connection connection = Conexion.obtenerConexion();
+            connection = Conexion.obtenerConexion();
             if (connection == null) {
             } else {
                 String query ="Insert into Ligas (IdLiga,Admin) VALUES ('"+id+"','"+admin.getIdUsuario()+"')";
@@ -30,6 +31,8 @@ public class LigaConexiones implements LigaRepository {
 
         }catch (Exception ex){
             ex.printStackTrace();
+        }finally {
+            Conexion.cerrarConexion(connection);
         }
         return true;
     }
@@ -37,11 +40,12 @@ public class LigaConexiones implements LigaRepository {
     //TODO
     @Override
     public boolean registerPass(PasswordLigas passwordLigas) {
+        Connection connection= null;
         try{
-            Connection connection = Conexion.obtenerConexion();
+            connection = Conexion.obtenerConexion();
             if (connection == null) {
             } else {
-                String query ="Insert into PasswordLigas (IdLiga,Password) VALUES ('"+passwordLigas.getIdLiga()
+                String query ="Insert into PasswordLigas (IdLiga,Password) VALUES ('"+passwordLigas.getLigas().getIdLiga()
                         +"','"+passwordLigas.getPassword()+"')";
 
                 Statement stmt = (Statement) connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
@@ -51,6 +55,8 @@ public class LigaConexiones implements LigaRepository {
 
         }catch (Exception ex){
             ex.printStackTrace();
+        }finally {
+            Conexion.cerrarConexion(connection);
         }
         return true;
     }
@@ -58,8 +64,9 @@ public class LigaConexiones implements LigaRepository {
     @Override
     public PasswordLigas unirte(Ligas ligas) {
         PasswordLigas buscado = new PasswordLigas();
+        Connection connection= null;
         try{
-            Connection connection = Conexion.obtenerConexion();
+            connection = Conexion.obtenerConexion();
             if (connection == null) {
             } else {
                 ResultSet rs = null;
@@ -77,6 +84,8 @@ public class LigaConexiones implements LigaRepository {
             }
         }catch (Exception ex){
             ex.printStackTrace();
+        }finally {
+            Conexion.cerrarConexion(connection);
         }
         return buscado;
     }
@@ -84,8 +93,9 @@ public class LigaConexiones implements LigaRepository {
     @Override
     public ArrayList<PasswordLigas> getAll() {
         ArrayList<PasswordLigas> liga = new ArrayList<>();
+        Connection connection= null;
         try{
-            Connection connection = Conexion.obtenerConexion();
+            connection = Conexion.obtenerConexion();
             if (connection == null) {
             } else {
                 ResultSet rs = null;
@@ -98,12 +108,15 @@ public class LigaConexiones implements LigaRepository {
                     PasswordLigas pass = new PasswordLigas();
                     pass.setPassword(rs.getString("Password"));
                     pass.setIdLiga(rs.getString("IdLiga"));
+                    liga.add(pass);
                 }
             }
         }catch (Exception ex){
             ex.printStackTrace();
+        }finally {
+            Conexion.cerrarConexion(connection);
         }
-        return (ArrayList<PasswordLigas>) liga;
+        return liga;
     }
 
     @Override
@@ -132,11 +145,12 @@ public class LigaConexiones implements LigaRepository {
 
     @Override
     public Ligas get(String id) {
+        Connection connection= null;
         Ligas liga = new Ligas();
         UsuarioConexiones user = new UsuarioConexiones();
 
         try{
-            Connection connection = Conexion.obtenerConexion();
+            connection = Conexion.obtenerConexion();
             if (connection == null) {
             } else {
                 ResultSet rs = null;
@@ -153,7 +167,9 @@ public class LigaConexiones implements LigaRepository {
                 }
             }
         }catch (Exception ex){
-            ex.printStackTrace();
+//            ex.printStackTrace();
+        }finally {
+            Conexion.cerrarConexion(connection);
         }
         return liga;
     }

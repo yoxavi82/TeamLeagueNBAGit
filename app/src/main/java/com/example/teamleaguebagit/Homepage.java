@@ -21,7 +21,10 @@ import android.widget.Toast;
 
 import org.jetbrains.annotations.NotNull;
 
-import static com.example.teamleaguebagit.Actual.ligasList;
+import static com.example.teamleaguebagit.Actual.ligasUsuarioActual;
+
+import com.example.teamleaguebagit.Conexiones.EquipoUsuarioConexiones;
+import com.example.teamleaguebagit.Conexiones.LigaConexiones;
 
 public class Homepage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     Button crear,unir;
@@ -35,12 +38,11 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
         setContentView(R.layout.activity_homepage);
         navView = (NavigationView) findViewById(R.id.nav_view);
 
-        if(ligasList==null)
-            Actual.initArrayMenu();
 
-        initMenu();
         Toolbar toolbar =findViewById(R.id.toolbar);
         TextView titulo = findViewById(R.id.toolbar_title);
+        if(Actual.getLigaSesion()==null)Actual.setEquiposUsuarios(new EquipoUsuarioConexiones().getByUser(Actual.getUsuarioActual().getIdUsuario()));
+        initMenu();
 
         crear = findViewById(R.id.crearId);
         unir = findViewById(R.id.unirseId);
@@ -194,8 +196,8 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
     private Menu initMenu() {
         Menu m = navView.getMenu();
         m.findItem(R.id.ligas).getSubMenu().clear();
-        for(int i = 0; i< ligasList.size(); i++) {
-            m.findItem(R.id.ligas).getSubMenu().add(ligasList.get(i).getIdLiga());
+        for(int i = 0; i< ligasUsuarioActual.size(); i++) {
+            m.findItem(R.id.ligas).getSubMenu().add(ligasUsuarioActual.get(i).getIdLiga());
         }
         return m;
 
