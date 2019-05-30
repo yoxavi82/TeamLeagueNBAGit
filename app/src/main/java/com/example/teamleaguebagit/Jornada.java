@@ -20,7 +20,7 @@ import android.widget.TextView;
 
 import org.jetbrains.annotations.NotNull;
 
-import static com.example.teamleaguebagit.Actual.ligasList;
+import static com.example.teamleaguebagit.Actual.ligasUsuarioActual;
 
 public class Jornada extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener{
     BottomNavigationView navigationBottom;
@@ -150,8 +150,8 @@ public class Jornada extends AppCompatActivity  implements NavigationView.OnNavi
     private Menu initMenu() {
         Menu m = navView.getMenu();
         m.findItem(R.id.ligas).getSubMenu().clear();
-        for(int i = 0; i< ligasList.size(); i++) {
-            m.findItem(R.id.ligas).getSubMenu().add(ligasList.get(i).getIdLiga());
+        for(int i = 0; i< ligasUsuarioActual.size(); i++) {
+            m.findItem(R.id.ligas).getSubMenu().add(ligasUsuarioActual.get(i).getIdLiga());
         }
         return m;
 
