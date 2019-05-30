@@ -3,7 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <item android:title="@string/mis_ligas">
+    <item
+        android:id="@+id/ligas"
+        android:title="@string/mis_ligas">
         <menu>
             <item
                 android:id="@+id/liga1"

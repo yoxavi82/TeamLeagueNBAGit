@@ -15,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.SubMenu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -23,14 +24,20 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.teamleaguebagit.Conexiones.JugadorConexiones;
+import com.example.teamleaguebagit.Conexiones.LigaConexiones;
 import com.example.teamleaguebagit.Conexiones.PlantillaConexiones;
 import com.example.teamleaguebagit.pojos.Jugadores;
+import com.example.teamleaguebagit.pojos.Ligas;
 import com.example.teamleaguebagit.pojos.Plantillas;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.text.ParseException;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+
+import static com.example.teamleaguebagit.Actual.ligasList;
 
 public class Mercado extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener{
     BottomNavigationView navigationBottom;
@@ -41,6 +48,7 @@ public class Mercado extends AppCompatActivity  implements NavigationView.OnNavi
     EditText precio ;
     TextView  alerta_puja;
 
+    NavigationView navView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -48,6 +56,10 @@ public class Mercado extends AppCompatActivity  implements NavigationView.OnNavi
         setContentView(R.layout.activity_mercado);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         TextView titulo = findViewById(R.id.toolbar_title);
+        navView = (NavigationView) findViewById(R.id.nav_view);
+        Menu m = initMenu();
+        MenuItem mi = m.getItem(m.size()-1);
+        mi.setTitle(mi.getTitle());
         LayoutInflater inflater = getLayoutInflater();
         formElementsView = inflater.inflate(R.layout.confirmar,  null);
         lista = new ArrayList<Jugadores>();
@@ -107,6 +119,8 @@ public class Mercado extends AppCompatActivity  implements NavigationView.OnNavi
             }
         });
     }
+
+
 
     public void initMercado() throws ParseException {
         PlantillaConexiones conexionesPlantilla = new PlantillaConexiones();
@@ -215,5 +229,16 @@ public class Mercado extends AppCompatActivity  implements NavigationView.OnNavi
                 break;
         }
         return true;
+    }
+
+    @NotNull
+    private Menu initMenu() {
+        Menu m = navView.getMenu();
+        m.findItem(R.id.ligas).getSubMenu().clear();
+        for(int i = 0; i< ligasList.size(); i++) {
+            m.findItem(R.id.ligas).getSubMenu().add(ligasList.get(i).getIdLiga());
+        }
+        return m;
+
     }
 }

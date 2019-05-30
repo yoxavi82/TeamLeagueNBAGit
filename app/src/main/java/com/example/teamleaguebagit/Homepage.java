@@ -19,15 +19,26 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.jetbrains.annotations.NotNull;
+
+import static com.example.teamleaguebagit.Actual.ligasList;
+
 public class Homepage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     Button crear,unir;
     BottomNavigationView navigationBottom;
+    NavigationView navView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_homepage);
+        navView = (NavigationView) findViewById(R.id.nav_view);
+
+        if(ligasList==null)
+            Actual.initArrayMenu();
+
+        initMenu();
         Toolbar toolbar =findViewById(R.id.toolbar);
         TextView titulo = findViewById(R.id.toolbar_title);
 
@@ -170,8 +181,24 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
                 break;
             case R.id.config:
                 break;
+
+
+                default:
+                    Toast toast= Toast.makeText(this,item.getTitle()+"", Toast.LENGTH_LONG);
+
         }
         return true;
+    }
+
+    @NotNull
+    private Menu initMenu() {
+        Menu m = navView.getMenu();
+        m.findItem(R.id.ligas).getSubMenu().clear();
+        for(int i = 0; i< ligasList.size(); i++) {
+            m.findItem(R.id.ligas).getSubMenu().add(ligasList.get(i).getIdLiga());
+        }
+        return m;
+
     }
 }
 

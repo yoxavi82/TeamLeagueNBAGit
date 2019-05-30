@@ -107,8 +107,34 @@ public class LigaConexiones implements LigaRepository {
     }
 
     @Override
+    public ArrayList<Ligas> getAllLigas() {
+        ArrayList<Ligas>  liga = new ArrayList<Ligas> ();
+        UsuarioConexiones user = new UsuarioConexiones();
+
+        try{
+            Connection connection = Conexion.obtenerConexion();
+            if (connection == null) {
+            } else {
+                ResultSet rs = null;
+                String query ="Select * FROM Ligas ";
+
+                Statement stmt = (Statement) connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+
+                rs = stmt.executeQuery(query);
+                while(rs.next()){
+                    liga.add(new Ligas(rs.getString("IdLiga"),user.get(rs.getString("Admin"))));
+                }
+            }
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return liga;    }
+
+    @Override
     public Ligas get(String id) {
         Ligas liga = new Ligas();
+        UsuarioConexiones user = new UsuarioConexiones();
+
         try{
             Connection connection = Conexion.obtenerConexion();
             if (connection == null) {
@@ -121,6 +147,7 @@ public class LigaConexiones implements LigaRepository {
                 rs = stmt.executeQuery(query);
                 if(rs.next()){
                     liga.setIdLiga(id);
+                    liga.setUsuarios(user.get(rs.getString("Admin")));
                 }else{
                     return null;
                 }
