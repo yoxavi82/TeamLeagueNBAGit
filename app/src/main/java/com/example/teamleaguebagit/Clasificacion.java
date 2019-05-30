@@ -29,8 +29,12 @@ import com.example.teamleaguebagit.pojos.EquiposUsuarios;
 import com.example.teamleaguebagit.pojos.Jugadores;
 import com.example.teamleaguebagit.pojos.Plantillas;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.Collections;
+
+import static com.example.teamleaguebagit.Actual.ligasUsuarioActual;
 
 public class Clasificacion extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener{
     BottomNavigationView navigationBottom;
@@ -38,6 +42,8 @@ public class Clasificacion extends AppCompatActivity  implements NavigationView.
     ArrayList<lista_clasificacion> lista;
     ListView lv, lv_plantilla;
     TextView nombre_usuario;
+    NavigationView navView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +58,10 @@ public class Clasificacion extends AppCompatActivity  implements NavigationView.
         lista = new ArrayList<lista_clasificacion>();
         lv = (ListView) findViewById(R.id.lista_clasificacion);
         lv_plantilla = (ListView) findViewById(R.id.lv_plantilla);
+
+        navView = (NavigationView) findViewById(R.id.nav_view);
+
+        initMenu();
 
         setSupportActionBar(toolbar);
 
@@ -205,5 +215,16 @@ public class Clasificacion extends AppCompatActivity  implements NavigationView.
                 break;
         }
         return true;
+    }
+
+    @NotNull
+    private Menu initMenu() {
+        Menu m = navView.getMenu();
+        m.findItem(R.id.ligas).getSubMenu().clear();
+        for(int i = 0; i< ligasUsuarioActual.size(); i++) {
+            m.findItem(R.id.ligas).getSubMenu().add(ligasUsuarioActual.get(i).getIdLiga());
+        }
+        return m;
+
     }
 }

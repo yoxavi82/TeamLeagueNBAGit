@@ -18,15 +18,23 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import org.jetbrains.annotations.NotNull;
+
+import static com.example.teamleaguebagit.Actual.ligasUsuarioActual;
+
 public class Jornada extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener{
     BottomNavigationView navigationBottom;
-
+    NavigationView navView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_jornada);
         Toolbar toolbar = findViewById(R.id.toolbar);
+
+         navView = (NavigationView) findViewById(R.id.nav_view);
+
+        initMenu();
 
 
         setSupportActionBar(toolbar);
@@ -136,5 +144,16 @@ public class Jornada extends AppCompatActivity  implements NavigationView.OnNavi
                 break;
         }
         return true;
+    }
+
+    @NotNull
+    private Menu initMenu() {
+        Menu m = navView.getMenu();
+        m.findItem(R.id.ligas).getSubMenu().clear();
+        for(int i = 0; i< ligasUsuarioActual.size(); i++) {
+            m.findItem(R.id.ligas).getSubMenu().add(ligasUsuarioActual.get(i).getIdLiga());
+        }
+        return m;
+
     }
 }

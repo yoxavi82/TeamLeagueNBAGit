@@ -21,19 +21,30 @@ import android.widget.Toast;
 
 import com.example.teamleaguebagit.Conexiones.EquipoUsuarioConexiones;
 import com.example.teamleaguebagit.Conexiones.LigaConexiones;
+import com.example.teamleaguebagit.pojos.Ligas;
+
+import org.jetbrains.annotations.NotNull;
+
+import static com.example.teamleaguebagit.Actual.ligasUsuarioActual;
 
 public class Homepage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     Button crear,unir;
     BottomNavigationView navigationBottom;
+    NavigationView navView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_homepage);
+        navView = (NavigationView) findViewById(R.id.nav_view);
+
+
         Toolbar toolbar =findViewById(R.id.toolbar);
         TextView titulo = findViewById(R.id.toolbar_title);
         if(Actual.getLigaSesion()==null)Actual.setEquiposUsuarios(new EquipoUsuarioConexiones().getByUser(Actual.getUsuarioActual().getIdUsuario()));
+        initMenu();
+
         crear = findViewById(R.id.crearId);
         unir = findViewById(R.id.unirseId);
         setSupportActionBar(toolbar);
@@ -102,8 +113,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
     }
 
     private boolean isInLeague() {
-        //return Actual.ligaActual != null;
-        return true;
+        return Actual.ligaActual != null;
     }
 
     private void errorLiga() {
@@ -173,8 +183,29 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
                 break;
             case R.id.config:
                 break;
+
+
+                default:
+                    for(Ligas liga: ligasUsuarioActual){
+                        if(item.getTitle().equals(liga.getIdLiga()))Actual.setLigaActual(liga);
+                    }
+                    Toast toast= Toast.makeText(this,"Liga "+item.getTitle()+" seleccionada", Toast.LENGTH_SHORT);
+                    toast.show();
+                    break;
+
         }
         return true;
+    }
+
+    @NotNull
+    private Menu initMenu() {
+        Menu m = navView.getMenu();
+        m.findItem(R.id.ligas).getSubMenu().clear();
+        for(int i = 0; i< ligasUsuarioActual.size(); i++) {
+            m.findItem(R.id.ligas).getSubMenu().add(ligasUsuarioActual.get(i).getIdLiga());
+        }
+        return m;
+
     }
 }
 
