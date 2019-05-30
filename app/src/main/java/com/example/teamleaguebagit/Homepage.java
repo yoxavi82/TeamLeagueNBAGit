@@ -41,7 +41,8 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
 
         Toolbar toolbar =findViewById(R.id.toolbar);
         TextView titulo = findViewById(R.id.toolbar_title);
-        if(Actual.getLigaSesion()==null)Actual.setEquiposUsuarios(new EquipoUsuarioConexiones().getByUser(Actual.getUsuarioActual().getIdUsuario()));
+        if(Actual.getLigaSesion()==null)
+            Actual.setEquiposUsuarios(new EquipoUsuarioConexiones().getByUser(Actual.getUsuarioActual().getIdUsuario()));
         initMenu();
 
         crear = findViewById(R.id.crearId);
@@ -112,8 +113,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
     }
 
     private boolean isInLeague() {
-        //return Actual.ligaActual != null;
-        return true;
+        return Actual.ligaActual != null;
     }
 
     private void errorLiga() {
@@ -168,6 +168,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
                 alert.setMessage(R.string.CerrarSesionPregunta);
                 alert.setNegativeButton(R.string.CerrarSesion, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
+
                         Actual.setIniciarSesion();
                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

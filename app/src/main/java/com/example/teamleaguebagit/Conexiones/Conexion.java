@@ -32,7 +32,7 @@ public class Conexion {
     }
     public static void cerrarConexion(Connection con){
         try {
-            if(!con.isClosed()){
+            if(con!=null&&!con.isClosed()){
                 con.close();
             }
         } catch (SQLException e) {
