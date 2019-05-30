@@ -27,8 +27,12 @@ import android.widget.TextView;
 
 import com.example.teamleaguebagit.pojos.Jugadores;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import static com.example.teamleaguebagit.Actual.ligasUsuarioActual;
 
 public class Alineacion extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener{
     BottomNavigationView navigationBottom;
@@ -64,12 +68,18 @@ public class Alineacion extends AppCompatActivity  implements NavigationView.OnN
     ImageView ext1;
     ImageView ext2;
     ImageView ext3;
+    NavigationView navView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alineacion);
+
+
+        navView = (NavigationView) findViewById(R.id.nav_view);
+
+        initMenu();
 
         layourtPrincipal = findViewById(R.id.layoutPrincipal);
         llenarArrayDraw();
@@ -582,5 +592,16 @@ public class Alineacion extends AppCompatActivity  implements NavigationView.OnN
             default:
                 return super.onTouchEvent(event);
         }
+    }
+
+    @NotNull
+    private Menu initMenu() {
+        Menu m = navView.getMenu();
+        m.findItem(R.id.ligas).getSubMenu().clear();
+        for(int i = 0; i< ligasUsuarioActual.size(); i++) {
+            m.findItem(R.id.ligas).getSubMenu().add(ligasUsuarioActual.get(i).getIdLiga());
+        }
+        return m;
+
     }
 }

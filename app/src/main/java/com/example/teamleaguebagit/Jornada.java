@@ -35,18 +35,23 @@ import com.example.teamleaguebagit.pojos.Plantillas;
 import java.util.ArrayList;
 import java.util.Date;
 
+import org.jetbrains.annotations.NotNull;
+
+import static com.example.teamleaguebagit.Actual.ligasList;
+
 public class Jornada extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener{
     BottomNavigationView navigationBottom;
-    ListView lv;
-    ArrayList<Jugadores> lista_puntucion;
-
+    NavigationView navView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_jornada);
         Toolbar toolbar = findViewById(R.id.toolbar);
-        lv = findViewById(R.id.lv_jornada);
+
+         navView = (NavigationView) findViewById(R.id.nav_view);
+
+        initMenu();
 
 
         setSupportActionBar(toolbar);
@@ -217,6 +222,17 @@ public class Jornada extends AppCompatActivity  implements NavigationView.OnNavi
 
 
 
+
+    }
+
+    @NotNull
+    private Menu initMenu() {
+        Menu m = navView.getMenu();
+        m.findItem(R.id.ligas).getSubMenu().clear();
+        for(int i = 0; i< ligasList.size(); i++) {
+            m.findItem(R.id.ligas).getSubMenu().add(ligasList.get(i).getIdLiga());
+        }
+        return m;
 
     }
 }

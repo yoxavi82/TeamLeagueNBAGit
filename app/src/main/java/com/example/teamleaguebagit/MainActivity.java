@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         if(usuario.getText().toString().isEmpty()||password.getText().toString().isEmpty()){
             errorLogin(R.string.ToastErrorMain);
         }else {
-            UsuarioConexiones user = new UsuarioConexiones();
+           UsuarioConexiones user = new UsuarioConexiones();
             PasswordUsuarios pass = user.login(usuario.getText().toString());
             if(pass.getPassword()!=null){
                 if(pass.getPassword().equals(password.getText().toString())){
@@ -68,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
             }else{
                 errorLogin(R.string.ErrorLogin);
             }
+
         }
     }
 

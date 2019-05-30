@@ -4,6 +4,7 @@ import com.example.teamleaguebagit.ConexionInterficies.EquipoUsuarioRepository;
 import com.example.teamleaguebagit.pojos.EquiposUsuarios;
 import com.mysql.jdbc.Statement;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -15,8 +16,9 @@ import java.util.ArrayList;
 public class EquipoUsuarioConexiones implements EquipoUsuarioRepository {
     @Override
     public boolean register(EquiposUsuarios nuevo) {
+        Connection connection= null;
         try{
-            Connection connection = Conexion.obtenerConexion();
+            connection = Conexion.obtenerConexion();
             if (connection == null) {
             } else {
                 String query ="Insert into EquiposUsuarios (NombreEquipo,EquipoNBA,IdUsuario,IdLiga," +
@@ -31,6 +33,8 @@ public class EquipoUsuarioConexiones implements EquipoUsuarioRepository {
 
         }catch (Exception ex){
             ex.printStackTrace();
+        }finally {
+            Conexion.cerrarConexion(connection);
         }
         return true;
     }
@@ -38,8 +42,9 @@ public class EquipoUsuarioConexiones implements EquipoUsuarioRepository {
     @Override
     public ArrayList<EquiposUsuarios> getAll() {
         ArrayList<EquiposUsuarios> equipos = new ArrayList<>();
+        Connection connection= null;
         try{
-            Connection connection = Conexion.obtenerConexion();
+            connection = Conexion.obtenerConexion();
             if (connection == null) {
             } else {
                 ResultSet rs = null;
@@ -62,6 +67,8 @@ public class EquipoUsuarioConexiones implements EquipoUsuarioRepository {
             }
         }catch (Exception ex){
             ex.printStackTrace();
+        }finally {
+            Conexion.cerrarConexion(connection);
         }
         return equipos;
     }
@@ -69,8 +76,9 @@ public class EquipoUsuarioConexiones implements EquipoUsuarioRepository {
     @Override
     public ArrayList<EquiposUsuarios> getByUser(String idUser) {
         ArrayList<EquiposUsuarios> equipos = new ArrayList<>();
+        Connection connection= null;
         try{
-            Connection connection = Conexion.obtenerConexion();
+            connection = Conexion.obtenerConexion();
             if (connection == null) {
             } else {
                 ResultSet rs = null;
@@ -92,7 +100,10 @@ public class EquipoUsuarioConexiones implements EquipoUsuarioRepository {
                 }
             }
         }catch (Exception ex){
-            ex.printStackTrace();
+//            ex.printStackTrace();
+        }finally {
+
+            Conexion.cerrarConexion(connection);
         }
         return equipos;
     }
@@ -100,8 +111,9 @@ public class EquipoUsuarioConexiones implements EquipoUsuarioRepository {
     @Override
     public ArrayList<EquiposUsuarios> getByLiga(String idLiga) {
         ArrayList<EquiposUsuarios> equipos = new ArrayList<>();
+        Connection connection= null;
         try{
-            Connection connection = Conexion.obtenerConexion();
+            connection = Conexion.obtenerConexion();
             if (connection == null) {
             } else {
                 ResultSet rs = null;
@@ -124,6 +136,8 @@ public class EquipoUsuarioConexiones implements EquipoUsuarioRepository {
             }
         }catch (Exception ex){
             ex.printStackTrace();
+        }finally {
+            Conexion.cerrarConexion(connection);
         }
         return equipos;
     }
@@ -131,8 +145,9 @@ public class EquipoUsuarioConexiones implements EquipoUsuarioRepository {
     @Override
     public EquiposUsuarios getEquipo(String id) {
         EquiposUsuarios equipo = new EquiposUsuarios();
+        Connection connection= null;
         try{
-            Connection connection = Conexion.obtenerConexion();
+            connection = Conexion.obtenerConexion();
             if (connection == null) {
             } else {
                 ResultSet rs = null;
@@ -153,6 +168,8 @@ public class EquipoUsuarioConexiones implements EquipoUsuarioRepository {
             }
         }catch (Exception ex){
             ex.printStackTrace();
+        }finally {
+            Conexion.cerrarConexion(connection);
         }
         return equipo;
     }

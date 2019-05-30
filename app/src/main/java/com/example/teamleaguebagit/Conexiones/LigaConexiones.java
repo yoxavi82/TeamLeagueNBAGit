@@ -18,8 +18,9 @@ public class LigaConexiones implements LigaRepository {
 
     @Override
     public boolean register(String id, Usuarios admin) {
+        Connection connection= null;
         try{
-            Connection connection = Conexion.obtenerConexion();
+            connection = Conexion.obtenerConexion();
             if (connection == null) {
             } else {
                 String query ="Insert into Ligas (IdLiga,Admin) VALUES ('"+id+"','"+admin.getIdUsuario()+"')";
@@ -31,6 +32,8 @@ public class LigaConexiones implements LigaRepository {
 
         }catch (Exception ex){
             ex.printStackTrace();
+        }finally {
+            Conexion.cerrarConexion(connection);
         }
         return true;
     }
@@ -38,8 +41,9 @@ public class LigaConexiones implements LigaRepository {
     //TODO
     @Override
     public boolean registerPass(PasswordLigas passwordLigas) {
+        Connection connection= null;
         try{
-            Connection connection = Conexion.obtenerConexion();
+            connection = Conexion.obtenerConexion();
             if (connection == null) {
             } else {
                 String query ="Insert into PasswordLigas (IdLiga,Password) VALUES ('"+passwordLigas.getLigas().getIdLiga()
@@ -53,6 +57,8 @@ public class LigaConexiones implements LigaRepository {
 
         }catch (Exception ex){
             ex.printStackTrace();
+        }finally {
+            Conexion.cerrarConexion(connection);
         }
         return true;
     }
@@ -60,8 +66,9 @@ public class LigaConexiones implements LigaRepository {
     @Override
     public PasswordLigas unirte(Ligas ligas) {
         PasswordLigas buscado = new PasswordLigas();
+        Connection connection= null;
         try{
-            Connection connection = Conexion.obtenerConexion();
+            connection = Conexion.obtenerConexion();
             if (connection == null) {
             } else {
                 ResultSet rs = null;
@@ -81,6 +88,8 @@ public class LigaConexiones implements LigaRepository {
             Conexion.cerrarConexion(connection);
         }catch (Exception ex){
             ex.printStackTrace();
+        }finally {
+            Conexion.cerrarConexion(connection);
         }
         return buscado;
     }
@@ -88,8 +97,9 @@ public class LigaConexiones implements LigaRepository {
     @Override
     public ArrayList<PasswordLigas> getAll() {
         ArrayList<PasswordLigas> liga = new ArrayList<>();
+        Connection connection= null;
         try{
-            Connection connection = Conexion.obtenerConexion();
+            connection = Conexion.obtenerConexion();
             if (connection == null) {
             } else {
                 ResultSet rs = null;
@@ -102,21 +112,51 @@ public class LigaConexiones implements LigaRepository {
                     PasswordLigas pass = new PasswordLigas();
                     pass.setPassword(rs.getString("Password"));
                     pass.setIdLiga(rs.getString("IdLiga"));
+                    liga.add(pass);
                 }
 
             }
             Conexion.cerrarConexion(connection);
         }catch (Exception ex){
             ex.printStackTrace();
+        }finally {
+            Conexion.cerrarConexion(connection);
         }
-        return (ArrayList<PasswordLigas>) liga;
+        return liga;
     }
 
     @Override
-    public Ligas get(String id) {
-        Ligas liga = new Ligas();
+    public ArrayList<Ligas> getAllLigas() {
+        ArrayList<Ligas>  liga = new ArrayList<Ligas> ();
+        UsuarioConexiones user = new UsuarioConexiones();
+
         try{
             Connection connection = Conexion.obtenerConexion();
+            if (connection == null) {
+            } else {
+                ResultSet rs = null;
+                String query ="Select * FROM Ligas ";
+
+                Statement stmt = (Statement) connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+
+                rs = stmt.executeQuery(query);
+                while(rs.next()){
+                    liga.add(new Ligas(rs.getString("IdLiga"),user.get(rs.getString("Admin"))));
+                }
+            }
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return liga;    }
+
+    @Override
+    public Ligas get(String id) {
+        Connection connection= null;
+        Ligas liga = new Ligas();
+        UsuarioConexiones user = new UsuarioConexiones();
+
+        try{
+            connection = Conexion.obtenerConexion();
             if (connection == null) {
             } else {
                 ResultSet rs = null;
@@ -127,13 +167,16 @@ public class LigaConexiones implements LigaRepository {
                 rs = stmt.executeQuery(query);
                 if(rs.next()){
                     liga.setIdLiga(id);
+                    liga.setUsuarios(user.get(rs.getString("Admin")));
                 }else{
                     return null;
                 }
             }
             Conexion.cerrarConexion(connection);
         }catch (Exception ex){
-            ex.printStackTrace();
+//            ex.printStackTrace();
+        }finally {
+            Conexion.cerrarConexion(connection);
         }
         return liga;
     }

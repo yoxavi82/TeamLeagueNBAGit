@@ -12,5 +12,7 @@ public interface LigaRepository {
     boolean registerPass(PasswordLigas passwordLigas);
     PasswordLigas unirte(Ligas ligas);
     ArrayList<PasswordLigas> getAll();
+    ArrayList<Ligas> getAllLigas();
+
     Ligas get(String id);
 }

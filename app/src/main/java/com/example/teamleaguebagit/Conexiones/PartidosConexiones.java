@@ -21,8 +21,9 @@ public class PartidosConexiones implements PartidosRepository {
 
     @Override
     public boolean addPartido(Partidos partido) {
+        Connection connection= null;
         try{
-            Connection connection = Conexion.obtenerConexion();
+            connection = Conexion.obtenerConexion();
             if (connection == null) {
             } else {
                 String query ="Insert into Partidos (IdPartido,IdVisitante,IdLocal,Semana)" +
@@ -34,6 +35,8 @@ public class PartidosConexiones implements PartidosRepository {
             }
         }catch (Exception ex){
             ex.printStackTrace();
+        }finally {
+            Conexion.cerrarConexion(connection);
         }
         return true;
     }
@@ -41,8 +44,9 @@ public class PartidosConexiones implements PartidosRepository {
     @Override
     public ArrayList<Partidos> getAll() {
         ArrayList<Partidos> partidos = new ArrayList<>();
+        Connection connection= null;
         try{
-            Connection connection = Conexion.obtenerConexion();
+            connection = Conexion.obtenerConexion();
             if (connection == null) {
             } else {
                 ResultSet rs = null;
@@ -62,15 +66,18 @@ public class PartidosConexiones implements PartidosRepository {
             }
         }catch (Exception ex){
             ex.printStackTrace();
+        }finally {
+            Conexion.cerrarConexion(connection);
         }
         return partidos;
     }
 
     @Override
     public Partidos getById(String id) {
+        Connection connection= null;
         Partidos partido = new Partidos();
         try{
-            Connection connection = Conexion.obtenerConexion();
+            connection = Conexion.obtenerConexion();
             if (connection == null) {
             } else {
                 ResultSet rs = null;
@@ -89,6 +96,8 @@ public class PartidosConexiones implements PartidosRepository {
             }
         }catch (Exception ex){
             ex.printStackTrace();
+        }finally {
+            Conexion.cerrarConexion(connection);
         }
         return partido;
     }
@@ -96,8 +105,9 @@ public class PartidosConexiones implements PartidosRepository {
     @Override
     public ArrayList<Partidos> getByEquipo(Equipos equipo) {
         ArrayList<Partidos> partidos = new ArrayList<>();
+        Connection connection= null;
         try{
-            Connection connection = Conexion.obtenerConexion();
+            connection = Conexion.obtenerConexion();
             if (connection == null) {
             } else {
                 ResultSet rs = null;
@@ -118,6 +128,8 @@ public class PartidosConexiones implements PartidosRepository {
             }
         }catch (Exception ex){
             ex.printStackTrace();
+        }finally {
+            Conexion.cerrarConexion(connection);
         }
         return partidos;
     }
@@ -125,8 +137,9 @@ public class PartidosConexiones implements PartidosRepository {
     @Override
     public ArrayList<Partidos> getBySemana(Date semana) {
         ArrayList<Partidos> partidos = new ArrayList<>();
+        Connection connection= null;
         try{
-            Connection connection = Conexion.obtenerConexion();
+            connection = Conexion.obtenerConexion();
             if (connection == null) {
             } else {
                 ResultSet rs = null;
@@ -146,6 +159,8 @@ public class PartidosConexiones implements PartidosRepository {
             }
         }catch (Exception ex){
             ex.printStackTrace();
+        }finally {
+            Conexion.cerrarConexion(connection);
         }
         return partidos;
     }

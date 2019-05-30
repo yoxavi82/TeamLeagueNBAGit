@@ -3,6 +3,27 @@
     android:layout_height="fill_parent"
     android:background="@drawable/degradado">
 
+    <EditText
+        android:id="@+id/PasswordLigaUnirse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="60dp"
+        android:layout_marginTop="69dp"
+        android:layout_marginRight="50dp"
+        android:ems="100"
+        android:inputType="textPassword" />
+
+    <TextView
+        android:id="@+id/errorPasswordLiga"
+        android:layout_width="199dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="115dp"
+        android:text="Contraseña Incorrecta"
+        android:textAlignment="textEnd"
+        android:textColor="@android:color/holo_red_dark"
+        android:visibility="invisible" />
+
     <TextView
         android:id="@+id/textView2"
         android:layout_width="316dp"
@@ -10,7 +31,7 @@
         android:layout_marginLeft="50dp"
         android:layout_marginTop="20dp"
         android:fontFamily="monospace"
-        android:text="Quieres unirte a esta liga?"
+        android:text="Escribe la contraseña para unirte a esta liga"
         android:textSize="18sp"
         android:textStyle="bold" />
 
