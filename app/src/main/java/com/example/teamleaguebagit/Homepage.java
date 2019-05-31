@@ -25,6 +25,11 @@ import static com.example.teamleaguebagit.Actual.ligasUsuarioActual;
 
 import com.example.teamleaguebagit.Conexiones.EquipoUsuarioConexiones;
 import com.example.teamleaguebagit.Conexiones.LigaConexiones;
+import com.example.teamleaguebagit.Conexiones.PlantillaConexiones;
+import com.example.teamleaguebagit.pojos.Ligas;
+import com.example.teamleaguebagit.pojos.Plantillas;
+
+import java.util.ArrayList;
 
 public class Homepage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     Button crear,unir;
@@ -194,11 +199,11 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
                 Toast toast= Toast.makeText(this,"Liga "+item.getTitle()+" seleccionada", Toast.LENGTH_SHORT);
                 toast.show();
                 break;
-                default:
-                    Toast toast= Toast.makeText(this,item.getTitle()+"", Toast.LENGTH_LONG);
-                    PlantillaConexiones lista_jugadores = new PlantillaConexiones();
-                    ArrayList<Plantillas> plan = lista_jugadores.getByIdLiga(Actual.getLigaActual().getIdLiga());
-                    Actual.setPlantillaActual(plan);
+//                default:
+//                    Toast toast= Toast.makeText(this,item.getTitle()+"", Toast.LENGTH_LONG);
+//                    PlantillaConexiones lista_jugadores = new PlantillaConexiones();
+//                    ArrayList<Plantillas> plan = lista_jugadores.getByIdLiga(Actual.getLigaActual().getIdLiga());
+//                    Actual.setPlantillaActual(plan);
 
         }
         return true;

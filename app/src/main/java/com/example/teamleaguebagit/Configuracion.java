@@ -64,10 +64,15 @@ public class Configuracion extends AppCompatActivity{
                 dialogo.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog,int id) {
                         EquipoUsuarioConexiones con = new EquipoUsuarioConexiones();
-                        con.abandonar(Actual.getUsuarioActual().getIdUsuario(), misLigas.get(position).getIdLiga());
+                        int i = con.getByLigaAndUser(Actual.getUsuarioActual().getIdUsuario(),misLigas.get(position).getIdLiga()).getIdEquipo();
+                        new PlantillaConexiones().deleteByTeamUser(i);
+                        con.abandonar(i);
                         misLigas.remove(position);
-                        Actual.setEquiposUsuarios(new EquipoUsuarioConexiones().getByUser(Actual.getUsuarioActual().getIdUsuario()));
-                        initMisLigas();
+                        Actual.setLigaActual(null);
+                        Actual.setLigasUsuarioActual(null);
+                        Intent intent = new Intent(getApplication(), Homepage.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
                     }
                 });
                 dialogo.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
@@ -88,6 +93,7 @@ public class Configuracion extends AppCompatActivity{
         UsuarioConexiones usuarioConexiones = new UsuarioConexiones();
         usuarioConexiones.update(u);
         Intent i = new Intent(this, Homepage.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(i);
     }
 

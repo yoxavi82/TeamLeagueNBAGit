@@ -206,13 +206,13 @@ public class EquipoUsuarioConexiones implements EquipoUsuarioRepository {
     }
 
     @Override
-    public boolean abandonar(String idUsuario, String idLiga) {
+    public boolean abandonar(int i) {
         Connection connection= null;
         try{
             connection = Conexion.obtenerConexion();
             if (connection == null) {
             } else {
-                String query ="DELETE FROM EquiposUsuarios WHERE IdLiga = '"+ idLiga+ "' AND IdUsuario='"+idUsuario+"'";
+                String query ="DELETE FROM EquiposUsuarios WHERE IdEquipo="+i;
                 Statement stmt = (Statement) connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
                 stmt.executeUpdate(query);
             }

@@ -125,6 +125,26 @@ public class PlantillaConexiones implements PlantillaRepository {
         return plantillas;
     }
 
+    public boolean deleteByTeamUser(int i) {
+        Connection connection = null;
+        try {
+            connection = Conexion.obtenerConexion();
+            if (connection == null) {
+            } else {
+                ResultSet rs = null;
+                String query = "DELETE FROM Plantillas WHERE IdEquipo="+i;
+
+                Statement stmt = (Statement) connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+                stmt.executeUpdate(query);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            Conexion.cerrarConexion(connection);
+        }
+        return true;
+    }
+
     @Override
     public ArrayList<Plantillas> getByIdLiga(String idLiga) {
         ArrayList<Plantillas> plantillas = new ArrayList<>();

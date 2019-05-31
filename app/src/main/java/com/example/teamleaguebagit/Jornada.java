@@ -6,7 +6,6 @@ import android.content.pm.ActivityInfo;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
@@ -23,12 +22,10 @@ import android.widget.TextView;
 
 import com.example.teamleaguebagit.Conexiones.EquipoUsuarioConexiones;
 import com.example.teamleaguebagit.Conexiones.JugadorConexiones;
-import com.example.teamleaguebagit.Conexiones.LigaConexiones;
 import com.example.teamleaguebagit.Conexiones.PartidosConexiones;
 import com.example.teamleaguebagit.Conexiones.PlantillaConexiones;
 import com.example.teamleaguebagit.Conexiones.PuntuacionConexiones;
 import com.example.teamleaguebagit.pojos.EquiposUsuarios;
-import com.example.teamleaguebagit.pojos.Jugadores;
 import com.example.teamleaguebagit.pojos.Partidos;
 import com.example.teamleaguebagit.pojos.Plantillas;
 
@@ -36,8 +33,6 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import org.jetbrains.annotations.NotNull;
-
-import static com.example.teamleaguebagit.Actual.ligasList;
 
 public class Jornada extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener{
     BottomNavigationView navigationBottom;
@@ -170,11 +165,11 @@ public class Jornada extends AppCompatActivity  implements NavigationView.OnNavi
         JugadorConexiones Cjugadores = new JugadorConexiones();
         final PuntuacionConexiones Cpunt = new PuntuacionConexiones();
         final ArrayList<Partidos> partidos = Cpartido.getBySemana(new java.sql.Date(new Date().getDay()));
-        final ArrayList<lista_jornada> lista_jornada = new ArrayList<lista_jornada>();
+        final ArrayList<Lista_jornada> lista_jornada = new ArrayList<Lista_jornada>();
         final ArrayList <EquiposUsuarios> lista_usuarios = new EquipoUsuarioConexiones().getByLiga(Actual.getLigaActual().getIdLiga());
         for (EquiposUsuarios e : lista_usuarios){
             ArrayList<Plantillas> plantillas = Cplantilla.getTitulares(Actual.getLigaActual().getIdLiga(), e.getNombreEquipo());
-            lista_jornada j = new lista_jornada(e.getUsuarios().getIdUsuario(), 0);
+            Lista_jornada j = new Lista_jornada(e.getUsuarios().getIdUsuario(), 0);
             int puntuacion = 0;
             for (Partidos p : partidos){
                 for (Plantillas plan : plantillas){
@@ -197,10 +192,10 @@ public class Jornada extends AppCompatActivity  implements NavigationView.OnNavi
                 final View view1 = inflater.inflate(R.layout.vista_jornada_jugadores_puntuaciones, null);
                 ListView lv = view1.findViewById(R.id.lv_jornada);
                 final AlertDialog dialogo = new AlertDialog.Builder(Jornada.this).setView(view1).create();
-                ArrayList<lista_jornada> lista_jugadores = new ArrayList<lista_jornada>();
+                ArrayList<Lista_jornada> lista_jugadores = new ArrayList<Lista_jornada>();
                 ArrayList<Plantillas> plantillas = Cplantilla.getTitulares(Actual.getLigaActual().getIdLiga(), lista_usuarios.get(position).getNombreEquipo());
                 for (Partidos p : partidos){
-                    lista_jornada j = null;
+                    Lista_jornada j = null;
                     for (Plantillas plan : plantillas){
                         if (lista_usuarios.get(position).getNombreEquipo().equals(p.getEquiposByIdLocal().getNombre()) | lista_usuarios.get(position).getNombreEquipo().equals(p.getEquiposByIdVisitante().getNombre())){
                             j.setNombre_usuario(plan.getJugadores().getNombre() + " " + plan.getJugadores().getApellido());
@@ -213,26 +208,14 @@ public class Jornada extends AppCompatActivity  implements NavigationView.OnNavi
                 lv.setAdapter(adapter);
             }
         });
-
-
-
-
-
-
-
-
-
-
-
-
     }
 
     @NotNull
     private Menu initMenu() {
         Menu m = navView.getMenu();
         m.findItem(R.id.ligas).getSubMenu().clear();
-        for(int i = 0; i< ligasList.size(); i++) {
-            m.findItem(R.id.ligas).getSubMenu().add(ligasList.get(i).getIdLiga());
+        for(int i = 0; i< Actual.getLigaSesion().size(); i++) {
+            m.findItem(R.id.ligas).getSubMenu().add(Actual.getLigaSesion().get(i).getIdLiga());
         }
         return m;
 

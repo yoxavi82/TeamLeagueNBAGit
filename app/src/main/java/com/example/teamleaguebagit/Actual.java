@@ -7,6 +7,7 @@ import android.view.Menu;
 
 import com.example.teamleaguebagit.Conexiones.LigaConexiones;
 import com.example.teamleaguebagit.pojos.Ligas;
+import com.example.teamleaguebagit.pojos.Plantillas;
 import com.example.teamleaguebagit.pojos.Usuarios;
 
 import java.lang.reflect.Array;
