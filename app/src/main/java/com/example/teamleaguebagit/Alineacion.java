@@ -3,7 +3,10 @@ package com.example.teamleaguebagit;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -25,10 +28,17 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.teamleaguebagit.Conexiones.EquipoUsuarioConexiones;
+import com.example.teamleaguebagit.Conexiones.JugadorConexiones;
+import com.example.teamleaguebagit.Conexiones.PlantillaConexiones;
+import com.example.teamleaguebagit.pojos.EquiposUsuarios;
 import com.example.teamleaguebagit.pojos.Jugadores;
+import com.example.teamleaguebagit.pojos.Plantillas;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -46,11 +56,12 @@ public class Alineacion extends AppCompatActivity  implements NavigationView.OnN
     RecyclerView suplentes, noConvocados;
     private PlayerAdapter adapter;
     private ArrayList<Drawable> myImageLisInicial = new ArrayList<Drawable>();
-    private ArrayList<String> myImageNameListInicial =  new ArrayList<String>(Arrays.asList("a","b" ,"c","d","e"));
+    private ArrayList<String> myImageNameListInicial =  new ArrayList<String>();
     private ArrayList<Drawable> myImageListSuplentes = new ArrayList<Drawable>();
     private ArrayList<Jugadores> myPlayerListInicial = new ArrayList<Jugadores>();
     private ArrayList<Jugadores> myPlayerListSuplentes = new ArrayList<Jugadores>();
     private ArrayList<Jugadores> myPlayerListNoConv = new ArrayList<Jugadores>();
+    private Jugadores[] jugadores= new Jugadores[5];
 
     private ArrayList<String> myImageNameListSuplentes =  new ArrayList<String>(Arrays.asList("1","2" ,"3","4","5","6","7"));
 
@@ -69,6 +80,11 @@ public class Alineacion extends AppCompatActivity  implements NavigationView.OnN
     ImageView ext2;
     ImageView ext3;
     NavigationView navView;
+    int titularesIntRest=2;
+    int titularesExtRest=3;
+
+
+    int suplentesRest=5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,7 +99,7 @@ public class Alineacion extends AppCompatActivity  implements NavigationView.OnN
 
         layourtPrincipal = findViewById(R.id.layoutPrincipal);
         //llenarArrayDraw();
-        initArrays();
+        //initArrays();
         suplentes = (RecyclerView) findViewById(R.id.suplentes);
         suplentes.setBackgroundColor(Color.parseColor("#FFA400"));
 
@@ -93,6 +109,7 @@ public class Alineacion extends AppCompatActivity  implements NavigationView.OnN
 
         inintRecycleView(suplentes);
         inintRecycleView(noConvocados);
+        initTitulares();
 
         int1=findViewById(R.id.int1);
         int2=findViewById(R.id.int2);
@@ -159,8 +176,84 @@ public class Alineacion extends AppCompatActivity  implements NavigationView.OnN
 
     }
 
+    private void initTitulares() {
+
+    }
+
+
     private void initArrays() {
-        
+
+        int intTit=0;
+        int extTit=0;
+        PlantillaConexiones plantilla = new PlantillaConexiones();
+        EquipoUsuarioConexiones equipoConexion = new EquipoUsuarioConexiones();
+        EquiposUsuarios equipo =equipoConexion.getByLigaAndUser(Actual.getUsuarioActual().getIdUsuario(), Actual.getLigaActual().getIdLiga());
+       ArrayList<Plantillas>listajug = plantilla.getJugadoresByIdEquipoYLiga(equipo.getIdEquipo(), Actual.getLigaActual().getIdLiga());
+        for (Plantillas jugador: listajug ) {
+            if(jugador.getTitular()==1)
+                if(jugador.getJugadores().getPosicion().equals("Interior"))
+                    intTit++;
+                else
+                    extTit++;
+        }
+        titularesIntRest-=intTit;
+        titularesExtRest-=extTit;
+
+
+        for (Plantillas jugador: listajug ) {
+            if(jugador.getTitular()==1) {
+                if(jugador.getJugadores().getPosicion().equals("Interior")){
+                    for(int i = 0; i<5;i++){
+                        if(jugadores[i]==null){
+                            jugadores[i]=jugador.getJugadores();
+                        }
+                    }
+                }else{
+                    for(int i = 5; i>0;i--){
+                        if(jugadores[i]==null){
+                            jugadores[i]=jugador.getJugadores();
+                        }
+                    }
+                }
+//                myPlayerListInicial.add(jugador.getJugadores());
+//                myImageLisInicial.add(getDrawableFromBytes(jugador.getJugadores().getImagen()));
+            }if(jugador.getTitular()==2){
+                myPlayerListSuplentes.add(jugador.getJugadores());
+                myImageListSuplentes.add(getDrawableFromBytes(jugador.getJugadores().getImagen()));
+            }if (jugador.getTitular()==3){
+                myPlayerListNoConv.add(jugador.getJugadores());
+                myImageListNoConv.add(getDrawableFromBytes(jugador.getJugadores().getImagen()));
+            }else{
+                if(jugador.getJugadores().getPosicion().equals("Interior")&&titularesIntRest>0) {
+                    titularesIntRest--;
+                    myPlayerListInicial.add(jugador.getJugadores());
+                    myImageLisInicial.add(getDrawableFromBytes(jugador.getJugadores().getImagen()));
+                }if (jugador.getJugadores().getPosicion().equals("Exterior")&&titularesExtRest>0) {
+                    titularesExtRest--;
+                    myPlayerListInicial.add(jugador.getJugadores());
+                    myImageLisInicial.add(getDrawableFromBytes(jugador.getJugadores().getImagen()));
+                }else if(suplentesRest>0) {
+                    myPlayerListSuplentes.add(jugador.getJugadores());
+                    myImageListSuplentes.add(getDrawableFromBytes(jugador.getJugadores().getImagen()));
+                    suplentesRest--;
+                }else{
+                    myPlayerListNoConv.add(jugador.getJugadores());
+                    myImageListNoConv.add(getDrawableFromBytes(jugador.getJugadores().getImagen()));
+                }
+            }
+
+        }
+        myPlayerListInicial= new ArrayList<Jugadores>(Arrays.asList(jugadores));
+
+
+
+
+
+    }
+
+    private Drawable getDrawableFromBytes(byte[] img) {
+       ByteArrayInputStream is = new ByteArrayInputStream(img);
+       return Drawable.createFromStream(is,"Imagen");
     }
 
     private void inintRecycleView(RecyclerView recyclerView) {
@@ -608,5 +701,22 @@ public class Alineacion extends AppCompatActivity  implements NavigationView.OnN
         }
         return m;
 
+    }
+    public void test(View view){
+        JugadorConexiones conJug = new JugadorConexiones();
+        byte[] test = getBytes();
+        int1.setImageBitmap(getDrawable(test));
+
+    }
+    public byte[] getBytes(){
+        ByteArrayOutputStream outImageStream = new ByteArrayOutputStream();
+        Bitmap bitmap = ((BitmapDrawable)getResources().getDrawable(R.drawable.dos)).getBitmap();
+        byte[] photo = outImageStream.toByteArray();
+        return photo;
+    }
+    public Bitmap getDrawable(byte[] bytes){
+        ByteArrayInputStream input = new ByteArrayInputStream(bytes);
+        Bitmap bitmap = BitmapFactory.decodeStream(input);
+        return bitmap;
     }
 }

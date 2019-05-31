@@ -164,4 +164,63 @@ public class JugadorConexiones implements JugadorRepository {
         }
         return buscado;
     }
+
+
+        public ArrayList<Jugadores> getAll() {
+            ArrayList<Jugadores> buscado = new ArrayList<>();
+            Connection connection = null;
+            try {
+                connection = Conexion.obtenerConexion();
+                if (connection == null) {
+                } else {
+                    ResultSet rs = null;
+                    String query = "Select * FROM Jugadores ";
+
+                    Statement stmt = (Statement) connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+
+                    rs = stmt.executeQuery(query);
+                    while (rs.next()) {
+                        Jugadores jugador = new Jugadores();
+                        jugador.setApellido(rs.getString("Apellido"));
+                        jugador.setDorsal(rs.getString("Dorsal"));
+                        jugador.setEquipos(new EquipoConexiones().get(rs.getString("IdEquipo")));
+                        jugador.setNombre(rs.getString("Nombre"));
+                        jugador.setIdJugador(rs.getString("IdJugador"));
+                        jugador.setLesionado(rs.getInt("Lesionado"));
+                        jugador.setPrecioMercado(rs.getInt("PrecioMercado"));
+                        jugador.setPosicion(rs.getString("Posicion"));
+                        jugador.setEstrellas(rs.getInt("Estrellas"));
+                        jugador.setPuntosTotales(rs.getInt("PuntosTotales"));
+                        jugador.setMedia(rs.getInt("Media"));
+                        jugador.setImagen(rs.getBytes("Imagen"));
+                        buscado.add(jugador);
+                    }
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            } finally {
+                Conexion.cerrarConexion(connection);
+            }
+            return buscado;
+        }
+    public void updateJugador(Jugadores jugador){
+        ArrayList<Jugadores> buscado = new ArrayList<>();
+        Connection connection = null;
+        try {
+            connection = Conexion.obtenerConexion();
+            if (connection == null) {
+            } else {
+                ResultSet rs = null;
+                String query = "UPDATE Jugadores SET Imagen= "+jugador.getImagen()+" ";
+
+                Statement stmt = (Statement) connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+
+                stmt.executeUpdate(query);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            Conexion.cerrarConexion(connection);
+        }
+    }
 }

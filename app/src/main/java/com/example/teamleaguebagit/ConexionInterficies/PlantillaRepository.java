@@ -13,4 +13,6 @@ public interface PlantillaRepository {
     ArrayList<Plantillas> getByIdLiga(String idLiga);
     ArrayList<Plantillas> getByIdEquipo(String idEquipo);
     ArrayList<Plantillas> getByDate(Date date);
-}
+    public ArrayList<Plantillas> getJugadoresByIdEquipoYLiga(int idEquipo,String idLiga) ;
+
+    }

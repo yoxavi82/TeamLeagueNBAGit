@@ -159,6 +159,41 @@ public class PlantillaConexiones implements PlantillaRepository {
         return plantillas;
     }
 
+
+    @Override
+    public ArrayList<Plantillas> getJugadoresByIdEquipoYLiga(int idEquipo,String idLiga) {
+        ArrayList<Plantillas> plantillas = new ArrayList<>();
+        Connection connection= null;
+        try{
+            connection = Conexion.obtenerConexion();
+            if (connection == null) {
+            } else {
+                ResultSet rs = null;
+                String query ="Select * FROM Plantillas WHERE IdEquipo="+idEquipo+" AND IdLiga='"+idLiga+"'";
+
+                Statement stmt = (Statement) connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+
+                rs = stmt.executeQuery(query);
+                while(rs.next()){
+                    Plantillas plantilla = new Plantillas();
+                    plantilla.setFechaCompra(rs.getDate("FechaCompra"));
+                    plantilla.setPrecio(rs.getInt("Precio"));
+                    plantilla.setEquiposUsuarios(new EquipoUsuarioConexiones().getEquipo(rs.getString("IdEquipo")));
+                    plantilla.setJugadores(new JugadorConexiones().getById(rs.getString("IdJugador")));
+                    plantilla.setPuja(rs.getInt("Puja"));
+                    plantilla.setTitular(rs.getInt("Titular"));
+                    plantilla.setLigas(new LigaConexiones().get(rs.getString("IdLiga")));
+                    plantillas.add(plantilla);
+                }
+            }
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }finally {
+            Conexion.cerrarConexion(connection);
+        }
+        return plantillas;
+    }
+
     @Override
     public ArrayList<Plantillas> getByIdEquipo(String idEquipo) {
         ArrayList<Plantillas> plantillas = new ArrayList<>();
