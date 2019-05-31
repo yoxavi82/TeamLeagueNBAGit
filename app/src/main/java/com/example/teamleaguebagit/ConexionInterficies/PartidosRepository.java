@@ -4,6 +4,7 @@ package com.example.teamleaguebagit.ConexionInterficies;
 import com.example.teamleaguebagit.pojos.Equipos;
 import com.example.teamleaguebagit.pojos.Partidos;
 
+import java.sql.Date;
 import java.util.ArrayList;
 
 public interface PartidosRepository {
@@ -11,5 +12,5 @@ public interface PartidosRepository {
     ArrayList<Partidos> getAll();
     Partidos getById(String id);
     ArrayList<Partidos> getByEquipo(Equipos equipo);
-    ArrayList<Partidos> getBySemana(Integer semana);
+    ArrayList<Partidos> getBySemana(Date semana);
 }

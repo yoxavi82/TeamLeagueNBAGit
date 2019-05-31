@@ -204,4 +204,24 @@ public class EquipoUsuarioConexiones implements EquipoUsuarioRepository {
         }
         return equipo;
     }
+
+    @Override
+    public boolean abandonar(String idUsuario, String idLiga) {
+        Connection connection= null;
+        try{
+            connection = Conexion.obtenerConexion();
+            if (connection == null) {
+            } else {
+                String query ="DELETE FROM EquiposUsuarios WHERE IdLiga = '"+ idLiga+ "' AND IdUsuario='"+idUsuario+"'";
+                Statement stmt = (Statement) connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+                stmt.executeUpdate(query);
+            }
+
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }finally {
+            Conexion.cerrarConexion(connection);
+        }
+        return true;
+    }
 }

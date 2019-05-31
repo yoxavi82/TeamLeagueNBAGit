@@ -6,6 +6,7 @@ import android.content.pm.ActivityInfo;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
@@ -17,10 +18,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.teamleaguebagit.Conexiones.EquipoConexiones;
 import com.example.teamleaguebagit.Conexiones.EquipoUsuarioConexiones;
+import com.example.teamleaguebagit.Conexiones.LigaConexiones;
 import com.example.teamleaguebagit.pojos.EquiposUsuarios;
 import com.example.teamleaguebagit.pojos.Jugadores;
 import com.example.teamleaguebagit.pojos.Plantillas;
@@ -28,15 +32,14 @@ import com.example.teamleaguebagit.pojos.Plantillas;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-
-import static com.example.teamleaguebagit.Actual.ligasUsuarioActual;
+import java.util.Collections;
 
 import static com.example.teamleaguebagit.Actual.ligasUsuarioActual;
 
 public class Clasificacion extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener{
     BottomNavigationView navigationBottom;
     View formElementsView;
-    ArrayList<Lista_clasificacion> lista;
+    ArrayList<lista_clasificacion> lista;
     ListView lv, lv_plantilla;
     TextView nombre_usuario;
     NavigationView navView;
@@ -49,10 +52,12 @@ public class Clasificacion extends AppCompatActivity  implements NavigationView.
         setContentView(R.layout.activity_clasificacion);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         TextView titulo = findViewById(R.id.toolbar_title);
+        nombre_liga = findViewById(R.id.nombre_liga);
+        nombre_liga.setText(Actual.getLigaActual().getIdLiga());
 
         LayoutInflater inflater = getLayoutInflater();
         formElementsView = inflater.inflate(R.layout.confirmar,  null);
-        lista = new ArrayList<Lista_clasificacion>();
+        lista = new ArrayList<lista_clasificacion>();
         lv = (ListView) findViewById(R.id.lista_clasificacion);
         lv_plantilla = (ListView) findViewById(R.id.lv_plantilla);
 
@@ -113,13 +118,13 @@ public class Clasificacion extends AppCompatActivity  implements NavigationView.
 
     public void initLista(){
         ArrayList <EquiposUsuarios> li = new EquipoUsuarioConexiones().getByLiga(Actual.getLigaActual().getIdLiga());
-        ArrayList<Lista_clasificacion> lis = new ArrayList<Lista_clasificacion>();
+        ArrayList<lista_clasificacion> lis;
         for (EquiposUsuarios e: li){
-            Lista_clasificacion l = new Lista_clasificacion(e.getUsuarios().getIdUsuario(), e.getPuntosTotales(), e.getUsuarios());
+            lista_clasificacion l = new lista_clasificacion(e.getUsuarios().getIdUsuario(), e.getPuntosTotales(), e.getUsuarios());
             lista.add(l);
         }
-        //Falta ordenarlos
-        AdapterListaClasificacionGeneral adapter = new AdapterListaClasificacionGeneral(this, lista);
+        lis = ordenar(lista);
+        AdapterListaClasificacionGeneral adapter = new AdapterListaClasificacionGeneral(this, lis);
         lv.setAdapter(adapter);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -128,9 +133,21 @@ public class Clasificacion extends AppCompatActivity  implements NavigationView.
                 LayoutInflater inflater = getLayoutInflater();
                 final View view1 = inflater.inflate(R.layout.vista_usuario, null);
                 final AlertDialog dialogo = new AlertDialog.Builder(Clasificacion.this).setView(view1).create();
+                lv_plantilla = (ListView) view1.findViewById(R.id.lv_plantilla);
                 nombre_usuario = view1.findViewById(R.id.vista_usuario_nombre);
                 nombre_usuario.setText(lista.get(position).user.getIdUsuario());
-                ArrayList<Jugadores> plantilla = null; //consulta a base de datos sobre plantilla entera sobre usuario
+                PlantillaConexiones lista_jugadores = new PlantillaConexiones();
+                ArrayList <Plantillas> plan = lista_jugadores.getByIdLiga(Actual.getLigaActual().getIdLiga());
+                plantilla = new ArrayList<Jugadores>();
+                fechasCompra = new ArrayList<Date>();
+                precioCompras = new ArrayList<Integer>();
+                for (Plantillas a : plan){
+                    if (a.getId().getIdJugador().equals(nombre_usuario.getText().toString())){
+                        plantilla.add(a.getJugadores());
+                        fechasCompra.add(a.getFechaCompra());
+                        precioCompras.add(a.getPrecio());
+                    }
+                }
                 AdapterListaPlantillaPorUsuario lista_p = new AdapterListaPlantillaPorUsuario(Clasificacion.this,plantilla);
                 lv_plantilla.setAdapter(lista_p);
                 //Hasta aqui esta rellenada el arrayList del dialogo abierto
@@ -147,9 +164,15 @@ public class Clasificacion extends AppCompatActivity  implements NavigationView.
                         TextView posicion = view1.findViewById(R.id.vista_jugador_pos);
                         TextView fecha = view1.findViewById(R.id.vista_jugador_fecha);
                         TextView precio_compra = view1.findViewById(R.id.vista_jugador_precio_compra);
-                        Jugadores jug = null; //consulta datos jugador
-                        Plantillas datos = null; //consulta por id de jugador + id liga para saber fecha y precio de compra
-                        //añadir datos a los text view
+                        Jugadores jug = plantilla.get(position);
+                        EquipoUsuarioConexiones e = new EquipoUsuarioConexiones();
+                        nombre.setText(jug.getNombre() + " " + jug.getApellido());
+                        precio.setText(jug.getPrecioMercado());
+                        puntos.setText(jug.getPuntosTotales());
+                        equipo.setText(e.getEquipo(jug.getIdJugador()).getEquipos().getNombre());
+                        posicion.setText(jug.getPosicion());
+                        fecha.setText(fechasCompra.get(position).getDate());
+                        precio_compra.setText(precioCompras.get(position));
 
                     }
                 });
@@ -223,5 +246,10 @@ public class Clasificacion extends AppCompatActivity  implements NavigationView.
         }
         return m;
 
+    }
+
+    public ArrayList<lista_clasificacion> ordenar(ArrayList<lista_clasificacion> lista){
+        Collections.reverse(lista);
+        return lista;
     }
 }

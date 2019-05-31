@@ -24,17 +24,7 @@ import org.jetbrains.annotations.NotNull;
 import static com.example.teamleaguebagit.Actual.ligasUsuarioActual;
 
 import com.example.teamleaguebagit.Conexiones.EquipoUsuarioConexiones;
-import com.example.teamleaguebagit.Conexiones.JugadorConexiones;
-import com.example.teamleaguebagit.Conexiones.PlantillaConexiones;
-import com.example.teamleaguebagit.pojos.Jugadores;
-import com.example.teamleaguebagit.pojos.Ligas;
-import com.example.teamleaguebagit.pojos.Plantillas;
-
-import org.jetbrains.annotations.NotNull;
-
-import java.util.Date;
-
-import static com.example.teamleaguebagit.Actual.ligasUsuarioActual;
+import com.example.teamleaguebagit.Conexiones.LigaConexiones;
 
 public class Homepage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     Button crear,unir;
@@ -51,10 +41,8 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
 
         Toolbar toolbar =findViewById(R.id.toolbar);
         TextView titulo = findViewById(R.id.toolbar_title);
-        if(Actual.getLigaSesion()==null)
-            Actual.setEquiposUsuarios(new EquipoUsuarioConexiones().getByUser(Actual.getUsuarioActual().getIdUsuario()));
+        if(Actual.getLigaSesion()==null)Actual.setEquiposUsuarios(new EquipoUsuarioConexiones().getByUser(Actual.getUsuarioActual().getIdUsuario()));
         initMenu();
-
 
         crear = findViewById(R.id.crearId);
         unir = findViewById(R.id.unirseId);
@@ -124,7 +112,8 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
     }
 
     private boolean isInLeague() {
-        return Actual.ligaActual != null;
+        //return Actual.ligaActual != null;
+        return true;
     }
 
     private void errorLiga() {
@@ -179,7 +168,6 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
                 alert.setMessage(R.string.CerrarSesionPregunta);
                 alert.setNegativeButton(R.string.CerrarSesion, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
-
                         Actual.setIniciarSesion();
                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -194,6 +182,8 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
                 alert.show();
                 break;
             case R.id.config:
+                Intent i = new Intent(this, Configuracion.class);
+                startActivity(i);
                 break;
 
 
@@ -204,6 +194,12 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
                 Toast toast= Toast.makeText(this,"Liga "+item.getTitle()+" seleccionada", Toast.LENGTH_SHORT);
                 toast.show();
                 break;
+                default:
+                    Toast toast= Toast.makeText(this,item.getTitle()+"", Toast.LENGTH_LONG);
+                    PlantillaConexiones lista_jugadores = new PlantillaConexiones();
+                    ArrayList<Plantillas> plan = lista_jugadores.getByIdLiga(Actual.getLigaActual().getIdLiga());
+                    Actual.setPlantillaActual(plan);
+
         }
         return true;
     }

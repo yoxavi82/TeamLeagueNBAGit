@@ -6,17 +6,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.teamleaguebagit.pojos.Ligas;
 
 import java.util.ArrayList;
 
-
-public class AdapterListaClasificacionGeneral extends BaseAdapter {
-
+public class AdapterListaConfiguracion extends BaseAdapter {
     protected Activity activity;
-    protected ArrayList<Lista_clasificacion> items;
+    protected ArrayList<Ligas> items;
 
-    public AdapterListaClasificacionGeneral(Activity activity, ArrayList<Lista_clasificacion> items) {
+    public AdapterListaConfiguracion(Activity activity, ArrayList<Ligas> items) {
         this.activity = activity;
         this.items = items;
     }
@@ -30,7 +31,7 @@ public class AdapterListaClasificacionGeneral extends BaseAdapter {
         items.clear();
     }
 
-    public void addAll(ArrayList<Lista_clasificacion> lista) {
+    public void addAll(ArrayList<Ligas> lista) {
         for (int i = 0; i < lista.size(); i++) {
             items.add(lista.get(i));
         }
@@ -52,18 +53,13 @@ public class AdapterListaClasificacionGeneral extends BaseAdapter {
 
         if (convertView == null) {
             LayoutInflater inf = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            v = inf.inflate(R.layout.list_item_layout, null);
+            v = inf.inflate(R.layout.list_misligas_configuracion, null);
         }
 
-        Lista_clasificacion dir = items.get(position);
+        Ligas dir = items.get(position);
 
-        TextView title = v.findViewById(R.id.lista_nombre_misligas);
-        title.setText(dir.getNombre());
-
-        TextView pos = v.findViewById(R.id.puntos_jornada);
-        pos.setText(dir.getClasificacion() + "");
-
-
+        TextView nombre = (TextView) v.findViewById(R.id.lista_nombre_misligas);
+        nombre.setText(dir.getIdLiga());
 
 
         return v;

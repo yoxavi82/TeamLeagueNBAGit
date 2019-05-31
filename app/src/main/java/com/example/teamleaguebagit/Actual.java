@@ -22,17 +22,29 @@ public class Actual {
     static Boolean iniciarSesion=true;
     static ArrayList<Ligas> ligasUsuarioActual = null;
     static ArrayList<EquiposUsuarios> equiposUsuarios = new ArrayList();
+    static ArrayList<Plantillas> plantillaActual = null;
 
     public static ArrayList<EquiposUsuarios> getEquiposUsuariosSesion(){
         return equiposUsuarios;
     }
 
     public static void setEquiposUsuarios(ArrayList<EquiposUsuarios> equipos){
-        ligasUsuarioActual=new ArrayList();
+        ligasUsuarioActual = new ArrayList<>();
         for(EquiposUsuarios eq: equipos){
             ligasUsuarioActual.add(eq.getLigas());
         }
         equiposUsuarios = equipos;
+    }
+
+    public static ArrayList<Plantillas> getPlantillaActual(){
+        return plantillaActual;
+    }
+
+    public static void setPlantillaActual(ArrayList<Plantillas> plantilla){
+        plantillaActual = new ArrayList<>();
+        for (Plantillas pla : plantilla){
+            plantillaActual.add(pla);
+        }
     }
 
     public static ArrayList<Ligas> getLigaSesion(){
@@ -54,7 +66,7 @@ public class Actual {
     }
 
     public static void setIniciarSesion(){
-        disconect();
+        iniciarSesion=false;
     }
 
 

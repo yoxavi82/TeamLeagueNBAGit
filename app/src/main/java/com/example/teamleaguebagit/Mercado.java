@@ -26,6 +26,7 @@ import android.widget.TextView;
 import com.example.teamleaguebagit.Conexiones.JugadorConexiones;
 import com.example.teamleaguebagit.Conexiones.LigaConexiones;
 import com.example.teamleaguebagit.Conexiones.PlantillaConexiones;
+import com.example.teamleaguebagit.pojos.EquiposUsuarios;
 import com.example.teamleaguebagit.pojos.Jugadores;
 import com.example.teamleaguebagit.pojos.Ligas;
 import com.example.teamleaguebagit.pojos.Plantillas;
@@ -33,6 +34,7 @@ import com.example.teamleaguebagit.pojos.Plantillas;
 import org.jetbrains.annotations.NotNull;
 
 import java.text.ParseException;
+import java.util.Calendar;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -44,9 +46,9 @@ public class Mercado extends AppCompatActivity  implements NavigationView.OnNavi
     View formElementsView;
     ArrayList<Jugadores> lista;
     ArrayList<Plantillas> plantillasMercado;
-    ListView lv;
+    ListView lv, lv_jugadoresPropios;
     EditText precio ;
-    TextView  alerta_puja;
+    TextView  alerta_puja, saldo, saldo_proximo;
 
     NavigationView navView;
     @Override
@@ -54,9 +56,18 @@ public class Mercado extends AppCompatActivity  implements NavigationView.OnNavi
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mercado);
+        saldo = findViewById(R.id.SaldoMercado);
+        ArrayList<EquiposUsuarios> e = (ArrayList<EquiposUsuarios>) Actual.getLigaActual().getEquiposUsuarioses();
+        for (EquiposUsuarios u : e){
+            if (u.getUsuarios().equals(Actual.getUsuarioActual())){
+                saldo.setText(u.getDinero());
+            }
+        }
+        saldo_proximo = findViewById(R.id.SaldoMercadoFuturo);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         TextView titulo = findViewById(R.id.toolbar_title);
         navView = (NavigationView) findViewById(R.id.nav_view);
+
         Menu m = initMenu();
         MenuItem mi = m.getItem(m.size()-1);
         mi.setTitle(mi.getTitle());
@@ -66,8 +77,8 @@ public class Mercado extends AppCompatActivity  implements NavigationView.OnNavi
         lv = (ListView) findViewById(R.id.lista_mercado);
         try {
             initMercado();
-        } catch (ParseException e) {
-            e.printStackTrace();
+        } catch (ParseException eee) {
+            eee.printStackTrace();
         }
 
         setSupportActionBar(toolbar);
@@ -156,7 +167,13 @@ public class Mercado extends AppCompatActivity  implements NavigationView.OnNavi
                                     }
                                 }
                                 else{
-                                    dialogo.dismiss();
+                                    PlantillaConexiones conexiones = new PlantillaConexiones();
+                                    Date myDate = new Date();
+                                    SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+                                    String d = df.format(myDate);
+                                    Plantillas p = new Plantillas();
+                                    p.setJugadores(lista.get(position));
+                                    p.setPrecio(precioActual);
                                 }
                             }
                         });
@@ -172,6 +189,85 @@ public class Mercado extends AppCompatActivity  implements NavigationView.OnNavi
                 dialogo.show();
             }
         });
+    }
+
+    public void anadirjugador(View v){
+        LayoutInflater inflater = getLayoutInflater();
+        final View view1 = inflater.inflate(R.layout.lista_jugadores_enviar_mercado, null);
+        AlertDialog dialog = new AlertDialog.Builder(this).setView(view1).create();
+        lv_jugadoresPropios = view1.findViewById(R.id.lv_jugadoresPropios_mercado);
+        ArrayList<Plantillas> plan = Actual.getPlantillaActual();
+        final ArrayList<Jugadores> listaJ = new ArrayList<Jugadores>();
+        ArrayList<Integer> indices = new ArrayList<Integer>();
+        for (int i = 0 ; i< plan.size(); i++){
+            for (int e = 0; e< lista.size(); e++){
+                if (plan.get(i).getJugadores().equals(lista.get(e))){
+                    indices.add(i);
+                }
+            }
+            listaJ.add(plan.get(i).getJugadores());
+        }
+
+        for (int i = 0; i < indices.size(); i++){
+            listaJ.remove(indices.get(i));
+        }
+        AdapterListaMercado adapterListaMercado = new AdapterListaMercado(this, listaJ);
+        lv_jugadoresPropios.setAdapter(adapterListaMercado);
+        lv_jugadoresPropios.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                LayoutInflater inflater = getLayoutInflater();
+                final View view1 = inflater.inflate(R.layout.confirmar_venta, null);
+                final AlertDialog dialogo = new AlertDialog.Builder(Mercado.this).setView(view1).setCancelable(false).setPositiveButton("Confirmar", null).setNegativeButton("Cancelar", null).create();
+                precio = view1.findViewById(R.id.preciopuja);
+                alerta_puja = view1.findViewById(R.id.alerta_puja);
+                alerta_puja.setVisibility(View.GONE);
+                final int precioInicial = listaJ.get(position).getPrecioMercado();
+                precio.setText(precioInicial + "");
+                dialogo.setOnShowListener(new DialogInterface.OnShowListener() {
+                    @Override
+                    public void onShow(final DialogInterface dialog) {
+                        Button button = ((AlertDialog) dialogo).getButton(AlertDialog.BUTTON_POSITIVE);
+                        button.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                int precioActual = Integer.parseInt(precio.getText().toString());
+                                if (precioActual< precioInicial){
+                                    if (alerta_puja.getVisibility() == View.GONE){
+                                        alerta_puja.setVisibility(View.VISIBLE);
+                                    }
+                                }
+                                else{
+
+                                }
+                            }
+                        });
+                        Button button2 = ((AlertDialog) dialogo).getButton(AlertDialog.BUTTON_NEGATIVE);
+                        button2.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                dialogo.dismiss();
+                            }
+                        });
+                    }
+                });
+                dialogo.show();
+            }
+        });
+    }
+
+    public void aceptarPuja(){
+        Date horaDespertar = new Date(System.currentTimeMillis());
+        Calendar c = Calendar.getInstance();
+        c.setTime(horaDespertar);
+        if (c.get(Calendar.HOUR_OF_DAY) >= 22) {
+            c.set(Calendar.DAY_OF_YEAR, c.get(Calendar.DAY_OF_YEAR) + 1);
+        }
+
+        c.set(Calendar.HOUR_OF_DAY, 8);
+        c.set(Calendar.MINUTE, 0);
+        c.set(Calendar.SECOND, 0);
+        horaDespertar = c.getTime();
     }
 
     //Pulsar para atrás
