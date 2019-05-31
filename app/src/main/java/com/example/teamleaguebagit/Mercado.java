@@ -239,6 +239,5 @@ public class Mercado extends AppCompatActivity  implements NavigationView.OnNavi
             m.findItem(R.id.ligas).getSubMenu().add(ligasUsuarioActual.get(i).getIdLiga());
         }
         return m;
-
     }
 }

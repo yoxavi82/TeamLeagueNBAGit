@@ -148,45 +148,10 @@ public class Creacion_equipo extends AppCompatActivity {
     }
 
     private void generarEquipo() {
-        ArrayList<Plantillas> jugadores= new ArrayList<>();
+        ThreadAddPlantilla[] Threads = new ThreadAddPlantilla[5];
         for(int i=1;i<5;i++){
-            ArrayList<Jugadores> jugadores1Estrellas = new JugadorConexiones().getByStarsRandom(i);
-            int ayuda=0;
-            switch (i){
-                case 1:
-                    ayuda=4;
-                    break;
-                case 2:
-                    ayuda= 5;
-                    break;
-                case 3:
-                    ayuda=3;
-                    break;
-                case 4:
-                    ayuda=1;
-                    break;
-            }
-            for (int j=0;j<ayuda;j++){
-                Plantillas plantilla = new Plantillas();
-                plantilla.setLigas(Actual.getLigaActual());
-                plantilla.setTitular(0);
-                plantilla.setPuja(0);
-                plantilla.setJugadores(jugadores1Estrellas.get(j));
-                plantilla.setEquiposUsuarios(new EquipoUsuarioConexiones().getByLigaAndUser(Actual.getUsuarioActual().getIdUsuario(),
-                        Actual.getLigaActual().getIdLiga()));
-                plantilla.setFechaCompra(new java.sql.Date(new Date().getTime()));
-                plantilla.setPrecio(i*1000000);
-                new PlantillaConexiones().addPlantilla(plantilla);
-//        Plantillas la = new Plantillas();
-//        la.setEquiposUsuarios(Actual.getEquiposUsuariosSesion().get(0));
-//        la.setFechaCompra(new java.sql.Date(new Date().getTime()));
-//        la.setJugadores(new JugadorConexiones().getById("ATL_11"));
-//        la.setLigas(Actual.getLigaActual());
-//        la.setPrecio(0);
-//        la.setTitular(0);
-//        la.setPuja(0);
-//        plant.addPlantilla(la);
-            }
+            Threads[i] = new ThreadAddPlantilla(i);
+            Threads[i].start();
         }
     }
 }
