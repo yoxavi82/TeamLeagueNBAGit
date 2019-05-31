@@ -14,4 +14,5 @@ public interface PlantillaRepository {
     ArrayList<Plantillas> getByIdEquipo(int idEquipo);
     ArrayList<Plantillas> getByDate(Date date);
     ArrayList<Plantillas> getTitulares(String idLiga, String idEquipo);
+    boolean modificarPorPrecio(Plantillas plantillas);
 }

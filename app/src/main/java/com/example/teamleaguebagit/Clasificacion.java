@@ -44,7 +44,7 @@ public class Clasificacion extends AppCompatActivity  implements NavigationView.
     View formElementsView;
     ArrayList<lista_clasificacion> lista;
     ListView lv, lv_plantilla;
-    TextView nombre_usuario;
+    TextView nombre_usuario, nombre_liga;
     ArrayList<Jugadores> plantilla;
     ArrayList<Date> fechasCompra;
     ArrayList<Integer> precioCompras;
@@ -58,12 +58,14 @@ public class Clasificacion extends AppCompatActivity  implements NavigationView.
         setContentView(R.layout.activity_clasificacion);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         TextView titulo = findViewById(R.id.toolbar_title);
+        nombre_liga = findViewById(R.id.nombre_liga);
+        nombre_liga.setText(Actual.getLigaActual().getIdLiga());
 
         LayoutInflater inflater = getLayoutInflater();
         formElementsView = inflater.inflate(R.layout.confirmar,  null);
         lista = new ArrayList<lista_clasificacion>();
         lv = (ListView) findViewById(R.id.lista_clasificacion);
-        lv_plantilla = (ListView) findViewById(R.id.lv_plantilla);
+
 
         navView = (NavigationView) findViewById(R.id.nav_view);
 
@@ -137,6 +139,7 @@ public class Clasificacion extends AppCompatActivity  implements NavigationView.
                 LayoutInflater inflater = getLayoutInflater();
                 final View view1 = inflater.inflate(R.layout.vista_usuario, null);
                 final AlertDialog dialogo = new AlertDialog.Builder(Clasificacion.this).setView(view1).create();
+                lv_plantilla = (ListView) view1.findViewById(R.id.lv_plantilla);
                 nombre_usuario = view1.findViewById(R.id.vista_usuario_nombre);
                 nombre_usuario.setText(lista.get(position).user.getIdUsuario());
                 PlantillaConexiones lista_jugadores = new PlantillaConexiones();

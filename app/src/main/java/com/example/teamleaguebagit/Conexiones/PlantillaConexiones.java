@@ -231,4 +231,29 @@ public class PlantillaConexiones implements PlantillaRepository {
         }
         return plantillas;
     }
+
+    @Override
+    public boolean modificarPorPrecio(Plantillas plantillas) {
+        Connection connection= null;
+        try{
+            connection = Conexion.obtenerConexion();
+            if (connection == null) {
+            } else {
+                String query ="Update Plantillas Set IdJugador='"+plantillas.getJugadores().getIdJugador()+"'," +
+                        "IdLiga='"+plantillas.getLigas().getIdLiga()+"',IdEquipo='"+plantillas.getEquiposUsuarios().getIdEquipo()+
+                        ",FechaCompra='"+plantillas.getFechaCompra()+"'," +
+                        "Puja="+plantillas.getPuja()+",Titular="+plantillas.getTitular() +"',Precio="+plantillas.getPrecio()+ "' WHERE Puja> (SELECT" +
+                        " Puja FROM Plantillas WHERE IdLiga='"+plantillas.getLigas().getIdLiga()+"')";
+
+                Statement stmt = (Statement) connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+                stmt.executeUpdate(query);
+            }
+
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }finally {
+            Conexion.cerrarConexion(connection);
+        }
+        return true;
+    }
 }
