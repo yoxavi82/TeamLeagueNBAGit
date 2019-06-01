@@ -287,7 +287,7 @@ public class PlantillaConexiones implements PlantillaRepository {
             if (connection == null) {
             } else {
                 ResultSet rs = null;
-                String query ="Select * FROM Plantillas WHERE IdEquipo='"+idEquipo+"' AND IdLiga='"+idLiga+"' AND Titular=1";
+                String query ="Select * FROM Plantillas WHERE IdEquipo="+idEquipo+" AND IdLiga='"+idLiga+"' AND Titular=1";
 
                 Statement stmt = (Statement) connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 

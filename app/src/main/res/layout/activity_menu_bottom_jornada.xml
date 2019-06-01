@@ -24,39 +24,60 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="5dp"
-        android:layout_marginTop="73dp"
+        android:layout_marginTop="57dp"
         android:layout_marginEnd="5dp"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@+id/bottom_navigation_view"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <ListView
             android:id="@+id/lv_jornada"
-            android:layout_width="364dp"
-            android:layout_height="464dp"
-            android:layout_marginStart="16dp"
+            android:layout_width="372dp"
+            android:layout_height="192dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="52dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginBottom="28dp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.23"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView24" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textView24"
-            android:layout_width="239dp"
-            android:layout_height="0dp"
+            android:id="@+id/tituloJornada"
+            android:layout_width="371dp"
+            android:layout_height="39dp"
             android:layout_marginTop="16dp"
-            android:layout_marginEnd="68dp"
-            android:layout_marginBottom="45dp"
+            android:layout_marginEnd="8dp"
+            android:gravity="center"
             android:text="@string/jornada"
             android:textAlignment="center"
-            android:textSize="24sp"
-            app:layout_constraintBottom_toTopOf="@+id/lv_jornada"
+            android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <ListView
+            android:id="@+id/lv_jugadores"
+            android:layout_width="375dp"
+            android:layout_height="211dp"
+            android:layout_marginTop="284dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tituloJornada" />
+
+        <TextView
+            android:id="@+id/tituloJugadores"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginBottom="16dp"
+            android:gravity="center"
+            android:text="TextView"
+            android:textSize="18sp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toTopOf="@+id/lv_jugadores"
+            app:layout_constraintEnd_toEndOf="parent" />
     </android.support.constraint.ConstraintLayout>
 
 </android.support.constraint.ConstraintLayout>

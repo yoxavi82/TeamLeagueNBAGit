@@ -38,6 +38,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(R.style.AppTheme);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_homepage);
@@ -117,8 +118,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
     }
 
     private boolean isInLeague() {
-        //return Actual.ligaActual != null;
-        return true;
+        return Actual.ligaActual != null;
     }
 
     private void errorLiga() {

@@ -21,6 +21,7 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.teamleaguebagit.Conexiones.EquipoConexiones;
 import com.example.teamleaguebagit.Conexiones.EquipoUsuarioConexiones;
@@ -28,6 +29,7 @@ import com.example.teamleaguebagit.Conexiones.LigaConexiones;
 import com.example.teamleaguebagit.Conexiones.PlantillaConexiones;
 import com.example.teamleaguebagit.pojos.EquiposUsuarios;
 import com.example.teamleaguebagit.pojos.Jugadores;
+import com.example.teamleaguebagit.pojos.Ligas;
 import com.example.teamleaguebagit.pojos.Plantillas;
 
 import org.jetbrains.annotations.NotNull;
@@ -237,6 +239,17 @@ public class Clasificacion extends AppCompatActivity  implements NavigationView.
                 alert.show();
                 break;
             case R.id.config:
+                Intent i = new Intent(this, Configuracion.class);
+                startActivity(i);
+                break;
+
+
+            default:
+                for(Ligas liga: ligasUsuarioActual){
+                    if(item.getTitle().equals(liga.getIdLiga()))Actual.setLigaActual(liga);
+                }
+                Toast toast= Toast.makeText(this,"Liga "+item.getTitle()+" seleccionada", Toast.LENGTH_SHORT);
+                toast.show();
                 break;
         }
         return true;

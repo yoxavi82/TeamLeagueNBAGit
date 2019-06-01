@@ -4,6 +4,9 @@ public class Lista_jornada {
     String nombre_usuario;
     int puntuacion;
 
+    public  Lista_jornada(){
+    }
+
     public Lista_jornada(String nombre_usuario, int puntuacion) {
         this.nombre_usuario = nombre_usuario;
         this.puntuacion = puntuacion;

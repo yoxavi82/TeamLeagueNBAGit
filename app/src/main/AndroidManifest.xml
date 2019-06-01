@@ -12,11 +12,13 @@
         android:theme="@style/AppTheme">
 
         <activity android:name="com.example.teamleaguebagit.MenuBottom.MenuBottomMercado"></activity>
-        <activity android:name="com.example.teamleaguebagit.Mercado" />
+        <activity android:name="com.example.teamleaguebagit.Mercado"
+            android:theme="@style/SplashTheme"/>
         <activity android:name="com.example.teamleaguebagit.MenuBottom.MenuBottomAlineacion" />
         <activity android:name="com.example.teamleaguebagit.Alineacion" />
         <activity android:name="com.example.teamleaguebagit.MenuBottom.MenuBottomJornada" />
-        <activity android:name="com.example.teamleaguebagit.Jornada" />
+        <activity android:name="com.example.teamleaguebagit.Jornada"
+            android:theme="@style/SplashTheme"/>
         <activity android:name="com.example.teamleaguebagit.Configuracion" />
         <activity android:name="com.example.teamleaguebagit.Clasificacion" />
         <activity
@@ -24,6 +26,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name="com.example.teamleaguebagit.Homepage"
+            android:theme="@style/SplashTheme"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.example.teamleaguebagit.RegisterView"

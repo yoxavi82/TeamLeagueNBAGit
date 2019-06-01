@@ -22,6 +22,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.teamleaguebagit.Conexiones.JugadorConexiones;
 import com.example.teamleaguebagit.Conexiones.LigaConexiones;
@@ -53,11 +54,12 @@ public class Mercado extends AppCompatActivity  implements NavigationView.OnNavi
     NavigationView navView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(R.style.AppTheme);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mercado);
         saldo = findViewById(R.id.SaldoMercado);
-        ArrayList<EquiposUsuarios> e = (ArrayList<EquiposUsuarios>) Actual.getLigaActual().getEquiposUsuarioses();
+        ArrayList<EquiposUsuarios> e = Actual.getEquiposUsuariosSesion();
         for (EquiposUsuarios u : e){
             if (u.getUsuarios().equals(Actual.getUsuarioActual())){
                 saldo.setText(u.getDinero());
@@ -322,6 +324,17 @@ public class Mercado extends AppCompatActivity  implements NavigationView.OnNavi
                 alert.show();
                 break;
             case R.id.config:
+                Intent i = new Intent(this, Configuracion.class);
+                startActivity(i);
+                break;
+
+
+            default:
+                for(Ligas liga: ligasUsuarioActual){
+                    if(item.getTitle().equals(liga.getIdLiga()))Actual.setLigaActual(liga);
+                }
+                Toast toast= Toast.makeText(this,"Liga "+item.getTitle()+" seleccionada", Toast.LENGTH_SHORT);
+                toast.show();
                 break;
         }
         return true;

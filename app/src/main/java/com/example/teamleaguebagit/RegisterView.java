@@ -1,5 +1,6 @@
 package com.example.teamleaguebagit;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -25,7 +26,6 @@ public class RegisterView extends AppCompatActivity {
     String fechaNacimiento;
     Spinner dia,mes,año;
     Button accionRegistrar;
-    ArrayList<String> usuarios =new ArrayList<>();
     ArrayList<String> dias = new ArrayList<>();
     ArrayList<String> meses = new ArrayList<>();
     ArrayList<String> años = new ArrayList<>();
@@ -133,6 +133,9 @@ public class RegisterView extends AppCompatActivity {
             UsuarioConexiones con = new UsuarioConexiones();
             con.register(registrado);
             con.registrarPassword(passRegistrado);
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
         }
     }
 }
