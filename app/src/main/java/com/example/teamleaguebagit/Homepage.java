@@ -133,6 +133,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
         alert.setMessage(R.string.MensajeSalirApp);
         alert.setNegativeButton(R.string.Salir, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
+                Actual.disconect();
                 finishAffinity();
                 System.exit(0);
             }
@@ -177,6 +178,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
+                        Actual.disconect();
                     }
                 });
                 alert.setPositiveButton(R.string.Cancelar, new DialogInterface.OnClickListener() {
