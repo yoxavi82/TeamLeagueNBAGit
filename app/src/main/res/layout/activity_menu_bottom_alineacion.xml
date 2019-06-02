@@ -24,7 +24,7 @@
         android:id="@+id/scrollView3"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="57dp"
+        android:layout_marginTop="55dp"
         app:layout_constraintBottom_toTopOf="@+id/bottom_navigation_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -42,6 +42,7 @@
 
 
             <android.support.constraint.ConstraintLayout
+                android:id="@+id/pista"
                 android:layout_width="match_parent"
                 android:layout_height="379dp"
                 android:background="@drawable/utah_jazz_pista">
@@ -177,7 +178,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="260dp"
-                android:onClick="test"
+                android:onClick="comprobarHora"
                 android:text="Confirmar"
                 android:textAlignment="textEnd" />
 

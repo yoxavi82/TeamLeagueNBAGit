@@ -55,7 +55,7 @@ public class EquipoUsuarioConexiones implements EquipoUsuarioRepository {
                 if (rs.next()){
                     equipo.setIdEquipo(rs.getInt("IdEquipo"));
                     equipo.setDinero(rs.getInt("Dinero"));
-                    equipo.setEquipos(new EquipoConexiones().get(rs.getString("IdEquipo")));
+                    equipo.setEquipos(new EquipoConexiones().get(rs.getString("EquipoNBA")));
                     equipo.setNombreEquipo(rs.getString("NombreEquipo"));
                     equipo.setLigas(new LigaConexiones().get(rs.getString("IdLiga")));
                     equipo.setUsuarios(new UsuarioConexiones().get(rs.getString("IdUsuario")));

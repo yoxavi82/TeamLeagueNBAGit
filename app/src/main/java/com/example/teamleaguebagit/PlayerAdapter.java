@@ -8,8 +8,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.teamleaguebagit.R;
-
 import java.util.ArrayList;
 
 public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.MyViewHolder> {
@@ -35,7 +33,7 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.MyViewHold
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
 
-        holder.iv.setImageDrawable(imageModelArrayList.get(position).getImage_drawable());
+        holder.iv.setImageResource(imageModelArrayList.get(position).getResourceImg());
         holder.time.setText(imageModelArrayList.get(position).getName());
     }
 

@@ -3,7 +3,9 @@ package com.example.teamleaguebagit;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -25,12 +27,14 @@ import static com.example.teamleaguebagit.Actual.ligasUsuarioActual;
 public class Jornada extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener{
     BottomNavigationView navigationBottom;
     NavigationView navView;
+    ConstraintLayout container;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_jornada);
         Toolbar toolbar = findViewById(R.id.toolbar);
+        container =findViewById(R.id.constraintLayout2);
 
          navView = (NavigationView) findViewById(R.id.nav_view);
 
@@ -86,6 +90,9 @@ public class Jornada extends AppCompatActivity  implements NavigationView.OnNavi
             }
         });
 
+        navigationBottom.setBackgroundColor(Color.parseColor(Colores.mapa.get(Actual.getEquipoActual().getEquipos().getIdEquipo())));
+        container.setBackgroundColor(Color.parseColor("#"+Actual.getEquipoActual().getEquipos().getColor()));
+        toolbar.setBackgroundColor(Color.parseColor(Colores.mapa.get(Actual.getEquipoActual().getEquipos().getIdEquipo())));
 
     }
 

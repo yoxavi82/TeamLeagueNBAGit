@@ -3,7 +3,9 @@ package com.example.teamleaguebagit;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -40,6 +42,7 @@ public class Clasificacion extends AppCompatActivity  implements NavigationView.
     ListView lv, lv_plantilla;
     TextView nombre_usuario;
     NavigationView navView;
+    ConstraintLayout container;
 
 
     @Override
@@ -49,6 +52,7 @@ public class Clasificacion extends AppCompatActivity  implements NavigationView.
         setContentView(R.layout.activity_clasificacion);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         TextView titulo = findViewById(R.id.toolbar_title);
+        container= findViewById(R.id.constraintLayout2);
 
         LayoutInflater inflater = getLayoutInflater();
         formElementsView = inflater.inflate(R.layout.confirmar,  null);
@@ -77,6 +81,10 @@ public class Clasificacion extends AppCompatActivity  implements NavigationView.
 
         navigationBottom  = (BottomNavigationView) findViewById(R.id.bottom_navigation_view);
         navigationBottom.setSelectedItemId(R.id.clasificacion);
+        navigationBottom.setBackgroundColor(Color.parseColor(Colores.mapa.get(Actual.getEquipoActual().getEquipos().getIdEquipo())));
+        container.setBackgroundColor(Color.parseColor("#"+Actual.getEquipoActual().getEquipos().getColor()));
+        toolbar.setBackgroundColor(Color.parseColor(Colores.mapa.get(Actual.getEquipoActual().getEquipos().getIdEquipo())));
+
         navigationBottom.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {

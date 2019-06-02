@@ -3,7 +3,9 @@ package com.example.teamleaguebagit;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -21,35 +23,29 @@ import android.widget.Toast;
 
 import org.jetbrains.annotations.NotNull;
 
+import static com.example.teamleaguebagit.Actual.ligaActual;
 import static com.example.teamleaguebagit.Actual.ligasUsuarioActual;
 
 import com.example.teamleaguebagit.Conexiones.EquipoUsuarioConexiones;
-import com.example.teamleaguebagit.Conexiones.JugadorConexiones;
-import com.example.teamleaguebagit.Conexiones.PlantillaConexiones;
-import com.example.teamleaguebagit.pojos.Jugadores;
 import com.example.teamleaguebagit.pojos.Ligas;
-import com.example.teamleaguebagit.pojos.Plantillas;
-
-import org.jetbrains.annotations.NotNull;
-
-import java.util.Date;
-
-import static com.example.teamleaguebagit.Actual.ligasUsuarioActual;
 
 public class Homepage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     Button crear,unir;
     BottomNavigationView navigationBottom;
-    NavigationView navView;
+    NavigationView navigationView;
+    Toolbar toolbar;
+    ConstraintLayout container;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_homepage);
-        navView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
 
+        container =findViewById(R.id.constraintLayout2);
 
-        Toolbar toolbar =findViewById(R.id.toolbar);
+        toolbar =findViewById(R.id.toolbar);
         TextView titulo = findViewById(R.id.toolbar_title);
         if(Actual.getLigaSesion()==null)
             Actual.setEquiposUsuarios(new EquipoUsuarioConexiones().getByUser(Actual.getUsuarioActual().getIdUsuario()));
@@ -64,16 +60,35 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+        try{
+            if (Actual.getEquipoActual()==null) {
+                if (ligaActual == null)
+                    Actual.setLigaActual(Actual.getLigaSesion().get(0));
 
-        NavigationView navigationView = findViewById(R.id.nav_view);
+                EquipoUsuarioConexiones conEquipo = new EquipoUsuarioConexiones();
+                Actual.setEquipoActual(conEquipo.getByLigaAndUser(Actual.usuarioActual.getIdUsuario(),Actual.ligaActual.getIdLiga()));
+            }
+        }catch(Exception e){
+            Toast toast=Toast.makeText(this,"No hay ligas", Toast.LENGTH_SHORT);
+            toast.show();
+        }
+
         navigationView.setNavigationItemSelectedListener(this);
 
         View headView = navigationView.getHeaderView(0);
         TextView nombre = headView.findViewById(R.id.NombreUser);
+
         nombre.setText(Actual.getUsuarioActual().getNombre()+" "+Actual.getUsuarioActual().getApellidos());
 
         navigationBottom  = findViewById(R.id.bottom_navigation_view);
         navigationBottom.setSelectedItemId(R.id.inicio);
+        if(Actual.getEquipoActual()!=null) {
+            navigationBottom.setBackgroundColor(Color.parseColor(Colores.mapa.get(Actual.getEquipoActual().getEquipos().getIdEquipo())));
+           container.setBackgroundColor(Color.parseColor("#"+Actual.getEquipoActual().getEquipos().getColor()));
+            toolbar.setBackgroundColor(Color.parseColor(Colores.mapa.get(Actual.getEquipoActual().getEquipos().getIdEquipo())));
+
+        }
+
         navigationBottom.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -201,6 +216,12 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
                 for(Ligas liga: ligasUsuarioActual){
                     if(item.getTitle().equals(liga.getIdLiga()))Actual.setLigaActual(liga);
                 }
+                EquipoUsuarioConexiones conEquipo = new EquipoUsuarioConexiones();
+                Actual.setEquipoActual(conEquipo.getByLigaAndUser(Actual.usuarioActual.getIdUsuario(),Actual.ligaActual.getIdLiga()));
+                toolbar.setBackgroundColor(Color.parseColor(Colores.mapa.get(Actual.getEquipoActual().getEquipos().getIdEquipo())));
+                navigationBottom.setBackgroundColor(Color.parseColor(Colores.mapa.get(Actual.getEquipoActual().getEquipos().getIdEquipo())));
+                container.setBackgroundColor(Color.parseColor("#"+Actual.getEquipoActual().getEquipos().getColor()));
+
                 Toast toast= Toast.makeText(this,"Liga "+item.getTitle()+" seleccionada", Toast.LENGTH_SHORT);
                 toast.show();
                 break;
@@ -210,7 +231,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
 
     @NotNull
     private Menu initMenu() {
-        Menu m = navView.getMenu();
+        Menu m = navigationView.getMenu();
         m.findItem(R.id.ligas).getSubMenu().clear();
         for(int i = 0; i< ligasUsuarioActual.size(); i++) {
             m.findItem(R.id.ligas).getSubMenu().add(ligasUsuarioActual.get(i).getIdLiga());

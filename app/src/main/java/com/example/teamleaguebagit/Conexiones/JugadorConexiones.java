@@ -4,6 +4,7 @@ import com.example.teamleaguebagit.ConexionInterficies.JugadorRepository;
 import com.example.teamleaguebagit.pojos.Jugadores;
 import com.mysql.jdbc.Statement;
 
+import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -113,7 +114,9 @@ public class JugadorConexiones implements JugadorRepository {
                     jugador.setEstrellas(rs.getInt("Estrellas"));
                     jugador.setPuntosTotales(rs.getInt("PuntosTotales"));
                     jugador.setMedia(rs.getInt("Media"));
-                    jugador.setImagen(rs.getBytes("Imagen"));
+                    jugador.setImagen( rs.getBytes("Imagen"));
+                    jugador.blob=rs.getBlob("Imagen");
+
                 }else {
                     return null;
                 }
@@ -211,7 +214,7 @@ public class JugadorConexiones implements JugadorRepository {
             if (connection == null) {
             } else {
                 ResultSet rs = null;
-                String query = "UPDATE Jugadores SET Imagen= "+jugador.getImagen()+" ";
+                String query = "UPDATE Jugadores SET Imagen= '"+jugador.test+"' WHERE IdJugador = '"+jugador.getIdJugador()+"'";
 
                 Statement stmt = (Statement) connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 
@@ -219,8 +222,10 @@ public class JugadorConexiones implements JugadorRepository {
             }
         } catch (Exception ex) {
             ex.printStackTrace();
+            System.out.println("no<<<<<<<<<<<<no<onnononononoonoononononononononono");
         } finally {
             Conexion.cerrarConexion(connection);
+
         }
     }
 }

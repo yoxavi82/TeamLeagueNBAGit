@@ -1,12 +1,12 @@
 package com.example.teamleaguebagit;
 
-import android.graphics.drawable.Drawable;
+import android.graphics.Bitmap;
 
 import com.example.teamleaguebagit.pojos.Jugadores;
 
 public class PlayerModel {
     private String name;
-    private Drawable image_drawable;
+    private int resourceImg;
     private Jugadores jugador;
 
     public String getName() {
@@ -17,12 +17,12 @@ public class PlayerModel {
         this.name = name;
     }
 
-    public Drawable getImage_drawable() {
-        return image_drawable;
+    public int getResourceImg() {
+        return resourceImg;
     }
 
-    public void setImage_drawable(Drawable image_drawable) {
-        this.image_drawable = image_drawable;
+    public void setResourceImg(int resourceImg) {
+        this.resourceImg = resourceImg;
     }
 
     public Jugadores getJugador() {

@@ -20,6 +20,7 @@ public class Actual {
     static Usuarios usuarioActual=null;
     static Ligas ligaActual=null;
     static Boolean iniciarSesion=true;
+    static EquiposUsuarios equipoActual;
     static ArrayList<Ligas> ligasUsuarioActual = null;
     static ArrayList<EquiposUsuarios> equiposUsuarios = new ArrayList();
 
@@ -29,10 +30,21 @@ public class Actual {
 
     public static void setEquiposUsuarios(ArrayList<EquiposUsuarios> equipos){
         ligasUsuarioActual=new ArrayList();
+        Alineacion.actPlantilla=true;
+
         for(EquiposUsuarios eq: equipos){
             ligasUsuarioActual.add(eq.getLigas());
         }
         equiposUsuarios = equipos;
+    }
+
+    public static EquiposUsuarios getEquipoActual() {
+        //Alineacion.actPlantilla=true;
+        return equipoActual;
+    }
+
+    public static void setEquipoActual(EquiposUsuarios equipoActual) {
+        Actual.equipoActual = equipoActual;
     }
 
     public static ArrayList<Ligas> getLigaSesion(){

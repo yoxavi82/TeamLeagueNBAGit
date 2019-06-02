@@ -1,6 +1,9 @@
 package com.example.teamleaguebagit.pojos;
 // Generated 24-may-2019 19:04:20 by Hibernate Tools 5.1.10.Final
 
+import android.graphics.Bitmap;
+
+import java.sql.Blob;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -23,7 +26,8 @@ public class Jugadores implements java.io.Serializable {
 	private int media;
 	private Set<Plantillas> plantillases = new HashSet<Plantillas>(0);
 	private Set<Puntuaciones> puntuacioneses = new HashSet<Puntuaciones>(0);
-
+public String test;
+	public Blob blob;
 	public Jugadores() {
 	}
 

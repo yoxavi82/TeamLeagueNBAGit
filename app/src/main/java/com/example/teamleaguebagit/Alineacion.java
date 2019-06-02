@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.MotionEventCompat;
@@ -20,6 +21,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Base64;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -27,10 +29,12 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.teamleaguebagit.Conexiones.EquipoUsuarioConexiones;
 import com.example.teamleaguebagit.Conexiones.JugadorConexiones;
 import com.example.teamleaguebagit.Conexiones.PlantillaConexiones;
+import com.example.teamleaguebagit.pojos.Equipos;
 import com.example.teamleaguebagit.pojos.EquiposUsuarios;
 import com.example.teamleaguebagit.pojos.Jugadores;
 import com.example.teamleaguebagit.pojos.Plantillas;
@@ -39,12 +43,21 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.sql.Blob;
+import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.LinkedList;
 
 import static com.example.teamleaguebagit.Actual.ligasUsuarioActual;
 
 public class Alineacion extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener{
+
+
+    byte[] test=null;
+
+    ConstraintLayout pista;
     BottomNavigationView navigationBottom;
     boolean moving = false;
     LinearLayout a;
@@ -55,25 +68,17 @@ public class Alineacion extends AppCompatActivity  implements NavigationView.OnN
     Integer anterior=null;
     RecyclerView suplentes, noConvocados;
     private PlayerAdapter adapter;
-    private ArrayList<Drawable> myImageLisInicial = new ArrayList<Drawable>();
-    private ArrayList<String> myImageNameListInicial =  new ArrayList<String>();
-    private ArrayList<Drawable> myImageListSuplentes = new ArrayList<Drawable>();
-    private ArrayList<Jugadores> myPlayerListInicial = new ArrayList<Jugadores>();
-    private ArrayList<Jugadores> myPlayerListSuplentes = new ArrayList<Jugadores>();
-    private ArrayList<Jugadores> myPlayerListNoConv = new ArrayList<Jugadores>();
-    private Jugadores[] jugadores= new Jugadores[5];
+    private static LinkedList<Jugadores> myPlayerListInicial = new LinkedList<Jugadores>();
+    private static ArrayList<Jugadores> myPlayerListSuplentes = new ArrayList<Jugadores>();
+    private static ArrayList<Jugadores> myPlayerListNoConv = new ArrayList<Jugadores>();
+    static boolean actPlantilla= true;
 
-    private ArrayList<String> myImageNameListSuplentes =  new ArrayList<String>(Arrays.asList("1","2" ,"3","4","5","6","7"));
 
-    private ArrayList<Drawable> myImageListNoConv = new ArrayList<Drawable>();
-    private ArrayList<String> myImageNameListNoConv =  new ArrayList<String>(Arrays.asList("1","2" ,"3","4","5","6","7"));
 
-    Drawable cambio = null;
     Jugadores cambioplayer,jugAnt = null;
 
     int anteriorId = -1;
     int anteriorPos=-1;
-    int numLigas=1;
     ImageView int1;
     ImageView int2;
     ImageView ext1;
@@ -91,31 +96,34 @@ public class Alineacion extends AppCompatActivity  implements NavigationView.OnN
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alineacion);
-
+        pista= findViewById(R.id.pista);
 
         navView = (NavigationView) findViewById(R.id.nav_view);
 
         initMenu();
 
         layourtPrincipal = findViewById(R.id.layoutPrincipal);
-        //llenarArrayDraw();
-        //initArrays();
+        if (actPlantilla)initArrays();
         suplentes = (RecyclerView) findViewById(R.id.suplentes);
-        suplentes.setBackgroundColor(Color.parseColor("#FFA400"));
+        EquipoUsuarioConexiones conEquipo = new EquipoUsuarioConexiones();
+        Equipos nba = (conEquipo.getByLigaAndUser(Actual.usuarioActual.getIdUsuario(),Actual.ligaActual.getIdLiga())).getEquipos();
+        suplentes.setBackgroundColor(Color.parseColor("#"+nba.getColor()));
 
         noConvocados = (RecyclerView) findViewById(R.id.noConvocados);
-        noConvocados.setBackgroundColor(Color.parseColor("#FFA400"));
+        noConvocados.setBackgroundColor(Color.parseColor("#"+nba.getColor()));
 
-
-        inintRecycleView(suplentes);
-        inintRecycleView(noConvocados);
-        initTitulares();
-
+        layourtPrincipal.setBackgroundColor(Color.parseColor("#"+nba.getColor()));
+        pista.setBackgroundResource(getResource("c_"+nba.getIdEquipo()));
         int1=findViewById(R.id.int1);
         int2=findViewById(R.id.int2);
         ext1=findViewById(R.id.ext1);
         ext2=findViewById(R.id.ext2);
         ext3=findViewById(R.id.ext3);
+        inintRecycleView(suplentes);
+        inintRecycleView(noConvocados);
+
+
+        //initTitulares();
 
 
         //alberto
@@ -172,16 +180,27 @@ public class Alineacion extends AppCompatActivity  implements NavigationView.OnN
 
             }
         });
+        navigationBottom.setBackgroundColor(Color.parseColor(Colores.mapa.get(Actual.getEquipoActual().getEquipos().getIdEquipo())));
+        toolbar.setBackgroundColor(Color.parseColor(Colores.mapa.get(Actual.getEquipoActual().getEquipos().getIdEquipo())));
 
 
     }
 
     private void initTitulares() {
+        ext1.setImageResource(getResource(myPlayerListInicial.get(0).getIdJugador().toLowerCase()));
+        ext2.setImageResource(getResource(myPlayerListInicial.get(1).getIdJugador().toLowerCase()));
+        ext3.setImageResource(getResource(myPlayerListInicial.get(2).getIdJugador().toLowerCase()));
+        int1.setImageResource(getResource(myPlayerListInicial.get(3).getIdJugador().toLowerCase()));
+        int2.setImageResource(getResource(myPlayerListInicial.get(4).getIdJugador().toLowerCase()));
+
+
 
     }
 
 
     private void initArrays() {
+        actPlantilla=false;
+
 
         int intTit=0;
         int extTit=0;
@@ -203,48 +222,33 @@ public class Alineacion extends AppCompatActivity  implements NavigationView.OnN
         for (Plantillas jugador: listajug ) {
             if(jugador.getTitular()==1) {
                 if(jugador.getJugadores().getPosicion().equals("Interior")){
-                    for(int i = 0; i<5;i++){
-                        if(jugadores[i]==null){
-                            jugadores[i]=jugador.getJugadores();
-                        }
-                    }
+                    myPlayerListInicial.addLast(jugador.getJugadores());
                 }else{
-                    for(int i = 5; i>0;i--){
-                        if(jugadores[i]==null){
-                            jugadores[i]=jugador.getJugadores();
-                        }
-                    }
+                    myPlayerListInicial.addFirst(jugador.getJugadores());
+
                 }
 //                myPlayerListInicial.add(jugador.getJugadores());
 //                myImageLisInicial.add(getDrawableFromBytes(jugador.getJugadores().getImagen()));
             }if(jugador.getTitular()==2){
                 myPlayerListSuplentes.add(jugador.getJugadores());
-                myImageListSuplentes.add(getDrawableFromBytes(jugador.getJugadores().getImagen()));
             }if (jugador.getTitular()==3){
                 myPlayerListNoConv.add(jugador.getJugadores());
-                myImageListNoConv.add(getDrawableFromBytes(jugador.getJugadores().getImagen()));
             }else{
                 if(jugador.getJugadores().getPosicion().equals("Interior")&&titularesIntRest>0) {
                     titularesIntRest--;
                     myPlayerListInicial.add(jugador.getJugadores());
-                    myImageLisInicial.add(getDrawableFromBytes(jugador.getJugadores().getImagen()));
-                }if (jugador.getJugadores().getPosicion().equals("Exterior")&&titularesExtRest>0) {
+                }else if (jugador.getJugadores().getPosicion().equals("Exterior")&&titularesExtRest>0) {
                     titularesExtRest--;
                     myPlayerListInicial.add(jugador.getJugadores());
-                    myImageLisInicial.add(getDrawableFromBytes(jugador.getJugadores().getImagen()));
                 }else if(suplentesRest>0) {
                     myPlayerListSuplentes.add(jugador.getJugadores());
-                    myImageListSuplentes.add(getDrawableFromBytes(jugador.getJugadores().getImagen()));
                     suplentesRest--;
                 }else{
                     myPlayerListNoConv.add(jugador.getJugadores());
-                    myImageListNoConv.add(getDrawableFromBytes(jugador.getJugadores().getImagen()));
                 }
             }
 
         }
-        myPlayerListInicial= new ArrayList<Jugadores>(Arrays.asList(jugadores));
-
 
 
 
@@ -263,18 +267,16 @@ public class Alineacion extends AppCompatActivity  implements NavigationView.OnN
                     @Override public void onItemClick(View view, int position) {
 
                         View parent = (View)view.getParent();
-                        if(cambio == null) {
+                        if(cambioplayer == null) {
                             anteriorPos=position;
                             if (parent.getId() == R.id.suplentes) {
-                                cambio = myImageListSuplentes.get(position);
                                 cambioplayer = myPlayerListSuplentes.get(position);
                             }else {
-                                cambio = myImageListNoConv.get(position);
                                 cambioplayer=myPlayerListNoConv.get(position);
 
                             }
 
-                            if (cambioplayer.getPosicion().equals("ext")){
+                            if (cambioplayer.getPosicion().equals("Exterior")){
                                 int1.setClickable(false);
                                 int2.setAlpha((float)0.5);
                                 int1.setAlpha((float)0.5);
@@ -303,9 +305,7 @@ public class Alineacion extends AppCompatActivity  implements NavigationView.OnN
                             if(anteriorId!=-1) {
                                 ImageView imagAnt = findViewById(anteriorId);
                                 if (parent.getId() == R.id.suplentes) {
-                                    imagAnt.setImageDrawable(myImageListSuplentes.get(position));
-                                    myImageListSuplentes.remove(position);
-                                    myImageListSuplentes.add(position, cambio);
+
 
 
                                     Jugadores jugadores = myPlayerListSuplentes.get(position);
@@ -315,9 +315,6 @@ public class Alineacion extends AppCompatActivity  implements NavigationView.OnN
                                     myPlayerListSuplentes.add(position, cambioplayer);
 
                                 }else{
-                                    imagAnt.setImageDrawable(myImageListNoConv.get(position));
-                                    myImageListNoConv.remove(position);
-                                    myImageListNoConv.add(position, cambio);
 
                                     Jugadores jugadores = myPlayerListNoConv.get(position);
                                     myPlayerListInicial.remove(anteriorPos);
@@ -328,11 +325,7 @@ public class Alineacion extends AppCompatActivity  implements NavigationView.OnN
                             }else{
                                 if (parent.getId() == R.id.suplentes) {
                                     if(parentAnterior.getId()==R.id.noConvocados) {
-                                        Drawable actual = myImageListSuplentes.get(position);
-                                        myImageListNoConv.remove(anteriorPos);
-                                        myImageListNoConv.add(anteriorPos, actual);
-                                        myImageListSuplentes.remove(position);
-                                        myImageListSuplentes.add(position, cambio);
+
 
                                         Jugadores jugadores = myPlayerListSuplentes.get(position);
                                         myPlayerListNoConv.remove(anteriorPos);
@@ -340,11 +333,6 @@ public class Alineacion extends AppCompatActivity  implements NavigationView.OnN
                                         myPlayerListSuplentes.remove(position);
                                         myPlayerListSuplentes.add(position, cambioplayer);
                                     }else{
-                                        Drawable actual = myImageListSuplentes.get(position);
-                                        myImageListSuplentes.remove(anteriorPos);
-                                        myImageListSuplentes.add(anteriorPos, actual);
-                                        myImageListSuplentes.remove(position);
-                                        myImageListSuplentes.add(position, cambio);
 
                                         Jugadores jugadores = myPlayerListSuplentes.get(position);
                                         myPlayerListSuplentes.remove(anteriorPos);
@@ -354,11 +342,6 @@ public class Alineacion extends AppCompatActivity  implements NavigationView.OnN
                                     }
                                 }else{
                                     if(parentAnterior.getId()==R.id.noConvocados) {
-                                        Drawable actual = myImageListNoConv.get(position);
-                                        myImageListNoConv.remove(anteriorPos);
-                                        myImageListNoConv.add(anteriorPos, actual);
-                                        myImageListNoConv.remove(position);
-                                        myImageListNoConv.add(position, cambio);
 
                                         Jugadores jugadores = myPlayerListNoConv.get(position);
 
@@ -367,11 +350,6 @@ public class Alineacion extends AppCompatActivity  implements NavigationView.OnN
                                         myPlayerListNoConv.remove(position);
                                         myPlayerListNoConv.add(position, cambioplayer);
                                     }else{
-                                        Drawable actual = myImageListNoConv.get(position);
-                                        myImageListSuplentes.remove(anteriorPos);
-                                        myImageListSuplentes.add(anteriorPos, actual);
-                                        myImageListNoConv.remove(position);
-                                        myImageListNoConv.add(position, cambio);
 
 
                                         Jugadores jugadores = myPlayerListNoConv.get(position);
@@ -384,7 +362,9 @@ public class Alineacion extends AppCompatActivity  implements NavigationView.OnN
                             }
                             initNoConv();
                             initSuplentes();
-                            cambio = null;
+                            initTitulares();
+
+                            cambioplayer = null;
                             anteriorId = -1;
                             anteriorPos = -1;
 
@@ -405,6 +385,8 @@ public class Alineacion extends AppCompatActivity  implements NavigationView.OnN
         //recyclerView.setAdapter(adapter);
         initSuplentes();
         initNoConv();
+        initTitulares();
+
         suplentes.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false));
         noConvocados.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false));
     }
@@ -481,100 +463,118 @@ public class Alineacion extends AppCompatActivity  implements NavigationView.OnN
 
         return true;
     }
-    public void llenarArrayDraw(){
-        ImageView img= findViewById(R.id.int1);
-        img.setImageResource(R.drawable.uno);
-        Jugadores player = new Jugadores();
-        player.setApellido("hola");
-        player.setPosicion("int");
-        myPlayerListInicial.add(player);
-         player = new Jugadores();
-        player.setApellido("adios");
-        player.setPosicion("ext");
-        myPlayerListInicial.add(player);
-         player = new Jugadores();
-        player.setApellido("uwu");
-        player.setPosicion("int");
-        myPlayerListInicial.add(player);
-         player = new Jugadores();
-        player.setApellido("owo");
-        player.setPosicion("ext");
-        myPlayerListInicial.add(player);
-         player = new Jugadores();
-        player.setApellido("ha");
-        player.setPosicion("ext");
-        myPlayerListInicial.add(player);
-
-
-
-        player = new Jugadores();
-        player.setApellido("1");
-        player.setPosicion("int");
-        myPlayerListSuplentes.add(player);
-        myImageListSuplentes.add( img.getDrawable() );
-        img.setImageResource(R.drawable.dos);
-        player = new Jugadores();
-        player.setApellido("2");
-        player.setPosicion("int");
-
-
-
-        myPlayerListSuplentes.add(player);
-        myImageListSuplentes.add( img.getDrawable() );
-        img.setImageResource(R.drawable.tres);
-        player = new Jugadores();
-        player.setApellido("3");
-        player.setPosicion("ext");
-        myPlayerListSuplentes.add(player);
-
-        myImageListSuplentes.add( img.getDrawable() );
-        img.setImageResource(R.drawable.uno);
-        player = new Jugadores();
-        player.setApellido("lolo");
-        player.setPosicion("int");
-        myPlayerListSuplentes.add(player);
-
-
-        myImageListSuplentes.add( img.getDrawable() );
-        img.setImageResource(R.drawable.dos);
-        player = new Jugadores();
-        player.setApellido("lelele");
-        player.setPosicion("int");
-        myPlayerListSuplentes.add(player);
-
-
-
-        img.setImageResource(R.drawable.uno);
-        myImageListNoConv.add( img.getDrawable() );
-        player = new Jugadores();
-        player.setApellido("lelle");
-        player.setPosicion("int");
-        myPlayerListNoConv.add(player);
-
-
-        img.setImageResource(R.drawable.dos);
-        myImageListNoConv.add( img.getDrawable() );
-        player.setApellido("lululu");
-        player.setPosicion("int");
-        myPlayerListNoConv.add(player);
-
-
-        img.setImageResource(R.drawable.tres);
-        myImageListNoConv.add( img.getDrawable() );
-        player.setApellido("lilili");
-        player.setPosicion("ext");
-        myPlayerListNoConv.add(player);
-
-
-    }
+//    public void llenarArrayDraw(){
+//        ImageView img= findViewById(R.id.int1);
+//        img.setImageResource(R.drawable.uno);
+//        Jugadores player = new Jugadores();
+//        player.setApellido("hola");
+//        player.setPosicion("int");
+//        myPlayerListInicial.add(player);
+//         player = new Jugadores();
+//        player.setApellido("adios");
+//        player.setPosicion("ext");
+//        myPlayerListInicial.add(player);
+//         player = new Jugadores();
+//        player.setApellido("uwu");
+//        player.setPosicion("int");
+//        myPlayerListInicial.add(player);
+//         player = new Jugadores();
+//        player.setApellido("owo");
+//        player.setPosicion("ext");
+//        myPlayerListInicial.add(player);
+//         player = new Jugadores();
+//        player.setApellido("ha");
+//        player.setPosicion("ext");
+//        myPlayerListInicial.add(player);
+//
+//
+//
+//        player = new Jugadores();
+//        player.setApellido("1");
+//        player.setPosicion("int");
+//        myPlayerListSuplentes.add(player);
+//        myImageListSuplentes.add( img.getDrawable() );
+//        img.setImageResource(R.drawable.dos);
+//        player = new Jugadores();
+//        player.setApellido("2");
+//        player.setPosicion("int");
+//
+//
+//
+//        myPlayerListSuplentes.add(player);
+//        myImageListSuplentes.add( img.getDrawable() );
+//        img.setImageResource(R.drawable.tres);
+//        player = new Jugadores();
+//        player.setApellido("3");
+//        player.setPosicion("ext");
+//        myPlayerListSuplentes.add(player);
+//
+//        myImageListSuplentes.add( img.getDrawable() );
+//        img.setImageResource(R.drawable.uno);
+//        player = new Jugadores();
+//        player.setApellido("lolo");
+//        player.setPosicion("int");
+//        myPlayerListSuplentes.add(player);
+//
+//
+//        myImageListSuplentes.add( img.getDrawable() );
+//        img.setImageResource(R.drawable.dos);
+//        player = new Jugadores();
+//        player.setApellido("lelele");
+//        player.setPosicion("int");
+//        myPlayerListSuplentes.add(player);
+//
+//
+//
+//        img.setImageResource(R.drawable.uno);
+//        myImageListNoConv.add( img.getDrawable() );
+//        player = new Jugadores();
+//        player.setApellido("lelle");
+//        player.setPosicion("int");
+//        myPlayerListNoConv.add(player);
+//
+//
+//        img.setImageResource(R.drawable.dos);
+//        myImageListNoConv.add( img.getDrawable() );
+//        player.setApellido("lululu");
+//        player.setPosicion("int");
+//        myPlayerListNoConv.add(player);
+//
+//
+//        img.setImageResource(R.drawable.tres);
+//        myImageListNoConv.add( img.getDrawable() );
+//        player.setApellido("lilili");
+//        player.setPosicion("ext");
+//        myPlayerListNoConv.add(player);
+//
+//
+//    }
 
     public void clickjugador(View view){
         ImageView img = findViewById(view.getId());
-        if(cambio == null) {
+        if(cambioplayer == null) {
             anteriorId= view.getId();
-            cambio =img.getDrawable();
+            cambioplayer =   myPlayerListInicial.get(getPos(view));
 
             anteriorPos=getPos(view);
+
+            if (cambioplayer.getPosicion().equals("Exterior")){
+                int1.setClickable(false);
+                int2.setClickable(false);
+
+                int2.setAlpha((float)0.5);
+                int1.setAlpha((float)0.5);
+
+
+
+            }else{
+                ext1.setClickable(false);
+                ext1.setAlpha((float)0.5);
+                ext2.setAlpha((float)0.5);
+                ext3.setAlpha((float)0.5);
+                ext2.setClickable(false);
+                ext3.setClickable(false);
+            }
         }else{
             if(anteriorId==-1) {
                 int1.setClickable(true);
@@ -588,9 +588,6 @@ public class Alineacion extends AppCompatActivity  implements NavigationView.OnN
                 ext2.setAlpha((float)1);
                 ext3.setAlpha((float)1);
                 if (parentAnterior.getId() == R.id.noConvocados) {
-                    myImageListNoConv.remove(anteriorPos);
-                    myImageListNoConv.add(anteriorPos, img.getDrawable());
-                    img.setImageDrawable(cambio);
 
 
                     int position=getPos(view);
@@ -600,9 +597,7 @@ public class Alineacion extends AppCompatActivity  implements NavigationView.OnN
                     myPlayerListInicial.remove(position);
                     myPlayerListInicial.add(position, cambioplayer);
                 } else if (parentAnterior.getId() == R.id.suplentes) {
-                    myImageListSuplentes.remove(anteriorPos);
-                    myImageListSuplentes.add(anteriorPos, img.getDrawable());
-                    img.setImageDrawable(cambio);
+
 
 
                     int position=getPos(view);
@@ -615,9 +610,7 @@ public class Alineacion extends AppCompatActivity  implements NavigationView.OnN
 
                 }
             }else{
-                ImageView imgAnt = findViewById(anteriorId);
-                imgAnt.setImageDrawable(img.getDrawable());
-                img.setImageDrawable(cambio);
+
 
                 int position=getPos(view);
                 Jugadores jugadores = myPlayerListInicial.get(position);
@@ -628,7 +621,8 @@ public class Alineacion extends AppCompatActivity  implements NavigationView.OnN
             }
             initNoConv();
             initSuplentes();
-            cambio = null;
+            initTitulares();
+            cambioplayer = null;
             anteriorId = -1;
             anteriorPos = -1;
         }
@@ -648,10 +642,11 @@ public class Alineacion extends AppCompatActivity  implements NavigationView.OnN
 
     private void initNoConv(){
         ArrayList<PlayerModel> list = new ArrayList<>();
-        for(int i = 0; i < myImageListNoConv.size(); i++){
+        for(int i = 0; i < myPlayerListNoConv.size(); i++){
+
             PlayerModel playerModel = new PlayerModel();
             playerModel.setName(myPlayerListNoConv.get(i).getApellido());
-            playerModel.setImage_drawable(myImageListNoConv.get(i));
+            playerModel.setResourceImg(getResource(myPlayerListNoConv.get(i).getIdJugador().toLowerCase()));
             list.add(playerModel);
         }
         noConvocados.setAdapter(new PlayerAdapter(this, list));
@@ -659,10 +654,10 @@ public class Alineacion extends AppCompatActivity  implements NavigationView.OnN
 
     private void initSuplentes(){
         ArrayList<PlayerModel> list = new ArrayList<>();
-        for(int i = 0; i < myImageListSuplentes.size(); i++){
+        for(int i = 0; i < myPlayerListSuplentes.size(); i++){
             PlayerModel playerModel = new PlayerModel();
             playerModel.setName(myPlayerListSuplentes.get(i).getApellido());
-            playerModel.setImage_drawable(myImageListSuplentes.get(i));
+            playerModel.setResourceImg(getResource(myPlayerListSuplentes.get(i).getIdJugador().toLowerCase()));
             list.add(playerModel);
         }
         suplentes.setAdapter(new PlayerAdapter(this, list));
@@ -702,21 +697,104 @@ public class Alineacion extends AppCompatActivity  implements NavigationView.OnN
         return m;
 
     }
-    public void test(View view){
+   public void test(View view) {
         JugadorConexiones conJug = new JugadorConexiones();
-        byte[] test = getBytes();
-        int1.setImageBitmap(getDrawable(test));
+        Jugadores jugador =conJug.getById("UTA_45");
+        byte[]bytes =getFromBlob( jugador.blob);
+        ext1.setImageBitmap(getBitmap(bytes));
 
+        //int1.setImageBitmap(getBitmap(jugador.getImagen()));
+        //getBytes(jugador);
+        //test=jugador.getImagen();
+
+//        conJug.updateJugador(jugador);
+
+       /*Jugadores jugador2 =conJug.getById("UTA_45");
+       int1.setImageBitmap(getBitmap(jugador2.getImagen()));
+       if(jugador2.getImagen().equals(test)){
+           System.out.println("igual>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<");
+       }else
+           System.out.println("no<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");*/
+
+
+
+
+   }
+
+//        System.out.println("empieza<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+//         JugadorConexiones conJug = new JugadorConexiones();
+////        Jugadores jugador =conJug.getById("UTA_3");
+////        jugador.setImagen(getBytes((jugador.getIdJugador().toLowerCase())));
+////
+////        conJug.updateJugador(jugador);
+////        int1.setImageBitmap(getBitmap(jugador.getImagen()));
+//
+//
+//
+//
+//        ArrayList<Jugadores> lista = conJug.getAll();
+//        System.out.println("<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+//
+//        for (Jugadores jugador: lista){
+//            jugador.setImagen(getBytes( (jugador.getIdJugador().toLowerCase())));
+//
+//            conJug.updateJugador(jugador);
+//        }
+//        System.out.println("ya<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+//    }
+    public byte[] getBytes(Jugadores jugador){
+        int resource = getResources().getIdentifier(jugador.getIdJugador().toLowerCase(),"drawable", getPackageName());
+        Bitmap bitmap = ((BitmapDrawable)getResources().getDrawable(resource)).getBitmap();
+        ByteArrayOutputStream boas = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100,boas ); //bm is the bitmap object
+        byte[] byteArrayImage = boas .toByteArray();
+        String image_str = Base64.encodeToString(byteArrayImage, Base64.DEFAULT);
+        jugador.test = image_str;
+        return byteArrayImage;
     }
-    public byte[] getBytes(){
-        ByteArrayOutputStream outImageStream = new ByteArrayOutputStream();
-        Bitmap bitmap = ((BitmapDrawable)getResources().getDrawable(R.drawable.dos)).getBitmap();
-        byte[] photo = outImageStream.toByteArray();
-        return photo;
-    }
-    public Bitmap getDrawable(byte[] bytes){
+    public Bitmap getBitmap(byte[] bytes){
+
         ByteArrayInputStream input = new ByteArrayInputStream(bytes);
         Bitmap bitmap = BitmapFactory.decodeStream(input);
         return bitmap;
+    }
+
+    public  byte[] getFromBlob(Blob blob){
+        try {
+            int blobLength = (int) blob.length();
+            byte[] blobAsBytes = blob.getBytes(1, blobLength);
+            blob.free();
+            return  blobAsBytes;
+        }catch(SQLException e){
+            e.printStackTrace();
+
+        }
+        return null;
+    }
+
+    public int getResource(String string){
+       return getResources().getIdentifier(string.toLowerCase(),"drawable", getPackageName());
+
+    }
+
+    public void comprobarHora(View view){
+        Calendar min = new GregorianCalendar();
+        min.set(Calendar.HOUR_OF_DAY,8 );
+        min.set(Calendar.MINUTE, 0);
+        min.set(Calendar.SECOND, 0);
+        Calendar max = new GregorianCalendar();
+        max.set(Calendar.HOUR_OF_DAY,17 );
+        max.set(Calendar.MINUTE, 0);
+        max.set(Calendar.SECOND, 0);
+        Calendar c = new GregorianCalendar();
+        if (c.before(max)&&c.after(min)){
+            //guardamos
+            Toast.makeText(this," Alineacion guardada correctamente",Toast.LENGTH_SHORT).show();
+
+        }else{
+            Toast.makeText(this,c.get(Calendar.HOUR_OF_DAY)+ ":"+c.get(Calendar.MINUTE)+" no es una hora valida intentalo de nuevo entre las 8:00 y las 17:00",Toast.LENGTH_SHORT).show();
+
+        }
+        Toast.makeText(this,c.get(Calendar.HOUR_OF_DAY)+ ":"+c.get(Calendar.MINUTE)+":"+c.get(Calendar.SECOND),Toast.LENGTH_SHORT).show();
     }
 }

@@ -3,7 +3,9 @@ package com.example.teamleaguebagit;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -47,6 +49,7 @@ public class Mercado extends AppCompatActivity  implements NavigationView.OnNavi
     ListView lv;
     EditText precio ;
     TextView  alerta_puja;
+    ConstraintLayout container;
 
     NavigationView navView;
     @Override
@@ -56,6 +59,7 @@ public class Mercado extends AppCompatActivity  implements NavigationView.OnNavi
         setContentView(R.layout.activity_mercado);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         TextView titulo = findViewById(R.id.toolbar_title);
+        container = findViewById(R.id.constraintLayout2);
         navView = (NavigationView) findViewById(R.id.nav_view);
         Menu m = initMenu();
         MenuItem mi = m.getItem(m.size()-1);
@@ -118,6 +122,10 @@ public class Mercado extends AppCompatActivity  implements NavigationView.OnNavi
 
             }
         });
+        navigationBottom.setBackgroundColor(Color.parseColor(Colores.mapa.get(Actual.getEquipoActual().getEquipos().getIdEquipo())));
+        container.setBackgroundColor(Color.parseColor("#"+Actual.getEquipoActual().getEquipos().getColor()));
+        toolbar.setBackgroundColor(Color.parseColor(Colores.mapa.get(Actual.getEquipoActual().getEquipos().getIdEquipo())));
+
     }
 
 
