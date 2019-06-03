@@ -487,7 +487,12 @@ public class Alineacion extends AppCompatActivity  implements NavigationView.OnN
 
             default:
                 for(Ligas liga: ligasUsuarioActual){
-                    if(item.getTitle().equals(liga.getIdLiga()))Actual.setLigaActual(liga);
+                    if(item.getTitle().equals(liga.getIdLiga())){
+                        Actual.setLigaActual(liga);
+                        i = new Intent(Alineacion.super.getApplication(), Homepage.class);
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(i);
+                    }
                 }
                 Toast toast= Toast.makeText(this,"Liga "+item.getTitle()+" seleccionada", Toast.LENGTH_SHORT);
                 toast.show();

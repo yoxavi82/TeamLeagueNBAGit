@@ -22,17 +22,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.teamleaguebagit.Conexiones.EquipoUsuarioConexiones;
-import com.example.teamleaguebagit.Conexiones.JugadorConexiones;
-import com.example.teamleaguebagit.Conexiones.PartidosConexiones;
 import com.example.teamleaguebagit.Conexiones.PlantillaConexiones;
-import com.example.teamleaguebagit.Conexiones.PuntuacionConexiones;
 import com.example.teamleaguebagit.pojos.EquiposUsuarios;
 import com.example.teamleaguebagit.pojos.Ligas;
-import com.example.teamleaguebagit.pojos.Partidos;
 import com.example.teamleaguebagit.pojos.Plantillas;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -54,7 +49,7 @@ public class Jornada extends AppCompatActivity  implements NavigationView.OnNavi
         lv = findViewById(R.id.lv_jornada);
         lv2 = findViewById(R.id.lv_jugadores);
         tituloJornada = findViewById(R.id.tituloJornada);
-        tituloJornada.setText("Clasificación liga: "+Actual.getLigaActual().getIdLiga());
+        tituloJornada.setText("Jornada actual de liga: "+Actual.getLigaActual().getIdLiga());
          navView = (NavigationView) findViewById(R.id.nav_view);
 
          titulo = findViewById(R.id.tituloJugadores);
@@ -175,7 +170,12 @@ public class Jornada extends AppCompatActivity  implements NavigationView.OnNavi
 
             default:
                 for(Ligas liga: ligasUsuarioActual){
-                    if(item.getTitle().equals(liga.getIdLiga()))Actual.setLigaActual(liga);
+                    if(item.getTitle().equals(liga.getIdLiga())){
+                        Actual.setLigaActual(liga);
+                        i = new Intent(Jornada.super.getApplication(), Homepage.class);
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(i);
+                    }
                 }
                 Toast toast= Toast.makeText(this,"Liga "+item.getTitle()+" seleccionada", Toast.LENGTH_SHORT);
                 toast.show();

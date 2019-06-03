@@ -39,6 +39,29 @@ public class EquipoUsuarioConexiones implements EquipoUsuarioRepository {
         return true;
     }
 
+    public boolean updateEquipoUsuario(EquiposUsuarios equipo){
+        Connection connection= null;
+        try{
+            connection = Conexion.obtenerConexion();
+            if (connection == null) {
+            } else {
+                String query ="Update EquiposUsuarios Set NombreEquipo='"+equipo.getNombreEquipo()+"'," +
+                        "IdLiga='"+equipo.getLigas().getIdLiga()+"',EquipoNBA='"+equipo.getEquipos().getIdEquipo()
+                        +"',IdUsuario='"+equipo.getUsuarios().getIdUsuario()+"',Dinero="+equipo.getDinero()+"," +
+                        "PuntosTotales="+equipo.getPuntosTotales()+" WHERE IdEquipo="+equipo.getIdEquipo();
+
+                Statement stmt = (Statement) connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+                stmt.executeUpdate(query);
+            }
+
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }finally {
+            Conexion.cerrarConexion(connection);
+        }
+        return true;
+    }
+
     public EquiposUsuarios getByLigaAndUser(String user,String liga){
         EquiposUsuarios equipo = new EquiposUsuarios();
         Connection connection= null;
@@ -54,8 +77,8 @@ public class EquipoUsuarioConexiones implements EquipoUsuarioRepository {
                 rs = stmt.executeQuery(query);
                 if (rs.next()){
                     equipo.setIdEquipo(rs.getInt("IdEquipo"));
-                    equipo.setDinero(rs.getInt("Dinero"));
-                    equipo.setEquipos(new EquipoConexiones().get(rs.getString("IdEquipo")));
+                    equipo.setDinero(rs.getInt("Precio"));
+                    equipo.setEquipos(new EquipoConexiones().get(rs.getString("EquipoNBA")));
                     equipo.setNombreEquipo(rs.getString("NombreEquipo"));
                     equipo.setLigas(new LigaConexiones().get(rs.getString("IdLiga")));
                     equipo.setUsuarios(new UsuarioConexiones().get(rs.getString("IdUsuario")));
@@ -88,7 +111,7 @@ public class EquipoUsuarioConexiones implements EquipoUsuarioRepository {
                     EquiposUsuarios equipo = new EquiposUsuarios();
                     equipo.setIdEquipo(rs.getInt("IdEquipo"));
                     equipo.setDinero(rs.getInt("Dinero"));
-                    equipo.setEquipos(new EquipoConexiones().get(rs.getString("IdEquipo")));
+                    equipo.setEquipos(new EquipoConexiones().get(rs.getString("EquipoNBA")));
                     equipo.setNombreEquipo(rs.getString("NombreEquipo"));
                     equipo.setLigas(new LigaConexiones().get(rs.getString("IdLiga")));
                     equipo.setPuntosTotales(rs.getInt("PuntosTotales"));
@@ -122,7 +145,7 @@ public class EquipoUsuarioConexiones implements EquipoUsuarioRepository {
                     EquiposUsuarios equipo = new EquiposUsuarios();
                     equipo.setIdEquipo(rs.getInt("IdEquipo"));
                     equipo.setDinero(rs.getInt("Dinero"));
-                    equipo.setEquipos(new EquipoConexiones().get(rs.getString("IdEquipo")));
+                    equipo.setEquipos(new EquipoConexiones().get(rs.getString("EquipoNBA")));
                     equipo.setNombreEquipo(rs.getString("NombreEquipo"));
                     equipo.setLigas(new LigaConexiones().get(rs.getString("IdLiga")));
                     equipo.setPuntosTotales(rs.getInt("PuntosTotales"));
@@ -157,7 +180,7 @@ public class EquipoUsuarioConexiones implements EquipoUsuarioRepository {
                     EquiposUsuarios equipo = new EquiposUsuarios();
                     equipo.setIdEquipo(rs.getInt("IdEquipo"));
                     equipo.setDinero(rs.getInt("Dinero"));
-                    equipo.setEquipos(new EquipoConexiones().get(rs.getString("IdEquipo")));
+                    equipo.setEquipos(new EquipoConexiones().get(rs.getString("EquipoNBA")));
                     equipo.setNombreEquipo(rs.getString("NombreEquipo"));
                     equipo.setLigas(new LigaConexiones().get(rs.getString("IdLiga")));
                     equipo.setUsuarios(new UsuarioConexiones().get(rs.getString("IdUsuario")));
@@ -190,7 +213,7 @@ public class EquipoUsuarioConexiones implements EquipoUsuarioRepository {
                 if (rs.next()){
                     equipo.setIdEquipo(rs.getInt("IdEquipo"));
                     equipo.setDinero(rs.getInt("Dinero"));
-                    equipo.setEquipos(new EquipoConexiones().get(rs.getString("IdEquipo")));
+                    equipo.setEquipos(new EquipoConexiones().get(rs.getString("EquipoNBA")));
                     equipo.setNombreEquipo(rs.getString("NombreEquipo"));
                     equipo.setLigas(new LigaConexiones().get(rs.getString("IdLiga")));
                     equipo.setUsuarios(new UsuarioConexiones().get(rs.getString("IdUsuario")));

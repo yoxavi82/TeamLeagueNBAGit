@@ -31,6 +31,7 @@ import com.example.teamleaguebagit.pojos.EquiposUsuarios;
 import com.example.teamleaguebagit.pojos.Jugadores;
 import com.example.teamleaguebagit.pojos.Ligas;
 import com.example.teamleaguebagit.pojos.Plantillas;
+import com.example.teamleaguebagit.pojos.Usuarios;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -125,7 +126,7 @@ public class Clasificacion extends AppCompatActivity  implements NavigationView.
 
     public void initLista(){
         ArrayList <EquiposUsuarios> li = new EquipoUsuarioConexiones().getByLiga(Actual.getLigaActual().getIdLiga());
-        ArrayList<Lista_clasificacion> lis;
+        final ArrayList<Lista_clasificacion> lis;
         for (EquiposUsuarios e: li){
             Lista_clasificacion l = new Lista_clasificacion(e.getUsuarios().getIdUsuario(), e.getPuntosTotales(), e.getUsuarios());
             lista.add(l);
@@ -137,52 +138,57 @@ public class Clasificacion extends AppCompatActivity  implements NavigationView.
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                LayoutInflater inflater = getLayoutInflater();
-                final View view1 = inflater.inflate(R.layout.vista_usuario, null);
-                final AlertDialog dialogo = new AlertDialog.Builder(Clasificacion.this).setView(view1).create();
-                lv_plantilla = (ListView) view1.findViewById(R.id.lv_plantilla);
-                nombre_usuario = view1.findViewById(R.id.vista_usuario_nombre);
-                nombre_usuario.setText(lista.get(position).user.getIdUsuario());
-                PlantillaConexiones lista_jugadores = new PlantillaConexiones();
-                ArrayList <Plantillas> plan = lista_jugadores.getByIdLiga(Actual.getLigaActual().getIdLiga());
-                plantilla = new ArrayList<Jugadores>();
-                fechasCompra = new ArrayList<Date>();
-                precioCompras = new ArrayList<Integer>();
-                for (Plantillas a : plan){
-                    if (a.getId().getIdJugador().equals(nombre_usuario.getText().toString())){
-                        plantilla.add(a.getJugadores());
-                        fechasCompra.add(a.getFechaCompra());
-                        precioCompras.add(a.getPrecio());
-                    }
-                }
-                AdapterListaPlantillaPorUsuario lista_p = new AdapterListaPlantillaPorUsuario(Clasificacion.this,plantilla);
-                lv_plantilla.setAdapter(lista_p);
-                //Hasta aqui esta rellenada el arrayList del dialogo abierto
-                lv_plantilla.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        LayoutInflater inflater = getLayoutInflater();
-                        final View view1 = inflater.inflate(R.layout.vista_jugador, null);
-                        final AlertDialog dialogo = new AlertDialog.Builder(Clasificacion.this).setView(view1).create();
-                        TextView nombre = view1.findViewById(R.id.vista_jugador_nombre);
-                        TextView precio = view1.findViewById(R.id.vista_jugador_precio_compra);
-                        TextView puntos = view1.findViewById(R.id.vista_jugador_puntos);
-                        TextView equipo = view1.findViewById(R.id.vista_jugador_equipo);
-                        TextView posicion = view1.findViewById(R.id.vista_jugador_pos);
-                        TextView fecha = view1.findViewById(R.id.vista_jugador_fecha);
-                        TextView precio_compra = view1.findViewById(R.id.vista_jugador_precio_compra);
-                        Jugadores jug = plantilla.get(position);
-                        EquipoUsuarioConexiones e = new EquipoUsuarioConexiones();
-                        nombre.setText(jug.getNombre() + " " + jug.getApellido());
-                        precio.setText(jug.getPrecioMercado());
-                        puntos.setText(jug.getPuntosTotales());
-                        equipo.setText(e.getEquipo(jug.getIdJugador()).getEquipos().getNombre());
-                        posicion.setText(jug.getPosicion());
-                        fecha.setText(fechasCompra.get(position).getDate());
-                        precio_compra.setText(precioCompras.get(position));
 
-                    }
-                });
+                Intent i = new Intent(getApplication(), Vista_Jugador.class);
+                i.putExtra("Usuario",lis.get(position).user);
+                startActivity(i);
+
+//                LayoutInflater inflater = getLayoutInflater();
+//                final View view1 = inflater.inflate(R.layout.vista_usuario, null);
+//                final AlertDialog dialogo = new AlertDialog.Builder(Clasificacion.this).setView(view1).create();
+//                lv_plantilla = (ListView) view1.findViewById(R.id.lv_plantilla);
+//                nombre_usuario = view1.findViewById(R.id.vista_usuario_nombre);
+//                nombre_usuario.setText(lista.get(position).user.getIdUsuario());
+//                PlantillaConexiones lista_jugadores = new PlantillaConexiones();
+//                ArrayList <Plantillas> plan = lista_jugadores.getByIdLiga(Actual.getLigaActual().getIdLiga());
+//                plantilla = new ArrayList<Jugadores>();
+//                fechasCompra = new ArrayList<Date>();
+//                precioCompras = new ArrayList<Integer>();
+//                for (Plantillas a : plan){
+//                    if (a.getId().getIdJugador().equals(nombre_usuario.getText().toString())){
+//                        plantilla.add(a.getJugadores());
+//                        fechasCompra.add(a.getFechaCompra());
+//                        precioCompras.add(a.getPrecio());
+//                    }
+//                }
+//                AdapterListaPlantillaPorUsuario lista_p = new AdapterListaPlantillaPorUsuario(Clasificacion.this,plantilla);
+//                lv_plantilla.setAdapter(lista_p);
+//                //Hasta aqui esta rellenada el arrayList del dialogo abierto
+//                lv_plantilla.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//                    @Override
+//                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                        LayoutInflater inflater = getLayoutInflater();
+//                        final View view1 = inflater.inflate(R.layout.vista_jugador, null);
+//                        final AlertDialog dialogo = new AlertDialog.Builder(Clasificacion.this).setView(view1).create();
+//                        TextView nombre = view1.findViewById(R.id.vista_jugador_nombre);
+//                        TextView precio = view1.findViewById(R.id.vista_jugador_precio_compra);
+//                        TextView puntos = view1.findViewById(R.id.vista_jugador_puntos);
+//                        TextView equipo = view1.findViewById(R.id.vista_jugador_equipo);
+//                        TextView posicion = view1.findViewById(R.id.vista_jugador_pos);
+//                        TextView fecha = view1.findViewById(R.id.vista_jugador_fecha);
+//                        TextView precio_compra = view1.findViewById(R.id.vista_jugador_precio_compra);
+//                        Jugadores jug = plantilla.get(position);
+//                        EquipoUsuarioConexiones e = new EquipoUsuarioConexiones();
+//                        nombre.setText(jug.getNombre() + " " + jug.getApellido());
+//                        precio.setText(jug.getPrecioMercado());
+//                        puntos.setText(jug.getPuntosTotales());
+//                        equipo.setText(e.getEquipo(jug.getIdJugador()).getEquipos().getNombre());
+//                        posicion.setText(jug.getPosicion());
+//                        fecha.setText(fechasCompra.get(position).getDate());
+//                        precio_compra.setText(precioCompras.get(position));
+//
+//                    }
+//                });
             }
         });
     }
@@ -248,7 +254,12 @@ public class Clasificacion extends AppCompatActivity  implements NavigationView.
 
             default:
                 for(Ligas liga: ligasUsuarioActual){
-                    if(item.getTitle().equals(liga.getIdLiga()))Actual.setLigaActual(liga);
+                    if(item.getTitle().equals(liga.getIdLiga())){
+                        Actual.setLigaActual(liga);
+                        i = new Intent(Clasificacion.super.getApplication(), Homepage.class);
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(i);
+                    }
                 }
                 Toast toast= Toast.makeText(this,"Liga "+item.getTitle()+" seleccionada", Toast.LENGTH_SHORT);
                 toast.show();

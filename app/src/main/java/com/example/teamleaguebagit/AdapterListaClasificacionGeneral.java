@@ -52,19 +52,16 @@ public class AdapterListaClasificacionGeneral extends BaseAdapter {
 
         if (convertView == null) {
             LayoutInflater inf = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            v = inf.inflate(R.layout.list_item_layout, null);
+            v = inf.inflate(R.layout.list_jornada_item, null);
         }
 
         Lista_clasificacion dir = items.get(position);
 
         TextView title = v.findViewById(R.id.lista_nombre_misligas);
-        title.setText(dir.getNombre());
+        title.setText(dir.nombre);
 
         TextView pos = v.findViewById(R.id.puntos_jornada);
         pos.setText(dir.getClasificacion() + "");
-
-
-
 
         return v;
     }
