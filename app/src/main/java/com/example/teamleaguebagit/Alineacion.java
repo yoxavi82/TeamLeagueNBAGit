@@ -795,6 +795,5 @@ public class Alineacion extends AppCompatActivity  implements NavigationView.OnN
             Toast.makeText(this,c.get(Calendar.HOUR_OF_DAY)+ ":"+c.get(Calendar.MINUTE)+" no es una hora valida intentalo de nuevo entre las 8:00 y las 17:00",Toast.LENGTH_SHORT).show();
 
         }
-        Toast.makeText(this,c.get(Calendar.HOUR_OF_DAY)+ ":"+c.get(Calendar.MINUTE)+":"+c.get(Calendar.SECOND),Toast.LENGTH_SHORT).show();
     }
 }

@@ -44,6 +44,8 @@ public class Actual {
     }
 
     public static void setEquipoActual(EquiposUsuarios equipoActual) {
+        Alineacion.actPlantilla=true;
+
         Actual.equipoActual = equipoActual;
     }
 
