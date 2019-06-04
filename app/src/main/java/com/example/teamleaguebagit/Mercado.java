@@ -51,6 +51,7 @@ public class Mercado extends AppCompatActivity  implements NavigationView.OnNavi
     BottomNavigationView navigationBottom;
     View formElementsView;
     ArrayList<Jugadores> lista;
+    ArrayList<Integer> fotos;
     ArrayList<Plantillas> plantillasMercado;
     ListView lv, lv_jugadoresPropios;
     EditText precio ;
@@ -82,6 +83,7 @@ public class Mercado extends AppCompatActivity  implements NavigationView.OnNavi
         LayoutInflater inflater = getLayoutInflater();
         formElementsView = inflater.inflate(R.layout.confirmar,  null);
         lista = new ArrayList<Jugadores>();
+        fotos = new ArrayList<>();
         lv = (ListView) findViewById(R.id.lista_mercado);
         try {
             initMercado();
@@ -153,11 +155,12 @@ public class Mercado extends AppCompatActivity  implements NavigationView.OnNavi
                 if(plantillasMercado.get(i).getPuja()==0){
                     Jugadores jugador = conexionesJugadores.getById(plantillasMercado.get(i).getJugadores().getIdJugador());
                     jugador.setPrecioMercado(jugador.getEstrellas()*1000000);
+                    fotos.add(getResources().getIdentifier(jugador.getIdJugador().toLowerCase(),"drawable",getPackageName()));
                     lista.add(jugador);
                 }
             }
         }
-        AdapterListaMercado adapter = new AdapterListaMercado(this, lista);
+        AdapterListaMercado adapter = new AdapterListaMercado(this, lista,fotos);
         lv.setAdapter(adapter);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

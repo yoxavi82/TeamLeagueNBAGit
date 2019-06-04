@@ -205,7 +205,7 @@ public class EquipoUsuarioConexiones implements EquipoUsuarioRepository {
             if (connection == null) {
             } else {
                 ResultSet rs = null;
-                String query ="Select * FROM EquiposUsuarios WHERE IdEquipo='"+id+"'";
+                String query ="Select * FROM EquiposUsuarios WHERE IdEquipo="+id;
 
                 Statement stmt = (Statement) connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 

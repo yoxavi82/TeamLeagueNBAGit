@@ -57,7 +57,7 @@ public class Vista_Jugador extends AppCompatActivity {
                 equipo.setText(plantillaJugadores.get(position).getEquiposUsuarios().getNombreEquipo());
                 posicion.setText(plantillaJugadores.get(position).getJugadores().getPosicion());
                 fecha.setText(plantillaJugadores.get(position).getFechaCompra().toString());
-//                foto.setImageResource();
+                foto.setImageResource(getResources().getIdentifier(plantillaJugadores.get(position).getJugadores().getIdJugador().toLowerCase(),"drawable", getPackageName()));
             }
 
             @Override

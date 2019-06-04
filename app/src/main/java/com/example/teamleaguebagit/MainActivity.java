@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void showInfo(View view){
-        Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.Programadores) +
+        Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.Programadores) +"\n"+
                 getString(R.string.Version),Toast.LENGTH_SHORT);
         toast.show();
     }

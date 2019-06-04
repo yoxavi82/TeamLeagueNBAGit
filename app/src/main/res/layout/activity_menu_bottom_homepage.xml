@@ -47,20 +47,44 @@
                     android:orientation="horizontal">
 
                     <Button
+
                         android:id="@+id/unirseId"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="5px"
+                        android:layout_marginTop="1px"
+                        android:layout_marginRight="5px"
                         android:layout_weight="1"
+                        android:background="@drawable/my_button_bg"
                         android:onClick="unirseLiga"
-                        android:text="@string/unirse_a_liga" />
+                        android:paddingLeft="5px"
+                        android:paddingRight="5px"
+                        android:shadowColor="@android:color/black"
+                        android:shadowDx="5"
+                        android:shadowDy="5"
+                        android:shadowRadius="1"
+                        android:text="@string/unirse_a_liga"
+                        android:textColor="@android:color/white" />
 
                     <Button
                         android:id="@+id/crearId"
+                        android:background="@drawable/my_button_bg"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="5px"
+                        android:layout_marginTop="1px"
+                        android:layout_marginRight="5px"
                         android:layout_weight="1"
                         android:onClick="crearLiga"
-                        android:text="@string/crear_liga_nueva" />
+                        android:paddingLeft="5px"
+                        android:paddingRight="5px"
+                        android:shadowColor="@android:color/black"
+                        android:shadowDx="5"
+                        android:shadowDy="5"
+                        android:shadowRadius="1"
+                        android:singleLine="true"
+                        android:text="@string/crear_liga_nueva"
+                        android:textColor="@android:color/white" />
                 </LinearLayout>
 
                 <TextView

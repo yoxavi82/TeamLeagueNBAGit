@@ -160,6 +160,7 @@ public class PlantillaConexiones implements PlantillaRepository {
     public int getNumberPlayer(String idLiga,String idJugador) {
         Connection connection= null;
         ResultSet rs = null;
+        int i=0;
         try{
             connection = Conexion.obtenerConexion();
             if (connection == null) {
@@ -170,17 +171,16 @@ public class PlantillaConexiones implements PlantillaRepository {
                 Statement stmt = (Statement) connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 
                 rs = stmt.executeQuery(query);
+                if(rs.next()){
+                    i = rs.getInt(1);
+                }else return 0;
             }
         }catch (Exception ex){
             ex.printStackTrace();
         }finally {
             Conexion.cerrarConexion(connection);
         }
-        try {
-            return rs.getInt(0);
-        } catch (SQLException e) {
-            return 0;
-        }
+        return i;
     }
 
 

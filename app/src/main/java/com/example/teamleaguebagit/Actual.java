@@ -2,20 +2,14 @@ package com.example.teamleaguebagit;
 
 import com.example.teamleaguebagit.Conexiones.LigaConexiones;
 import com.example.teamleaguebagit.pojos.EquiposUsuarios;
-import android.support.design.widget.NavigationView;
-import android.view.Menu;
 
-import com.example.teamleaguebagit.Conexiones.LigaConexiones;
 import com.example.teamleaguebagit.pojos.Ligas;
 import com.example.teamleaguebagit.pojos.Plantillas;
 import com.example.teamleaguebagit.pojos.Usuarios;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import org.jetbrains.annotations.NotNull;
-
-import java.util.ArrayList;
 
 public class Actual {
     static Usuarios usuarioActual=null;
@@ -52,7 +46,6 @@ public class Actual {
     }
 
     public static EquiposUsuarios getEquipoActual() {
-        //Alineacion.actPlantilla=true;
         return equipoActual;
     }
 

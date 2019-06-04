@@ -228,8 +228,6 @@ public class Alineacion extends AppCompatActivity  implements NavigationView.OnN
                     myPlayerListInicial.addFirst(jugador.getJugadores());
 
                 }
-//                myPlayerListInicial.add(jugador.getJugadores());
-//                myImageLisInicial.add(getDrawableFromBytes(jugador.getJugadores().getImagen()));
             }if(jugador.getTitular()==2){
                 myPlayerListSuplentes.add(jugador.getJugadores());
             }if (jugador.getTitular()==3){
@@ -248,12 +246,7 @@ public class Alineacion extends AppCompatActivity  implements NavigationView.OnN
                     myPlayerListNoConv.add(jugador.getJugadores());
                 }
             }
-
         }
-
-
-
-
     }
 
     private Drawable getDrawableFromBytes(byte[] img) {
@@ -381,9 +374,6 @@ public class Alineacion extends AppCompatActivity  implements NavigationView.OnN
                     }
                 })
         );
-        //imageModelArrayList = eatFruits();
-        //adapter = new PlayerAdapter(this, imageModelArrayList);
-        //recyclerView.setAdapter(adapter);
         initSuplentes();
         initNoConv();
         initTitulares();
@@ -421,20 +411,6 @@ public class Alineacion extends AppCompatActivity  implements NavigationView.OnN
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
-//    @Override
-//    public boolean  onPrepareOptionsMenu(Menu menu) {
-//        for (int i=0; i<5; i++){
-//            menu.getItem(i).setTitle("hola");
-//            if (i>=numLigas)
-//                menu.getItem(i).setVisible(false);
-//        }
-//        getMenuInflater().inflate(R.menu.main, menu);
-//        return true;
-//    }
-
-
-
-
 
     //Opciones para menu lateral
     @Override
@@ -482,92 +458,6 @@ public class Alineacion extends AppCompatActivity  implements NavigationView.OnN
 
         return true;
     }
-//    public void llenarArrayDraw(){
-//        ImageView img= findViewById(R.id.int1);
-//        img.setImageResource(R.drawable.uno);
-//        Jugadores player = new Jugadores();
-//        player.setApellido("hola");
-//        player.setPosicion("int");
-//        myPlayerListInicial.add(player);
-//         player = new Jugadores();
-//        player.setApellido("adios");
-//        player.setPosicion("ext");
-//        myPlayerListInicial.add(player);
-//         player = new Jugadores();
-//        player.setApellido("uwu");
-//        player.setPosicion("int");
-//        myPlayerListInicial.add(player);
-//         player = new Jugadores();
-//        player.setApellido("owo");
-//        player.setPosicion("ext");
-//        myPlayerListInicial.add(player);
-//         player = new Jugadores();
-//        player.setApellido("ha");
-//        player.setPosicion("ext");
-//        myPlayerListInicial.add(player);
-//
-//
-//
-//        player = new Jugadores();
-//        player.setApellido("1");
-//        player.setPosicion("int");
-//        myPlayerListSuplentes.add(player);
-//        myImageListSuplentes.add( img.getDrawable() );
-//        img.setImageResource(R.drawable.dos);
-//        player = new Jugadores();
-//        player.setApellido("2");
-//        player.setPosicion("int");
-//
-//
-//
-//        myPlayerListSuplentes.add(player);
-//        myImageListSuplentes.add( img.getDrawable() );
-//        img.setImageResource(R.drawable.tres);
-//        player = new Jugadores();
-//        player.setApellido("3");
-//        player.setPosicion("ext");
-//        myPlayerListSuplentes.add(player);
-//
-//        myImageListSuplentes.add( img.getDrawable() );
-//        img.setImageResource(R.drawable.uno);
-//        player = new Jugadores();
-//        player.setApellido("lolo");
-//        player.setPosicion("int");
-//        myPlayerListSuplentes.add(player);
-//
-//
-//        myImageListSuplentes.add( img.getDrawable() );
-//        img.setImageResource(R.drawable.dos);
-//        player = new Jugadores();
-//        player.setApellido("lelele");
-//        player.setPosicion("int");
-//        myPlayerListSuplentes.add(player);
-//
-//
-//
-//        img.setImageResource(R.drawable.uno);
-//        myImageListNoConv.add( img.getDrawable() );
-//        player = new Jugadores();
-//        player.setApellido("lelle");
-//        player.setPosicion("int");
-//        myPlayerListNoConv.add(player);
-//
-//
-//        img.setImageResource(R.drawable.dos);
-//        myImageListNoConv.add( img.getDrawable() );
-//        player.setApellido("lululu");
-//        player.setPosicion("int");
-//        myPlayerListNoConv.add(player);
-//
-//
-//        img.setImageResource(R.drawable.tres);
-//        myImageListNoConv.add( img.getDrawable() );
-//        player.setApellido("lilili");
-//        player.setPosicion("ext");
-//        myPlayerListNoConv.add(player);
-//
-//
-//    }
 
     public void clickjugador(View view){
         ImageView img = findViewById(view.getId());
@@ -722,45 +612,8 @@ public class Alineacion extends AppCompatActivity  implements NavigationView.OnN
         byte[]bytes =getFromBlob( jugador.blob);
         ext1.setImageBitmap(getBitmap(bytes));
 
-        //int1.setImageBitmap(getBitmap(jugador.getImagen()));
-        //getBytes(jugador);
-        //test=jugador.getImagen();
-
-//        conJug.updateJugador(jugador);
-
-       /*Jugadores jugador2 =conJug.getById("UTA_45");
-       int1.setImageBitmap(getBitmap(jugador2.getImagen()));
-       if(jugador2.getImagen().equals(test)){
-           System.out.println("igual>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<");
-       }else
-           System.out.println("no<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");*/
-
-
-
-
    }
 
-//        System.out.println("empieza<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
-//         JugadorConexiones conJug = new JugadorConexiones();
-////        Jugadores jugador =conJug.getById("UTA_3");
-////        jugador.setImagen(getBytes((jugador.getIdJugador().toLowerCase())));
-////
-////        conJug.updateJugador(jugador);
-////        int1.setImageBitmap(getBitmap(jugador.getImagen()));
-//
-//
-//
-//
-//        ArrayList<Jugadores> lista = conJug.getAll();
-//        System.out.println("<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-//
-//        for (Jugadores jugador: lista){
-//            jugador.setImagen(getBytes( (jugador.getIdJugador().toLowerCase())));
-//
-//            conJug.updateJugador(jugador);
-//        }
-//        System.out.println("ya<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
-//    }
     public byte[] getBytes(Jugadores jugador){
         int resource = getResources().getIdentifier(jugador.getIdJugador().toLowerCase(),"drawable", getPackageName());
         Bitmap bitmap = ((BitmapDrawable)getResources().getDrawable(resource)).getBitmap();

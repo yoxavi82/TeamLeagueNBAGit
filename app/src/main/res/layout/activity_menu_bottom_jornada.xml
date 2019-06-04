@@ -46,13 +46,15 @@
             android:id="@+id/tituloJornada"
             android:layout_width="371dp"
             android:layout_height="39dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
             android:gravity="center"
             android:text="@string/jornada"
             android:textAlignment="center"
-            android:textSize="20sp"
+            android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ListView

@@ -58,23 +58,31 @@
 
     <TextView
         android:id="@+id/textView28"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="79dp"
+        android:layout_height="33dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="246dp"
         android:layout_marginEnd="15dp"
+        android:gravity="center"
         android:text="@string/mis_ligas"
         app:layout_constraintBottom_toTopOf="@+id/lv_misligas"
         app:layout_constraintEnd_toStartOf="@+id/configuracion_contraseña"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
     <Button
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="33dp"
+        android:background="@drawable/my_button_bg"
         android:onClick="update"
+        android:shadowColor="@android:color/black"
+        android:shadowDx="2"
+        android:shadowDy="2"
+        android:shadowRadius="1"
         android:text="Guardar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

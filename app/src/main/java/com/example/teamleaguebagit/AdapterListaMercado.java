@@ -2,6 +2,7 @@ package com.example.teamleaguebagit;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,10 +17,16 @@ import java.util.ArrayList;
 public class AdapterListaMercado extends BaseAdapter {
     protected Activity activity;
     protected ArrayList<Jugadores> items;
+    protected ArrayList<Integer> fotos;
 
     public AdapterListaMercado(Activity activity, ArrayList<Jugadores> items) {
         this.activity = activity;
         this.items = items;
+    }
+    public AdapterListaMercado(Activity activity, ArrayList<Jugadores> items,ArrayList<Integer> fotos) {
+        this.activity = activity;
+        this.items = items;
+        this.fotos = fotos;
     }
 
     @Override
@@ -57,13 +64,12 @@ public class AdapterListaMercado extends BaseAdapter {
         }
 
         Jugadores dir = items.get(position);
-
-        /*byte[] b = dir.getImagen();
-        ByteArrayInputStream is = new ByteArrayInputStream(b);
-        Drawable drw = Drawable.createFromStream(is, "articleImage");*/
+        Integer fotoInt = fotos.get(position);
 
         ImageView imagen = v.findViewById(R.id.imagen_jugador);
-        imagen.setImageResource(R.drawable.pelota);
+
+        imagen.setImageResource(fotoInt);
+
 
 
         TextView nombre = v.findViewById(R.id.lista_nombre_misligas);
