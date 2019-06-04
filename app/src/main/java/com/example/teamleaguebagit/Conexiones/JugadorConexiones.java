@@ -50,7 +50,7 @@ public class JugadorConexiones implements JugadorRepository {
         return buscado;
     }
 
-    public ArrayList<Jugadores> getByStarsRandom(int i) {
+    public ArrayList<Jugadores> getByStarsRandom(int i,String idliga) {
         ArrayList<Jugadores> buscado =new ArrayList<>();
         Connection connection= null;
         try{
@@ -58,7 +58,7 @@ public class JugadorConexiones implements JugadorRepository {
             if (connection == null) {
             } else {
                 ResultSet rs = null;
-                String query ="Select * FROM Jugadores WHERE IdJugador NOT IN(SELECT IdJugador FROM Plantillas) AND Estrellas="+i+" ORDER BY RAND()LIMIT 5";
+                String query ="Select * FROM Jugadores WHERE IdJugador NOT IN(SELECT IdJugador FROM Plantillas WHERE IdLiga='"+idliga+"') AND Estrellas="+i+" ORDER BY RAND()LIMIT 5";
 
                 Statement stmt = (Statement) connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 

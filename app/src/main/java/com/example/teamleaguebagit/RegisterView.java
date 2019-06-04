@@ -1,6 +1,7 @@
 package com.example.teamleaguebagit;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -126,6 +127,7 @@ public class RegisterView extends AppCompatActivity {
                     "Introduce todos los campos", Toast.LENGTH_SHORT);
             toast.show();
         }else{
+            accionRegistrar.setTextColor(Color.WHITE);
             Date date1=new SimpleDateFormat("dd/MM/yyyy").parse(fechaNacimiento);
             Usuarios registrado = new Usuarios(usuario.getText().toString(),nombre.getText().toString(),
                     apellidos.getText().toString(),correo.getText().toString(), new java.sql.Date( date1.getTime()),0);

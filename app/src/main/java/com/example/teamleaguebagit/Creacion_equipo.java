@@ -1,12 +1,14 @@
 package com.example.teamleaguebagit;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -141,6 +143,8 @@ public class Creacion_equipo extends AppCompatActivity {
                 Actual.getEquiposUsuariosSesion().add(equipo);
                 Actual.setLigaActual(liga);
                 generarEquipo();
+                Button boton = findViewById(R.id.CrearEquipoUsuario);
+                boton.setTextColor(Color.WHITE);
                 i = new Intent(this, Homepage.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i);
