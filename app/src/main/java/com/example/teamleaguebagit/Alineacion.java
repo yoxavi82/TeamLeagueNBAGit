@@ -37,6 +37,7 @@ import com.example.teamleaguebagit.Conexiones.PlantillaConexiones;
 import com.example.teamleaguebagit.pojos.Equipos;
 import com.example.teamleaguebagit.pojos.EquiposUsuarios;
 import com.example.teamleaguebagit.pojos.Jugadores;
+import com.example.teamleaguebagit.pojos.Ligas;
 import com.example.teamleaguebagit.pojos.Plantillas;
 
 import org.jetbrains.annotations.NotNull;
@@ -400,6 +401,7 @@ public class Alineacion extends AppCompatActivity  implements NavigationView.OnN
         alert.setMessage(R.string.MensajeSalirApp);
         alert.setNegativeButton(R.string.Salir, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
+                Actual.disconect();
                 finishAffinity();
                 System.exit(0);
             }
@@ -444,6 +446,7 @@ public class Alineacion extends AppCompatActivity  implements NavigationView.OnN
                 alert.setMessage(R.string.CerrarSesionPregunta);
                 alert.setNegativeButton(R.string.CerrarSesion, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
+                        Actual.disconect();
                         Actual.setIniciarSesion();
                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -458,6 +461,22 @@ public class Alineacion extends AppCompatActivity  implements NavigationView.OnN
                 alert.show();
                 break;
             case R.id.config:
+                Intent i = new Intent(this, Configuracion.class);
+                startActivity(i);
+                break;
+
+
+            default:
+                for(Ligas liga: ligasUsuarioActual){
+                    if(item.getTitle().equals(liga.getIdLiga())){
+                        Actual.setLigaActual(liga);
+                        i = new Intent(Alineacion.super.getApplication(), Homepage.class);
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(i);
+                    }
+                }
+                Toast toast= Toast.makeText(this,"Liga "+item.getTitle()+" seleccionada", Toast.LENGTH_SHORT);
+                toast.show();
                 break;
         }
 

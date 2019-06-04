@@ -6,7 +6,7 @@
     android:layout_height="80dp">
 
     <TextView
-        android:id="@+id/lista_nombre_jugador"
+        android:id="@+id/lista_nombre_misligas"
         android:layout_width="148dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"

@@ -7,6 +7,7 @@ import android.view.Menu;
 
 import com.example.teamleaguebagit.Conexiones.LigaConexiones;
 import com.example.teamleaguebagit.pojos.Ligas;
+import com.example.teamleaguebagit.pojos.Plantillas;
 import com.example.teamleaguebagit.pojos.Usuarios;
 
 import java.lang.reflect.Array;
@@ -23,6 +24,7 @@ public class Actual {
     static EquiposUsuarios equipoActual;
     static ArrayList<Ligas> ligasUsuarioActual = null;
     static ArrayList<EquiposUsuarios> equiposUsuarios = new ArrayList();
+    static ArrayList<Plantillas> plantillaActual = null;
 
     public static ArrayList<EquiposUsuarios> getEquiposUsuariosSesion(){
         return equiposUsuarios;
@@ -36,6 +38,17 @@ public class Actual {
             ligasUsuarioActual.add(eq.getLigas());
         }
         equiposUsuarios = equipos;
+    }
+
+    public static ArrayList<Plantillas> getPlantillaActual(){
+        return plantillaActual;
+    }
+
+    public static void setPlantillaActual(ArrayList<Plantillas> plantilla){
+        plantillaActual = new ArrayList<>();
+        for (Plantillas pla : plantilla){
+            plantillaActual.add(pla);
+        }
     }
 
     public static EquiposUsuarios getEquipoActual() {

@@ -27,7 +27,17 @@ import static com.example.teamleaguebagit.Actual.ligaActual;
 import static com.example.teamleaguebagit.Actual.ligasUsuarioActual;
 
 import com.example.teamleaguebagit.Conexiones.EquipoUsuarioConexiones;
+import com.example.teamleaguebagit.Conexiones.JugadorConexiones;
+import com.example.teamleaguebagit.Conexiones.PlantillaConexiones;
+import com.example.teamleaguebagit.pojos.Jugadores;
 import com.example.teamleaguebagit.pojos.Ligas;
+import com.example.teamleaguebagit.pojos.Plantillas;
+
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Date;
+
+import static com.example.teamleaguebagit.Actual.ligasUsuarioActual;
 
 public class Homepage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     Button crear,unir;
@@ -84,7 +94,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
         navigationBottom.setSelectedItemId(R.id.inicio);
         if(Actual.getEquipoActual()!=null) {
             navigationBottom.setBackgroundColor(Color.parseColor(Colores.mapa.get(Actual.getEquipoActual().getEquipos().getIdEquipo())));
-           container.setBackgroundColor(Color.parseColor("#"+Actual.getEquipoActual().getEquipos().getColor()));
+            container.setBackgroundColor(Color.parseColor("#"+Actual.getEquipoActual().getEquipos().getColor()));
             toolbar.setBackgroundColor(Color.parseColor(Colores.mapa.get(Actual.getEquipoActual().getEquipos().getIdEquipo())));
 
         }
@@ -154,6 +164,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
         alert.setMessage(R.string.MensajeSalirApp);
         alert.setNegativeButton(R.string.Salir, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
+                Actual.disconect();
                 finishAffinity();
                 System.exit(0);
             }
@@ -199,6 +210,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
+                        Actual.disconect();
                     }
                 });
                 alert.setPositiveButton(R.string.Cancelar, new DialogInterface.OnClickListener() {
@@ -209,6 +221,8 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
                 alert.show();
                 break;
             case R.id.config:
+                Intent i = new Intent(this, Configuracion.class);
+                startActivity(i);
                 break;
 
 

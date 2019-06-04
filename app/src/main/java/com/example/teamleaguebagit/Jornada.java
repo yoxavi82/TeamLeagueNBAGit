@@ -15,10 +15,22 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.example.teamleaguebagit.Conexiones.EquipoUsuarioConexiones;
+import com.example.teamleaguebagit.Conexiones.PlantillaConexiones;
+import com.example.teamleaguebagit.pojos.EquiposUsuarios;
+import com.example.teamleaguebagit.pojos.Ligas;
+import com.example.teamleaguebagit.pojos.Plantillas;
+
+import java.util.ArrayList;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -28,17 +40,27 @@ public class Jornada extends AppCompatActivity  implements NavigationView.OnNavi
     BottomNavigationView navigationBottom;
     NavigationView navView;
     ConstraintLayout container;
+    ListView lv,lv2;
+    TextView titulo,tituloJornada;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(R.style.AppTheme);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_jornada);
         Toolbar toolbar = findViewById(R.id.toolbar);
+        lv = findViewById(R.id.lv_jornada);
+        lv2 = findViewById(R.id.lv_jugadores);
+        tituloJornada = findViewById(R.id.tituloJornada);
+        tituloJornada.setText("Jornada actual de liga: "+Actual.getLigaActual().getIdLiga());
         container =findViewById(R.id.constraintLayout2);
 
          navView = (NavigationView) findViewById(R.id.nav_view);
 
+         titulo = findViewById(R.id.tituloJugadores);
         initMenu();
+        initJornada();
 
 
         setSupportActionBar(toolbar);
@@ -104,6 +126,7 @@ public class Jornada extends AppCompatActivity  implements NavigationView.OnNavi
         alert.setMessage(R.string.MensajeSalirApp);
         alert.setNegativeButton(R.string.Salir, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
+                Actual.disconect();
                 finishAffinity();
                 System.exit(0);
             }
@@ -134,6 +157,7 @@ public class Jornada extends AppCompatActivity  implements NavigationView.OnNavi
                 alert.setMessage(R.string.CerrarSesionPregunta);
                 alert.setNegativeButton(R.string.CerrarSesion, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
+                        Actual.disconect();
                         Actual.setIniciarSesion();
                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -148,17 +172,64 @@ public class Jornada extends AppCompatActivity  implements NavigationView.OnNavi
                 alert.show();
                 break;
             case R.id.config:
+                Intent i = new Intent(this, Configuracion.class);
+                startActivity(i);
+                break;
+
+
+            default:
+                for(Ligas liga: ligasUsuarioActual){
+                    if(item.getTitle().equals(liga.getIdLiga())){
+                        Actual.setLigaActual(liga);
+                        i = new Intent(Jornada.super.getApplication(), Homepage.class);
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(i);
+                    }
+                }
+                Toast toast= Toast.makeText(this,"Liga "+item.getTitle()+" seleccionada", Toast.LENGTH_SHORT);
+                toast.show();
                 break;
         }
         return true;
+    }
+
+    public void initJornada(){
+        final PlantillaConexiones Cplantilla = new PlantillaConexiones();
+        final ArrayList<Lista_jornada> lista_jornada = new ArrayList<Lista_jornada>();
+        final ArrayList <EquiposUsuarios> lista_usuarios = new EquipoUsuarioConexiones().getByLiga(Actual.getLigaActual().getIdLiga());
+        for (EquiposUsuarios e : lista_usuarios){
+            Lista_jornada j = new Lista_jornada(e.getUsuarios().getIdUsuario(), 0);
+            j.setPuntuacion(e.getPuntosTotales());
+            lista_jornada.add(j);
+        }
+
+        AdapterListaJornada adapter = new AdapterListaJornada(this, lista_jornada);
+        lv.setAdapter(adapter);
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                titulo.setText("Jugadores de "+lista_jornada.get(position).nombre_usuario);
+                titulo.setVisibility(View.VISIBLE);
+                ArrayList<Lista_jornada> lista_jugadores = new ArrayList<>();
+                ArrayList<Plantillas> plantillas = Cplantilla.getByIdEquipo(Actual.getEquiposUsuariosSesion().get(position).getIdEquipo());
+                for (Plantillas p : plantillas){
+                    Lista_jornada j = new Lista_jornada();
+                    j.setNombre_usuario(p.getJugadores().getNombre() + " " + p.getJugadores().getApellido());
+                    j.setPuntuacion(p.getJugadores().getPuntosTotales());
+                    lista_jugadores.add(j);
+                }
+                AdapterListaJornada adapter2 = new AdapterListaJornada(Jornada.this, lista_jugadores);
+                lv2.setAdapter(adapter2);
+            }
+        });
     }
 
     @NotNull
     private Menu initMenu() {
         Menu m = navView.getMenu();
         m.findItem(R.id.ligas).getSubMenu().clear();
-        for(int i = 0; i< ligasUsuarioActual.size(); i++) {
-            m.findItem(R.id.ligas).getSubMenu().add(ligasUsuarioActual.get(i).getIdLiga());
+        for(int i = 0; i< Actual.getLigaSesion().size(); i++) {
+            m.findItem(R.id.ligas).getSubMenu().add(Actual.getLigaSesion().get(i).getIdLiga());
         }
         return m;
 

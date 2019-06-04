@@ -28,6 +28,7 @@ public class LigaConexiones implements LigaRepository {
                 Statement stmt = (Statement) connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
                 stmt.executeUpdate(query);
             }
+            Conexion.cerrarConexion(connection);
 
         }catch (Exception ex){
             ex.printStackTrace();
@@ -52,6 +53,7 @@ public class LigaConexiones implements LigaRepository {
                         ResultSet.CONCUR_READ_ONLY);
                 stmt.executeUpdate(query);
             }
+            Conexion.cerrarConexion(connection);
 
         }catch (Exception ex){
             ex.printStackTrace();
@@ -81,7 +83,9 @@ public class LigaConexiones implements LigaRepository {
                 }else{
                     return null;
                 }
+
             }
+            Conexion.cerrarConexion(connection);
         }catch (Exception ex){
             ex.printStackTrace();
         }finally {
@@ -110,7 +114,9 @@ public class LigaConexiones implements LigaRepository {
                     pass.setIdLiga(rs.getString("IdLiga"));
                     liga.add(pass);
                 }
+
             }
+            Conexion.cerrarConexion(connection);
         }catch (Exception ex){
             ex.printStackTrace();
         }finally {
@@ -166,6 +172,7 @@ public class LigaConexiones implements LigaRepository {
                     return null;
                 }
             }
+            Conexion.cerrarConexion(connection);
         }catch (Exception ex){
 //            ex.printStackTrace();
         }finally {
