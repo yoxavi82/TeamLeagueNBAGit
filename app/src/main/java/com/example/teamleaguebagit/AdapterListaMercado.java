@@ -2,6 +2,7 @@ package com.example.teamleaguebagit;
 
 import android.app.Activity;
 import android.content.Context;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ public class AdapterListaMercado extends BaseAdapter {
         this.activity = activity;
         this.items = items;
     }
+
 
     @Override
     public int getCount() {
@@ -81,5 +83,7 @@ public class AdapterListaMercado extends BaseAdapter {
 
 
         return v;
+
     }
+
 }
