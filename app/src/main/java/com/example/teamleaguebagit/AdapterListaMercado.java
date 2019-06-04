@@ -82,8 +82,8 @@ public class AdapterListaMercado extends BaseAdapter {
         puntos.setText(dir.getPuntosTotales() + "");
 
         TextView pos = (TextView) v.findViewById(R.id.lista_pos_jugador);
-        if (dir.getPosicion().equals("Exterior")) pos.setText("Ext");
-        else pos.setText("Int");
+        if (dir.getPosicion().equals(activity.getString(R.string.Exterior))) pos.setText(activity.getString(R.string.Ext));
+        else pos.setText(activity.getString(R.string.Int));
 
 
         return v;

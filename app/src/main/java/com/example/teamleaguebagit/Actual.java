@@ -51,7 +51,6 @@ public class Actual {
 
     public static void setEquipoActual(EquiposUsuarios equipoActual) {
         Alineacion.actPlantilla=true;
-
         Actual.equipoActual = equipoActual;
     }
 
@@ -99,6 +98,7 @@ public class Actual {
 
 
     public static void setLigaActual(Ligas ligaActual) {
+        Alineacion.actPlantilla=true;
         Actual.ligaActual = ligaActual;
     }
 

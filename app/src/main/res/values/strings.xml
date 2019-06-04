@@ -69,4 +69,7 @@
     <string name="ToastErrorMain">Debes introducir una contraseña y usuario</string>
     <string name="ErrorLogin">Usuario y/o contraseña incorrecto</string>
     <string name="SelectLeague">Selecciona una liga</string>
+    <string name="Exterior">Exterior</string>
+    <string name="Ext">Ext</string>
+    <string name="Int">Int</string>
 </resources>

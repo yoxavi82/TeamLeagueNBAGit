@@ -284,6 +284,7 @@ public class Mercado extends AppCompatActivity  implements NavigationView.OnNavi
                 for(Ligas liga: ligasUsuarioActual){
                     if(item.getTitle().equals(liga.getIdLiga())){
                         Actual.setLigaActual(liga);
+                        Actual.setEquipoActual(null);
                         i = new Intent(Mercado.super.getApplication(), Homepage.class);
                         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(i);

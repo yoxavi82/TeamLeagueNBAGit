@@ -7,6 +7,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -80,33 +81,33 @@ public class Creacion_equipo extends AppCompatActivity {
         final ArrayList<Drawable> fotos = new ArrayList<Drawable>();
         final ArrayList<String> nombres = new ArrayList<>();
         fotos.add(ATL);
-        fotos.add(BOS);
         fotos.add(BKN);
+        fotos.add(BOS);
         fotos.add(CLE);
-        fotos.add(CHA);
-        fotos.add(CHI);
-        fotos.add(DEN);
-        fotos.add(DET);
-        fotos.add(DAL);
-        fotos.add(PHX);
-        fotos.add(GS);
-        fotos.add(HOU);
-        fotos.add(IND);
         fotos.add(LAC);
+        fotos.add(DAL);
+        fotos.add(GS);
+        fotos.add(CHA);
+        fotos.add(HOU);
+        fotos.add(NY);
         fotos.add(LAL);
+        fotos.add(CHI);
         fotos.add(MEM);
         fotos.add(MIA);
         fotos.add(MIL);
         fotos.add(MIN);
-        fotos.add(NO);
-        fotos.add(NY);
         fotos.add(OKC);
         fotos.add(ORL);
+        fotos.add(IND);
+        fotos.add(NO);
         fotos.add(PHI);
+        fotos.add(DET);
         fotos.add(POR);
-        fotos.add(SA);
         fotos.add(SAC);
+        fotos.add(PHX);
+        fotos.add(DEN);
         fotos.add(TOR);
+        fotos.add(SA);
         fotos.add(UTA);
         fotos.add(WSH);
         final AdapterListaSeleccionarFoto adapter = new AdapterListaSeleccionarFoto(this, fotos);
@@ -114,6 +115,9 @@ public class Creacion_equipo extends AppCompatActivity {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                ImageView foto = findViewById(R.id.iconoEquipo);
+                foto.setImageDrawable(fotos.get(position));
+                foto.setVisibility(View.VISIBLE);
                 ayuda.setVisibility(View.INVISIBLE);
                 siglasActuales=siglasEquipos[position];
             }
