@@ -24,54 +24,70 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.teamleaguebagit.Conexiones.EquipoUsuarioConexiones;
 import com.example.teamleaguebagit.Conexiones.JugadorConexiones;
 import com.example.teamleaguebagit.Conexiones.LigaConexiones;
 import com.example.teamleaguebagit.Conexiones.PlantillaConexiones;
+import com.example.teamleaguebagit.pojos.EquiposUsuarios;
 import com.example.teamleaguebagit.pojos.Jugadores;
 import com.example.teamleaguebagit.pojos.Ligas;
 import com.example.teamleaguebagit.pojos.Plantillas;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.sql.SQLException;
 import java.text.ParseException;
+import java.util.Calendar;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
+import static com.example.teamleaguebagit.Actual.equiposUsuarios;
 import static com.example.teamleaguebagit.Actual.ligasUsuarioActual;
 
 public class Mercado extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener{
     BottomNavigationView navigationBottom;
     View formElementsView;
     ArrayList<Jugadores> lista;
+    ArrayList<Integer> fotos;
     ArrayList<Plantillas> plantillasMercado;
-    ListView lv;
+    ListView lv, lv_jugadoresPropios;
     EditText precio ;
-    TextView  alerta_puja;
+    TextView  alerta_puja, saldo, saldo_proximo,nombreEquipo;
+    EquiposUsuarios equiposUsuarios;
     ConstraintLayout container;
 
     NavigationView navView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(R.style.AppTheme);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mercado);
+        equiposUsuarios = new EquipoUsuarioConexiones().getByLigaAndUser(
+                Actual.getUsuarioActual().getIdUsuario(),Actual.getLigaActual().getIdLiga());
+        saldo = findViewById(R.id.SaldoMercado);
+        saldo.setText(equiposUsuarios.getDinero()+"€");
+        nombreEquipo = findViewById(R.id.NombreEquipo);
+        nombreEquipo.setText(equiposUsuarios.getNombreEquipo()+"");
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         TextView titulo = findViewById(R.id.toolbar_title);
         container = findViewById(R.id.constraintLayout2);
         navView = (NavigationView) findViewById(R.id.nav_view);
+
         Menu m = initMenu();
         MenuItem mi = m.getItem(m.size()-1);
         mi.setTitle(mi.getTitle());
         LayoutInflater inflater = getLayoutInflater();
         formElementsView = inflater.inflate(R.layout.confirmar,  null);
         lista = new ArrayList<Jugadores>();
+        fotos = new ArrayList<>();
         lv = (ListView) findViewById(R.id.lista_mercado);
         try {
             initMercado();
-        } catch (ParseException e) {
-            e.printStackTrace();
+        } catch (ParseException | SQLException eee) {
         }
 
         setSupportActionBar(toolbar);
@@ -130,14 +146,21 @@ public class Mercado extends AppCompatActivity  implements NavigationView.OnNavi
 
 
 
-    public void initMercado() throws ParseException {
+    public void initMercado() throws ParseException, SQLException {
         PlantillaConexiones conexionesPlantilla = new PlantillaConexiones();
-        plantillasMercado = conexionesPlantilla.getByDate(new java.sql.Date( new Date().getTime()));
+        plantillasMercado = conexionesPlantilla.getByIdLiga("ADMIN");
         JugadorConexiones conexionesJugadores = new JugadorConexiones();
         for(int i =0;i<plantillasMercado.size();i++){
-            lista.add(conexionesJugadores.getById(plantillasMercado.get(i).getJugadores().getIdJugador()));
+            if (conexionesPlantilla.getNumberPlayer(Actual.getLigaActual().getIdLiga(),plantillasMercado.get(i).getJugadores().getIdJugador())==0){
+                if(plantillasMercado.get(i).getPuja()==0){
+                    Jugadores jugador = conexionesJugadores.getById(plantillasMercado.get(i).getJugadores().getIdJugador());
+                    jugador.setPrecioMercado(jugador.getEstrellas()*1000000);
+                    fotos.add(getResources().getIdentifier(jugador.getIdJugador().toLowerCase(),"drawable",getPackageName()));
+                    lista.add(jugador);
+                }
+            }
         }
-        AdapterListaMercado adapter = new AdapterListaMercado(this, lista);
+        AdapterListaMercado adapter = new AdapterListaMercado(this, lista,fotos);
         lv.setAdapter(adapter);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -164,7 +187,23 @@ public class Mercado extends AppCompatActivity  implements NavigationView.OnNavi
                                     }
                                 }
                                 else{
+                                    PlantillaConexiones conexiones = new PlantillaConexiones();
+                                    Plantillas p = new Plantillas();
+                                    p.setJugadores(lista.get(position));
+                                    p.setPrecio(precioActual);
+                                    p.setLigas(Actual.getLigaActual());
+                                    p.setPuja(1);
+                                    p.setTitular(3);
+                                    p.setFechaCompra(new java.sql.Date(new Date().getTime()));
+                                    p.setEquiposUsuarios(equiposUsuarios);
+                                    equiposUsuarios.setDinero(equiposUsuarios.getDinero()-precioActual);
+
+                                    new EquipoUsuarioConexiones().updateEquipoUsuario(equiposUsuarios);
+                                    conexiones.addPlantilla(p);
                                     dialogo.dismiss();
+                                    Intent i = new Intent(getApplication(), Mercado.class);
+                                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                    startActivity(i);
                                 }
                             }
                         });
@@ -190,6 +229,7 @@ public class Mercado extends AppCompatActivity  implements NavigationView.OnNavi
         alert.setMessage(R.string.MensajeSalirApp);
         alert.setNegativeButton(R.string.Salir, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
+                Actual.disconect();
                 finishAffinity();
                 System.exit(0);
             }
@@ -220,6 +260,7 @@ public class Mercado extends AppCompatActivity  implements NavigationView.OnNavi
                 alert.setMessage(R.string.CerrarSesionPregunta);
                 alert.setNegativeButton(R.string.CerrarSesion, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
+                        Actual.disconect();
                         Actual.setIniciarSesion();
                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -234,6 +275,24 @@ public class Mercado extends AppCompatActivity  implements NavigationView.OnNavi
                 alert.show();
                 break;
             case R.id.config:
+                Intent i = new Intent(this, Configuracion.class);
+                startActivity(i);
+                break;
+
+
+            default:
+                for(Ligas liga: ligasUsuarioActual){
+                    if(item.getTitle().equals(liga.getIdLiga())){
+                        Actual.setLigaActual(liga);
+                        Actual.setEquipoActual(null);
+                        i = new Intent(Mercado.super.getApplication(), Homepage.class);
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(i);
+                    }
+
+                }
+                Toast toast= Toast.makeText(this,"Liga "+item.getTitle()+" seleccionada", Toast.LENGTH_SHORT);
+                toast.show();
                 break;
         }
         return true;

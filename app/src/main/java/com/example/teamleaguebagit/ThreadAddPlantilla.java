@@ -13,7 +13,7 @@ public class ThreadAddPlantilla extends Thread{
 
     @Override
     public void run() {
-        ArrayList<Jugadores> jugadores1Estrellas = new JugadorConexiones().getByStarsRandom(i);
+        ArrayList<Jugadores> jugadores1Estrellas = new JugadorConexiones().getByStarsRandom(i,Actual.getLigaActual().getIdLiga());
         int ayuda=0;
         switch (i){
             case 1:

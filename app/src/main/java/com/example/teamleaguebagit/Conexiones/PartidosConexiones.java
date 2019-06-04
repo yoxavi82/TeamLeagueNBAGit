@@ -7,6 +7,7 @@ import com.example.teamleaguebagit.pojos.Puntuaciones;
 import com.mysql.jdbc.Statement;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +33,6 @@ public class PartidosConexiones implements PartidosRepository {
                 Statement stmt = (Statement) connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
                 stmt.executeUpdate(query);
             }
-
         }catch (Exception ex){
             ex.printStackTrace();
         }finally {
@@ -135,7 +135,7 @@ public class PartidosConexiones implements PartidosRepository {
     }
 
     @Override
-    public ArrayList<Partidos> getBySemana(Integer semana) {
+    public ArrayList<Partidos> getBySemana(Date semana) {
         ArrayList<Partidos> partidos = new ArrayList<>();
         Connection connection= null;
         try{
@@ -143,7 +143,7 @@ public class PartidosConexiones implements PartidosRepository {
             if (connection == null) {
             } else {
                 ResultSet rs = null;
-                String query ="Select * FROM Partidos WHERE Semana="+semana;
+                String query ="Select * FROM Partidos WHERE Semana="+new java.sql.Date(semana.getDay());
 
                 Statement stmt = (Statement) connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 

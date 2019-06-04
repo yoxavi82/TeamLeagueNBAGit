@@ -19,7 +19,7 @@
     <string name="Version">Versión 1.0</string>
     <string name="NoValidDate">Fecha no valida</string>
     <string name="ErrorEmptyFields">Introduce todos los campos</string>
-    <string name="iniciar_sesion">Iniciar Sesion</string>
+    <string name="iniciar_sesion">Iniciar Sesión</string>
     <string name="l_e_a_g_u_e_t_e_a_m">L e a g u e T e a m</string>
     <string name="registrarse">Registrarse</string>
     <string name="recordar_usuario">Recordar usuario</string>
@@ -69,4 +69,7 @@
     <string name="ToastErrorMain">Debes introducir una contraseña y usuario</string>
     <string name="ErrorLogin">Usuario y/o contraseña incorrecto</string>
     <string name="SelectLeague">Selecciona una liga</string>
+    <string name="Exterior">Exterior</string>
+    <string name="Ext">Ext</string>
+    <string name="Int">Int</string>
 </resources>

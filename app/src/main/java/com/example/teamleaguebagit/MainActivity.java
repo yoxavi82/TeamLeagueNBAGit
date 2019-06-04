@@ -3,6 +3,7 @@ package com.example.teamleaguebagit;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -53,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
             PasswordUsuarios pass = user.login(usuario.getText().toString());
             if(pass.getPassword()!=null){
                 if(pass.getPassword().equals(password.getText().toString())){
+                    entrar.setTextColor(Color.WHITE);
                     Actual.setUsuarioActual(user.get(usuario.getText().toString()));
                     if (recordarUser.isChecked()) {
                         SharedPreferences prefs = getSharedPreferences("Usuario", Context.MODE_PRIVATE);
@@ -84,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void showInfo(View view){
-        Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.Programadores) +
+        Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.Programadores) +"\n"+
                 getString(R.string.Version),Toast.LENGTH_SHORT);
         toast.show();
     }

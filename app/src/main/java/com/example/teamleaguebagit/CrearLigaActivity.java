@@ -1,9 +1,11 @@
 package com.example.teamleaguebagit;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -27,6 +29,7 @@ public class CrearLigaActivity extends AppCompatActivity {
     }
 
     public void crearLiga(String idLiga, String contra){
+        Button boton = findViewById(R.id.registrar);
         LigaConexiones crearLiga = new LigaConexiones();
         UsuarioConexiones crearUsu = new UsuarioConexiones();
         if (crearLiga.get(idLiga) == null){

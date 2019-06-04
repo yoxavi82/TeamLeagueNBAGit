@@ -11,16 +11,27 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name="com.example.teamleaguebagit.MenuBottom.MenuBottomMercado"></activity>
-        <activity android:name="com.example.teamleaguebagit.Mercado" />
-        <activity android:name="com.example.teamleaguebagit.MenuBottom.MenuBottomAlineacion" />
-        <activity android:name="com.example.teamleaguebagit.Alineacion" />
-        <activity android:name="com.example.teamleaguebagit.MenuBottom.MenuBottomJornada" />
-        <activity android:name="com.example.teamleaguebagit.Jornada" />
-        <activity android:name="com.example.teamleaguebagit.Clasificacion" />
+        <activity android:name="com.example.teamleaguebagit.MenuBottom.MenuBottomMercado"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name="com.example.teamleaguebagit.Mercado"
+            android:screenOrientation="portrait"/>
+        <activity android:name="com.example.teamleaguebagit.MenuBottom.MenuBottomAlineacion"
+            android:screenOrientation="portrait"/>
+        <activity android:name="com.example.teamleaguebagit.Alineacion"
+            android:screenOrientation="portrait"/>
+        <activity android:name="com.example.teamleaguebagit.MenuBottom.MenuBottomJornada"
+            android:screenOrientation="portrait"/>
+        <activity android:name="com.example.teamleaguebagit.Jornada"
+            android:screenOrientation="portrait"/>
+        <activity android:name="com.example.teamleaguebagit.Configuracion"
+            android:screenOrientation="portrait"/>
+        <activity android:name="com.example.teamleaguebagit.Clasificacion"
+            android:screenOrientation="portrait"/>
         <activity
             android:name="com.example.teamleaguebagit.ranking.Ranking"
             android:screenOrientation="portrait" />
+        <activity android:name=".Vista_Jugador"
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name="com.example.teamleaguebagit.Homepage"
             android:screenOrientation="portrait" />
@@ -29,17 +40,20 @@
             android:screenOrientation="portrait" />
         <activity
             android:name="com.example.teamleaguebagit.MainActivity"
-            android:theme="@style/SplashTheme"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".CrearLigaActivity"/>
-        <activity android:name=".BuscarLigaActivity"/>
-        <activity android:name=".Creacion_equipo"/>
+        <activity android:name=".CrearLigaActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".BuscarLigaActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Creacion_equipo"
+            android:screenOrientation="portrait"/>
 
 
         <meta-data

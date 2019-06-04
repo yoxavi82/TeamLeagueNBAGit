@@ -3,14 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent"
+    android:background="@drawable/degradado">
 
     <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="123dp"
-        android:layout_height="146dp"
-        android:layout_marginTop="28dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:id="@+id/fotoJugador"
+        android:layout_width="188dp"
+        android:layout_height="164dp"
+        android:layout_marginStart="84dp"
+        android:layout_marginTop="112dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@tools:sample/avatars[2]" />
@@ -19,8 +20,8 @@
         android:id="@+id/layoutgeneral"
         android:layout_width="221dp"
         android:layout_height="218dp"
-        android:layout_marginLeft="80dp"
-        android:layout_marginTop="200dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="280dp"
         android:orientation="vertical"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -50,37 +51,6 @@
             <TextView
                 android:id="@+id/vista_jugador_nombre"
                 android:layout_width="123dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:textAlignment="center" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/linearLayout63233"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:hint="nombre jugador"
-                android:text="Precio:"
-                android:textAlignment="textEnd"
-                android:textColor="@android:color/black"
-                android:textStyle="italic" />
-
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-
-
-            <TextView
-                android:id="@+id/vista_jugador_precio"
-                android:layout_width="128dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:textAlignment="center" />
@@ -241,5 +211,15 @@
         </LinearLayout>
 
     </LinearLayout>
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="332dp"
+        android:layout_height="43dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="44dp"
+        android:gravity="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

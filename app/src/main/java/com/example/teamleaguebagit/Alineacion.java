@@ -37,6 +37,7 @@ import com.example.teamleaguebagit.Conexiones.PlantillaConexiones;
 import com.example.teamleaguebagit.pojos.Equipos;
 import com.example.teamleaguebagit.pojos.EquiposUsuarios;
 import com.example.teamleaguebagit.pojos.Jugadores;
+import com.example.teamleaguebagit.pojos.Ligas;
 import com.example.teamleaguebagit.pojos.Plantillas;
 
 import org.jetbrains.annotations.NotNull;
@@ -47,6 +48,7 @@ import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.LinkedList;
 
@@ -227,8 +229,6 @@ public class Alineacion extends AppCompatActivity  implements NavigationView.OnN
                     myPlayerListInicial.addFirst(jugador.getJugadores());
 
                 }
-//                myPlayerListInicial.add(jugador.getJugadores());
-//                myImageLisInicial.add(getDrawableFromBytes(jugador.getJugadores().getImagen()));
             }if(jugador.getTitular()==2){
                 myPlayerListSuplentes.add(jugador.getJugadores());
             }if (jugador.getTitular()==3){
@@ -247,12 +247,26 @@ public class Alineacion extends AppCompatActivity  implements NavigationView.OnN
                     myPlayerListNoConv.add(jugador.getJugadores());
                 }
             }
-
         }
+        if (titularesIntRest!=0){
+            for (int i = 0; i<titularesIntRest;i++) {
+                Jugadores cambio = myPlayerListNoConv.remove(0);
+                Jugadores nuevo = new JugadorConexiones().getByStarsInterior(cambio.getEstrellas(), Actual.ligaActual.getIdLiga()).get(i);
 
-
-
-
+                PlantillaConexiones conexion = new PlantillaConexiones();
+                conexion.removePlantilla(Actual.getEquipoActual().getIdEquipo(), cambio.getIdJugador());
+                Plantillas plantillaCambio = new Plantillas();
+                plantillaCambio.setLigas(Actual.getLigaActual());
+                plantillaCambio.setTitular(0);
+                plantillaCambio.setPuja(0);
+                plantillaCambio.setJugadores(nuevo);
+                plantillaCambio.setEquiposUsuarios(new EquipoUsuarioConexiones().getByLigaAndUser(Actual.getUsuarioActual().getIdUsuario(),
+                        Actual.getLigaActual().getIdLiga()));
+                plantillaCambio.setFechaCompra(new java.sql.Date(new Date().getTime()));
+                plantillaCambio.setPrecio(cambio.getEstrellas() * 1000000);
+                conexion.addPlantilla(plantillaCambio);
+            }
+        }
     }
 
     private Drawable getDrawableFromBytes(byte[] img) {
@@ -380,9 +394,6 @@ public class Alineacion extends AppCompatActivity  implements NavigationView.OnN
                     }
                 })
         );
-        //imageModelArrayList = eatFruits();
-        //adapter = new PlayerAdapter(this, imageModelArrayList);
-        //recyclerView.setAdapter(adapter);
         initSuplentes();
         initNoConv();
         initTitulares();
@@ -400,6 +411,7 @@ public class Alineacion extends AppCompatActivity  implements NavigationView.OnN
         alert.setMessage(R.string.MensajeSalirApp);
         alert.setNegativeButton(R.string.Salir, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
+                Actual.disconect();
                 finishAffinity();
                 System.exit(0);
             }
@@ -419,20 +431,6 @@ public class Alineacion extends AppCompatActivity  implements NavigationView.OnN
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
-//    @Override
-//    public boolean  onPrepareOptionsMenu(Menu menu) {
-//        for (int i=0; i<5; i++){
-//            menu.getItem(i).setTitle("hola");
-//            if (i>=numLigas)
-//                menu.getItem(i).setVisible(false);
-//        }
-//        getMenuInflater().inflate(R.menu.main, menu);
-//        return true;
-//    }
-
-
-
-
 
     //Opciones para menu lateral
     @Override
@@ -444,6 +442,7 @@ public class Alineacion extends AppCompatActivity  implements NavigationView.OnN
                 alert.setMessage(R.string.CerrarSesionPregunta);
                 alert.setNegativeButton(R.string.CerrarSesion, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
+                        Actual.disconect();
                         Actual.setIniciarSesion();
                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -458,97 +457,27 @@ public class Alineacion extends AppCompatActivity  implements NavigationView.OnN
                 alert.show();
                 break;
             case R.id.config:
+                Intent i = new Intent(this, Configuracion.class);
+                startActivity(i);
+                break;
+
+
+            default:
+                for(Ligas liga: ligasUsuarioActual){
+                    if(item.getTitle().equals(liga.getIdLiga())){
+                        Actual.setLigaActual(liga);
+                        i = new Intent(Alineacion.super.getApplication(), Homepage.class);
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(i);
+                    }
+                }
+                Toast toast= Toast.makeText(this,"Liga "+item.getTitle()+" seleccionada", Toast.LENGTH_SHORT);
+                toast.show();
                 break;
         }
 
         return true;
     }
-//    public void llenarArrayDraw(){
-//        ImageView img= findViewById(R.id.int1);
-//        img.setImageResource(R.drawable.uno);
-//        Jugadores player = new Jugadores();
-//        player.setApellido("hola");
-//        player.setPosicion("int");
-//        myPlayerListInicial.add(player);
-//         player = new Jugadores();
-//        player.setApellido("adios");
-//        player.setPosicion("ext");
-//        myPlayerListInicial.add(player);
-//         player = new Jugadores();
-//        player.setApellido("uwu");
-//        player.setPosicion("int");
-//        myPlayerListInicial.add(player);
-//         player = new Jugadores();
-//        player.setApellido("owo");
-//        player.setPosicion("ext");
-//        myPlayerListInicial.add(player);
-//         player = new Jugadores();
-//        player.setApellido("ha");
-//        player.setPosicion("ext");
-//        myPlayerListInicial.add(player);
-//
-//
-//
-//        player = new Jugadores();
-//        player.setApellido("1");
-//        player.setPosicion("int");
-//        myPlayerListSuplentes.add(player);
-//        myImageListSuplentes.add( img.getDrawable() );
-//        img.setImageResource(R.drawable.dos);
-//        player = new Jugadores();
-//        player.setApellido("2");
-//        player.setPosicion("int");
-//
-//
-//
-//        myPlayerListSuplentes.add(player);
-//        myImageListSuplentes.add( img.getDrawable() );
-//        img.setImageResource(R.drawable.tres);
-//        player = new Jugadores();
-//        player.setApellido("3");
-//        player.setPosicion("ext");
-//        myPlayerListSuplentes.add(player);
-//
-//        myImageListSuplentes.add( img.getDrawable() );
-//        img.setImageResource(R.drawable.uno);
-//        player = new Jugadores();
-//        player.setApellido("lolo");
-//        player.setPosicion("int");
-//        myPlayerListSuplentes.add(player);
-//
-//
-//        myImageListSuplentes.add( img.getDrawable() );
-//        img.setImageResource(R.drawable.dos);
-//        player = new Jugadores();
-//        player.setApellido("lelele");
-//        player.setPosicion("int");
-//        myPlayerListSuplentes.add(player);
-//
-//
-//
-//        img.setImageResource(R.drawable.uno);
-//        myImageListNoConv.add( img.getDrawable() );
-//        player = new Jugadores();
-//        player.setApellido("lelle");
-//        player.setPosicion("int");
-//        myPlayerListNoConv.add(player);
-//
-//
-//        img.setImageResource(R.drawable.dos);
-//        myImageListNoConv.add( img.getDrawable() );
-//        player.setApellido("lululu");
-//        player.setPosicion("int");
-//        myPlayerListNoConv.add(player);
-//
-//
-//        img.setImageResource(R.drawable.tres);
-//        myImageListNoConv.add( img.getDrawable() );
-//        player.setApellido("lilili");
-//        player.setPosicion("ext");
-//        myPlayerListNoConv.add(player);
-//
-//
-//    }
 
     public void clickjugador(View view){
         ImageView img = findViewById(view.getId());
@@ -703,45 +632,8 @@ public class Alineacion extends AppCompatActivity  implements NavigationView.OnN
         byte[]bytes =getFromBlob( jugador.blob);
         ext1.setImageBitmap(getBitmap(bytes));
 
-        //int1.setImageBitmap(getBitmap(jugador.getImagen()));
-        //getBytes(jugador);
-        //test=jugador.getImagen();
-
-//        conJug.updateJugador(jugador);
-
-       /*Jugadores jugador2 =conJug.getById("UTA_45");
-       int1.setImageBitmap(getBitmap(jugador2.getImagen()));
-       if(jugador2.getImagen().equals(test)){
-           System.out.println("igual>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<");
-       }else
-           System.out.println("no<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");*/
-
-
-
-
    }
 
-//        System.out.println("empieza<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
-//         JugadorConexiones conJug = new JugadorConexiones();
-////        Jugadores jugador =conJug.getById("UTA_3");
-////        jugador.setImagen(getBytes((jugador.getIdJugador().toLowerCase())));
-////
-////        conJug.updateJugador(jugador);
-////        int1.setImageBitmap(getBitmap(jugador.getImagen()));
-//
-//
-//
-//
-//        ArrayList<Jugadores> lista = conJug.getAll();
-//        System.out.println("<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-//
-//        for (Jugadores jugador: lista){
-//            jugador.setImagen(getBytes( (jugador.getIdJugador().toLowerCase())));
-//
-//            conJug.updateJugador(jugador);
-//        }
-//        System.out.println("ya<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
-//    }
     public byte[] getBytes(Jugadores jugador){
         int resource = getResources().getIdentifier(jugador.getIdJugador().toLowerCase(),"drawable", getPackageName());
         Bitmap bitmap = ((BitmapDrawable)getResources().getDrawable(resource)).getBitmap();
@@ -787,7 +679,24 @@ public class Alineacion extends AppCompatActivity  implements NavigationView.OnN
         max.set(Calendar.MINUTE, 0);
         max.set(Calendar.SECOND, 0);
         Calendar c = new GregorianCalendar();
-        if (c.before(max)&&c.after(min)){
+        Plantillas plantillaUpdate=null;
+        PlantillaConexiones plantillaCon = new PlantillaConexiones();
+        if (c.before(max)&&c.after(min)) {
+            for (Jugadores jugador : myPlayerListInicial) {
+                plantillaUpdate = plantillaCon.getJugadoresByJugadorYLiga(jugador.getIdJugador(), Actual.getLigaActual().getIdLiga());
+                plantillaUpdate.setTitular(1);
+                plantillaCon.actualizarPlantilla(plantillaUpdate);
+            }
+            for (Jugadores jugador : myPlayerListSuplentes){
+                plantillaUpdate = plantillaCon.getJugadoresByJugadorYLiga(jugador.getIdJugador(), Actual.getLigaActual().getIdLiga());
+                plantillaUpdate.setTitular(2);
+                plantillaCon.actualizarPlantilla(plantillaUpdate);
+            }
+            for (Jugadores jugador : myPlayerListNoConv){
+                plantillaUpdate = plantillaCon.getJugadoresByJugadorYLiga(jugador.getIdJugador(), Actual.getLigaActual().getIdLiga());
+                plantillaUpdate.setTitular(3);
+                plantillaCon.actualizarPlantilla(plantillaUpdate);
+            }
             //guardamos
             Toast.makeText(this," Alineacion guardada correctamente",Toast.LENGTH_SHORT).show();
 

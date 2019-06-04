@@ -2,19 +2,14 @@ package com.example.teamleaguebagit;
 
 import com.example.teamleaguebagit.Conexiones.LigaConexiones;
 import com.example.teamleaguebagit.pojos.EquiposUsuarios;
-import android.support.design.widget.NavigationView;
-import android.view.Menu;
 
-import com.example.teamleaguebagit.Conexiones.LigaConexiones;
 import com.example.teamleaguebagit.pojos.Ligas;
+import com.example.teamleaguebagit.pojos.Plantillas;
 import com.example.teamleaguebagit.pojos.Usuarios;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import org.jetbrains.annotations.NotNull;
-
-import java.util.ArrayList;
 
 public class Actual {
     static Usuarios usuarioActual=null;
@@ -23,6 +18,7 @@ public class Actual {
     static EquiposUsuarios equipoActual;
     static ArrayList<Ligas> ligasUsuarioActual = null;
     static ArrayList<EquiposUsuarios> equiposUsuarios = new ArrayList();
+    static ArrayList<Plantillas> plantillaActual = null;
 
     public static ArrayList<EquiposUsuarios> getEquiposUsuariosSesion(){
         return equiposUsuarios;
@@ -38,14 +34,23 @@ public class Actual {
         equiposUsuarios = equipos;
     }
 
+    public static ArrayList<Plantillas> getPlantillaActual(){
+        return plantillaActual;
+    }
+
+    public static void setPlantillaActual(ArrayList<Plantillas> plantilla){
+        plantillaActual = new ArrayList<>();
+        for (Plantillas pla : plantilla){
+            plantillaActual.add(pla);
+        }
+    }
+
     public static EquiposUsuarios getEquipoActual() {
-        //Alineacion.actPlantilla=true;
         return equipoActual;
     }
 
     public static void setEquipoActual(EquiposUsuarios equipoActual) {
         Alineacion.actPlantilla=true;
-
         Actual.equipoActual = equipoActual;
     }
 
@@ -93,6 +98,7 @@ public class Actual {
 
 
     public static void setLigaActual(Ligas ligaActual) {
+        Alineacion.actPlantilla=true;
         Actual.ligaActual = ligaActual;
     }
 

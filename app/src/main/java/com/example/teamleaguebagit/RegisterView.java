@@ -1,5 +1,7 @@
 package com.example.teamleaguebagit;
 
+import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -25,7 +27,6 @@ public class RegisterView extends AppCompatActivity {
     String fechaNacimiento;
     Spinner dia,mes,año;
     Button accionRegistrar;
-    ArrayList<String> usuarios =new ArrayList<>();
     ArrayList<String> dias = new ArrayList<>();
     ArrayList<String> meses = new ArrayList<>();
     ArrayList<String> años = new ArrayList<>();
@@ -126,6 +127,7 @@ public class RegisterView extends AppCompatActivity {
                     "Introduce todos los campos", Toast.LENGTH_SHORT);
             toast.show();
         }else{
+            accionRegistrar.setTextColor(Color.WHITE);
             Date date1=new SimpleDateFormat("dd/MM/yyyy").parse(fechaNacimiento);
             Usuarios registrado = new Usuarios(usuario.getText().toString(),nombre.getText().toString(),
                     apellidos.getText().toString(),correo.getText().toString(), new java.sql.Date( date1.getTime()),0);
@@ -133,6 +135,9 @@ public class RegisterView extends AppCompatActivity {
             UsuarioConexiones con = new UsuarioConexiones();
             con.register(registrado);
             con.registrarPassword(passRegistrado);
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
         }
     }
 }

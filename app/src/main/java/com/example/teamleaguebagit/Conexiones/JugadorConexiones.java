@@ -50,7 +50,7 @@ public class JugadorConexiones implements JugadorRepository {
         return buscado;
     }
 
-    public ArrayList<Jugadores> getByStarsRandom(int i) {
+    public ArrayList<Jugadores> getByStarsRandom(int i,String idliga) {
         ArrayList<Jugadores> buscado =new ArrayList<>();
         Connection connection= null;
         try{
@@ -58,7 +58,44 @@ public class JugadorConexiones implements JugadorRepository {
             if (connection == null) {
             } else {
                 ResultSet rs = null;
-                String query ="Select * FROM Jugadores WHERE IdJugador NOT IN(SELECT IdJugador FROM Plantillas) AND Estrellas="+i+" ORDER BY RAND()LIMIT 5";
+                String query ="Select * FROM Jugadores WHERE IdJugador NOT IN(SELECT IdJugador FROM Plantillas WHERE IdLiga='"+idliga+"') AND Estrellas="+i+" ORDER BY RAND()LIMIT 5";
+
+                Statement stmt = (Statement) connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+
+                rs = stmt.executeQuery(query);
+                while(rs.next()){
+                    Jugadores jugador = new Jugadores();
+                    jugador.setApellido(rs.getString("Apellido"));
+                    jugador.setDorsal(rs.getString("Dorsal"));
+                    jugador.setEquipos(new EquipoConexiones().get(rs.getString("IdEquipo")));
+                    jugador.setNombre(rs.getString("Nombre"));
+                    jugador.setIdJugador(rs.getString("IdJugador"));
+                    jugador.setLesionado(rs.getInt("Lesionado"));
+                    jugador.setPrecioMercado(rs.getInt("PrecioMercado"));
+                    jugador.setPosicion(rs.getString("Posicion"));
+                    jugador.setEstrellas(rs.getInt("Estrellas"));
+                    jugador.setPuntosTotales(rs.getInt("PuntosTotales"));
+                    jugador.setMedia(rs.getInt("Media"));
+                    jugador.setImagen(rs.getBytes("Imagen"));
+                    buscado.add(jugador);
+                }
+            }
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }finally {
+            Conexion.cerrarConexion(connection);
+        }
+        return buscado;
+    }
+    public ArrayList<Jugadores> getByStarsInterior(int i,String idliga) {
+        ArrayList<Jugadores> buscado =new ArrayList<>();
+        Connection connection= null;
+        try{
+            connection = Conexion.obtenerConexion();
+            if (connection == null) {
+            } else {
+                ResultSet rs = null;
+                String query ="Select * FROM Jugadores WHERE IdJugador NOT IN(SELECT IdJugador FROM Plantillas WHERE IdLiga='"+idliga+"') AND Estrellas="+i+" AND Posicion ='Interior' ORDER BY RAND()LIMIT 5";
 
                 Statement stmt = (Statement) connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 

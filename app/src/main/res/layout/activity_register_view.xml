@@ -104,11 +104,14 @@
         android:layout_height="53dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="16dp"
-        android:background="@android:color/black"
+        android:background="@drawable/my_button_bg"
         android:onClick="registrar"
+        android:shadowColor="@android:color/black"
+        android:shadowDx="2"
+        android:shadowDy="2"
+        android:shadowRadius="1"
         android:text="@string/registrar"
         android:textColor="@android:color/holo_orange_dark"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/año" />
 

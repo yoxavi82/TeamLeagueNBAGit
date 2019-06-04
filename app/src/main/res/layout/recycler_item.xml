@@ -15,7 +15,7 @@
         <LinearLayout
             android:id="@+id/layout"
             android:layout_width="160dp"
-            android:layout_height="130dp"
+            android:layout_height="135dp"
 
             android:orientation="vertical"
             android:padding="10dp">
@@ -33,7 +33,7 @@
             <TextView
                 android:id="@+id/tv"
                 android:layout_width="160dp"
-                android:layout_height="20dp"
+                android:layout_height="30dp"
                 android:gravity="center"
                 android:paddingLeft="-10dp"
                 android:text="Antetokoumpo"
