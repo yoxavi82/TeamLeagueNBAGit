@@ -202,6 +202,9 @@ public class Alineacion extends AppCompatActivity  implements NavigationView.OnN
 
     private void initArrays() {
         actPlantilla=false;
+        myPlayerListInicial= new LinkedList<>();
+        myPlayerListSuplentes = new ArrayList<>();
+        myPlayerListNoConv = new ArrayList<>();
 
 
         int intTit=0;

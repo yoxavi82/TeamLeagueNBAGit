@@ -289,7 +289,6 @@ public class Mercado extends AppCompatActivity  implements NavigationView.OnNavi
                         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(i);
                     }
-
                 }
                 Toast toast= Toast.makeText(this,"Liga "+item.getTitle()+" seleccionada", Toast.LENGTH_SHORT);
                 toast.show();

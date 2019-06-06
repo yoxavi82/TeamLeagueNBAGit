@@ -1,9 +1,13 @@
 package com.example.teamleaguebagit.Conexiones;
 
+import com.example.teamleaguebagit.Actual;
 import com.example.teamleaguebagit.ConexionInterficies.PlantillaRepository;
+import com.example.teamleaguebagit.pojos.Equipos;
 import com.example.teamleaguebagit.pojos.EquiposUsuarios;
+import com.example.teamleaguebagit.pojos.Jugadores;
 import com.example.teamleaguebagit.pojos.Partidos;
 import com.example.teamleaguebagit.pojos.Plantillas;
+import com.example.teamleaguebagit.pojos.Usuarios;
 import com.mysql.jdbc.Statement;
 
 import java.sql.Connection;
@@ -173,7 +177,8 @@ public class PlantillaConexiones implements PlantillaRepository {
             if (connection == null) {
             } else {
                 ResultSet rs = null;
-                String query ="Select * FROM Plantillas WHERE IdLiga='"+idLiga+"'";
+                String query ="Select * FROM Plantillas JOIN Jugadores ON Plantillas.IdJugador=Jugadores.IdJugador " +
+                        "JOIN EquiposUsuarios ON Plantillas.IdEquipo=EquiposUsuarios.IdEquipo WHERE IdLiga='"+idLiga+"'";
 
                 Statement stmt = (Statement) connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 
@@ -182,11 +187,11 @@ public class PlantillaConexiones implements PlantillaRepository {
                     Plantillas plantilla = new Plantillas();
                     plantilla.setFechaCompra(rs.getDate("FechaCompra"));
                     plantilla.setPrecio(rs.getInt("Precio"));
-                    plantilla.setEquiposUsuarios(new EquipoUsuarioConexiones().getEquipo(rs.getString("IdEquipo")));
-                    plantilla.setJugadores(new JugadorConexiones().getById(rs.getString("IdJugador")));
+                    plantilla.setEquiposUsuarios((EquiposUsuarios)rs.getObject("EquiposUsuarios"));
+                    plantilla.setJugadores((Jugadores)rs.getObject("Jugadores"));
                     plantilla.setPuja(rs.getInt("Puja"));
                     plantilla.setTitular(rs.getInt("Titular"));
-                    plantilla.setLigas(new LigaConexiones().get(rs.getString("IdLiga")));
+                    plantilla.setLigas(Actual.getLigaActual());
                     plantillas.add(plantilla);
                 }
             }
@@ -234,20 +239,50 @@ public class PlantillaConexiones implements PlantillaRepository {
             if (connection == null) {
             } else {
                 ResultSet rs = null;
-                String query ="Select * FROM Plantillas WHERE IdEquipo="+idEquipo+" AND IdLiga='"+idLiga+"'";
+                String query ="Select * FROM Plantillas JOIN Jugadores ON Plantillas.IdJugador=Jugadores.IdJugador " +
+                        "JOIN EquiposUsuarios ON Plantillas.IdEquipo=EquiposUsuarios.IdEquipo " +
+                        "JOIN Equipos ON EquiposUsuarios.EquipoNBA=Equipos.IdEquipo" +
+                        " WHERE Plantillas.IdEquipo="+idEquipo+" AND Plantillas.IdLiga='"+idLiga+"'";
 
                 Statement stmt = (Statement) connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 
                 rs = stmt.executeQuery(query);
                 while(rs.next()){
                     Plantillas plantilla = new Plantillas();
-                    plantilla.setFechaCompra(rs.getDate("FechaCompra"));
-                    plantilla.setPrecio(rs.getInt("Precio"));
-                    plantilla.setEquiposUsuarios(new EquipoUsuarioConexiones().getEquipo(rs.getString("IdEquipo")));
-                    plantilla.setJugadores(new JugadorConexiones().getById(rs.getString("IdJugador")));
+                    plantilla.setFechaCompra(rs.getDate("Plantillas.FechaCompra"));
+                    plantilla.setPrecio(rs.getInt("Plantillas.Precio"));
+                    EquiposUsuarios equiposUsuarios = new EquiposUsuarios();
+                    equiposUsuarios.setDinero(rs.getInt("EquiposUsuarios.Dinero"));
+                    Equipos equipos = new Equipos();
+                    equipos.setNombre(rs.getString("Equipos.Nombre"));
+                    equipos.setIdEquipo(rs.getString("Equipos.IdEquipo"));
+                    equiposUsuarios.setEquipos(equipos);
+                    equiposUsuarios.setNombreEquipo(rs.getString("EquiposUsuarios.NombreEquipo"));
+                    equiposUsuarios.setLigas(Actual.getLigaActual());
+                    equiposUsuarios.setIdEquipo(rs.getInt("EquiposUsuarios.IdEquipo"));
+                    equiposUsuarios.setPuntosTotales(rs.getInt("EquiposUsuarios.PuntosTotales"));
+
+                    Usuarios user = new Usuarios();
+                    user.setIdUsuario(rs.getString("EquiposUsuarios.IdUsuario"));
+                    equiposUsuarios.setUsuarios(user);
+
+                    Jugadores jugador = new Jugadores();
+                    jugador.setIdJugador(rs.getString("Jugadores.IdJugador"));
+                    jugador.setNombre(rs.getString("Jugadores.Nombre"));
+                    jugador.setApellido(rs.getString("Jugadores.Apellido"));
+                    jugador.setDorsal(rs.getString("Jugadores.Dorsal"));
+                    jugador.setEquipos(equipos);
+                    jugador.setPrecioMercado(rs.getInt("Jugadores.PrecioMercado"));
+                    jugador.setPosicion(rs.getString("Jugadores.Posicion"));
+                    jugador.setEstrellas(rs.getInt("Jugadores.Estrellas"));
+                    jugador.setPuntosTotales(rs.getInt("Jugadores.PuntosTotales"));
+                    jugador.setMedia(rs.getInt("Jugadores.Media"));
+
+                    plantilla.setEquiposUsuarios(equiposUsuarios);
+                    plantilla.setJugadores(jugador);
                     plantilla.setPuja(rs.getInt("Puja"));
                     plantilla.setTitular(rs.getInt("Titular"));
-                    plantilla.setLigas(new LigaConexiones().get(rs.getString("IdLiga")));
+                    plantilla.setLigas(Actual.getLigaActual());
                     plantillas.add(plantilla);
                 }
             }
@@ -300,20 +335,51 @@ public class PlantillaConexiones implements PlantillaRepository {
             if (connection == null) {
             } else {
                 ResultSet rs = null;
-                String query ="Select * FROM Plantillas WHERE IdEquipo="+idEquipo+"";
+
+                String query ="Select * FROM Plantillas JOIN Jugadores ON Plantillas.IdJugador=Jugadores.IdJugador " +
+                        "JOIN EquiposUsuarios ON Plantillas.IdEquipo=EquiposUsuarios.IdEquipo " +
+                        "JOIN Equipos ON EquiposUsuarios.EquipoNBA=Equipos.IdEquipo" +
+                        " WHERE Plantillas.IdEquipo="+idEquipo+" AND Plantillas.IdEquipo='"+idEquipo+"'";
 
                 Statement stmt = (Statement) connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 
                 rs = stmt.executeQuery(query);
                 while(rs.next()){
                     Plantillas plantilla = new Plantillas();
-                    plantilla.setFechaCompra(rs.getDate("FechaCompra"));
-                    plantilla.setPrecio(rs.getInt("Precio"));
-                    plantilla.setEquiposUsuarios(new EquipoUsuarioConexiones().getEquipo(rs.getInt("IdEquipo")+""));
-                    plantilla.setJugadores(new JugadorConexiones().getById(rs.getString("IdJugador")));
+                    plantilla.setFechaCompra(rs.getDate("Plantillas.FechaCompra"));
+                    plantilla.setPrecio(rs.getInt("Plantillas.Precio"));
+                    EquiposUsuarios equiposUsuarios = new EquiposUsuarios();
+                    equiposUsuarios.setDinero(rs.getInt("EquiposUsuarios.Dinero"));
+                    Equipos equipos = new Equipos();
+                    equipos.setNombre(rs.getString("Equipos.Nombre"));
+                    equipos.setIdEquipo(rs.getString("Equipos.IdEquipo"));
+                    equiposUsuarios.setEquipos(equipos);
+                    equiposUsuarios.setNombreEquipo(rs.getString("EquiposUsuarios.NombreEquipo"));
+                    equiposUsuarios.setLigas(Actual.getLigaActual());
+                    equiposUsuarios.setIdEquipo(rs.getInt("EquiposUsuarios.IdEquipo"));
+                    equiposUsuarios.setPuntosTotales(rs.getInt("EquiposUsuarios.PuntosTotales"));
+
+                    Usuarios user = new Usuarios();
+                    user.setIdUsuario(rs.getString("EquiposUsuarios.IdUsuario"));
+                    equiposUsuarios.setUsuarios(user);
+
+                    Jugadores jugador = new Jugadores();
+                    jugador.setIdJugador(rs.getString("Jugadores.IdJugador"));
+                    jugador.setNombre(rs.getString("Jugadores.Nombre"));
+                    jugador.setApellido(rs.getString("Jugadores.Apellido"));
+                    jugador.setDorsal(rs.getString("Jugadores.Dorsal"));
+                    jugador.setEquipos(equipos);
+                    jugador.setPrecioMercado(rs.getInt("Jugadores.PrecioMercado"));
+                    jugador.setPosicion(rs.getString("Jugadores.Posicion"));
+                    jugador.setEstrellas(rs.getInt("Jugadores.Estrellas"));
+                    jugador.setPuntosTotales(rs.getInt("Jugadores.PuntosTotales"));
+                    jugador.setMedia(rs.getInt("Jugadores.Media"));
+
+                    plantilla.setEquiposUsuarios(equiposUsuarios);
+                    plantilla.setJugadores(jugador);
                     plantilla.setPuja(rs.getInt("Puja"));
                     plantilla.setTitular(rs.getInt("Titular"));
-                    plantilla.setLigas(new LigaConexiones().get(rs.getString("IdLiga")));
+                    plantilla.setLigas(Actual.getLigaActual());
                     plantillas.add(plantilla);
                 }
             }
