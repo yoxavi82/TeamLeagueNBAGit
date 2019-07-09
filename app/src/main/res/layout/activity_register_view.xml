@@ -7,6 +7,17 @@
     android:background="@drawable/degradado"
     tools:context=".RegisterView">
 
+    <ImageView
+        android:id="@+id/eye"
+        android:layout_width="35dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="12dp"
+        android:onClick="visible"
+        app:layout_constraintStart_toEndOf="@+id/Password"
+        app:layout_constraintTop_toTopOf="@+id/Password"
+        app:srcCompat="@drawable/visible" />
+
     <Spinner
         android:id="@+id/mes"
         android:layout_width="107dp"

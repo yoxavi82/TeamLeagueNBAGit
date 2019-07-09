@@ -30,7 +30,6 @@ public class UsuarioConexiones implements UsuarioRepository {
                 Statement stmt = (Statement) connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
                 stmt.executeUpdate(query);
             }
-            Conexion.cerrarConexion(connection);
 
         }catch (Exception ex){
             ex.printStackTrace();
@@ -49,7 +48,7 @@ public class UsuarioConexiones implements UsuarioRepository {
             } else {
                 String query ="UPDATE Usuarios SET " +
                         "Nombre='"+usuario.getNombre()+"',Apellidos='"+usuario.getApellidos()+"',Correo='"+usuario.getCorreo()
-                        +"',FechaNacimiento='"+usuario.getFechaNacimiento()+"'";
+                        +"',FechaNacimiento='"+usuario.getFechaNacimiento()+"' WHERE Nombre='"+usuario.getNombre()+"',Apellidos='"+usuario.getApellidos()+"'";
 
                 Statement stmt = (Statement) connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 
@@ -87,7 +86,7 @@ public class UsuarioConexiones implements UsuarioRepository {
         }catch (Exception ex){
             ex.printStackTrace();
         }finally {
-            //Conexion.cerrarConexion(connection);
+            Conexion.cerrarConexion(connection);
         }
         return buscado;
 
@@ -168,7 +167,6 @@ public class UsuarioConexiones implements UsuarioRepository {
                 String query ="Insert into PasswordUsuarios (IdUsuario,Password) VALUES" +
                         " ('"+passwordUsuarios.getUsuarios().getIdUsuario()+"','"+passwordUsuarios.getPassword()+"')";
                 Statement stmt = (Statement) connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-
                 stmt.executeUpdate(query);
             }
         }catch (Exception ex){

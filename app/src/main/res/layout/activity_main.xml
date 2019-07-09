@@ -7,6 +7,23 @@
     android:background="@drawable/degradado"
     tools:context=".MainActivity">
 
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/sign_in_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        app:layout_constraintStart_toStartOf="@+id/Password"
+        app:layout_constraintTop_toBottomOf="@+id/Password" />
+    <ImageView
+        android:id="@+id/eye2"
+        android:layout_width="35dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="8dp"
+        android:onClick="visible"
+        app:layout_constraintStart_toEndOf="@+id/Password"
+        app:layout_constraintTop_toTopOf="@+id/Password"
+        app:srcCompat="@drawable/visible" />
+
     <Button
         android:id="@+id/Entrar"
         android:layout_width="290dp"

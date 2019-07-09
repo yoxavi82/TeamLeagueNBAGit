@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -16,6 +17,7 @@ import com.example.teamleaguebagit.Conexiones.UsuarioConexiones;
 import com.example.teamleaguebagit.pojos.PasswordUsuarios;
 import com.example.teamleaguebagit.pojos.Usuarios;
 
+import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -30,6 +32,7 @@ public class RegisterView extends AppCompatActivity {
     ArrayList<String> dias = new ArrayList<>();
     ArrayList<String> meses = new ArrayList<>();
     ArrayList<String> años = new ArrayList<>();
+    int show =1;
 
     boolean existe = false;
 
@@ -131,13 +134,23 @@ public class RegisterView extends AppCompatActivity {
             Date date1=new SimpleDateFormat("dd/MM/yyyy").parse(fechaNacimiento);
             Usuarios registrado = new Usuarios(usuario.getText().toString(),nombre.getText().toString(),
                     apellidos.getText().toString(),correo.getText().toString(), new java.sql.Date( date1.getTime()),0);
-            PasswordUsuarios passRegistrado = new PasswordUsuarios(registrado,contra.getText().toString());
+            PasswordUsuarios passRegistrado = new PasswordUsuarios(registrado, Cifrar_Descrifrar.cifrarPassword(contra.getText().toString()));
             UsuarioConexiones con = new UsuarioConexiones();
             con.register(registrado);
             con.registrarPassword(passRegistrado);
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
+        }
+    }
+
+    public void visible(View view){
+        if(show==1){
+            contra.setTransformationMethod(null);
+            show=0;
+        }else{
+            contra.setTransformationMethod(new PasswordTransformationMethod());
+            show=1;
         }
     }
 }

@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -21,7 +22,9 @@ public class MainActivity extends AppCompatActivity {
     Button entrar,resgitrar;
     CheckBox recordarUser;
     ImageView info;
-    TextView usuario,password;;
+    TextView usuario,password;
+    int show=1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,8 +55,9 @@ public class MainActivity extends AppCompatActivity {
         }else {
            UsuarioConexiones user = new UsuarioConexiones();
             PasswordUsuarios pass = user.login(usuario.getText().toString());
+            String contra = Cifrar_Descrifrar.cifrarPassword(password.getText().toString());
             if(pass.getPassword()!=null){
-                if(pass.getPassword().equals(password.getText().toString())){
+                if(pass.getPassword().equals(contra)){
                     entrar.setTextColor(Color.WHITE);
                     Actual.setUsuarioActual(user.get(usuario.getText().toString()));
                     if (recordarUser.isChecked()) {
@@ -71,7 +75,16 @@ public class MainActivity extends AppCompatActivity {
             }else{
                 errorLogin(R.string.ErrorLogin);
             }
+        }
+    }
 
+    public void visible(View view){
+        if(show==1){
+            password.setTransformationMethod(null);
+            show=0;
+        }else{
+            password.setTransformationMethod(new PasswordTransformationMethod());
+            show=1;
         }
     }
 
